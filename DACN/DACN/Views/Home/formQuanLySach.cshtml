@@ -46,20 +46,20 @@
                     <th>Giá</th>
                 </tr>
             </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>@item.tensach</td>
-                            <td>@item.masach</td>
-                            <td>@item.theloai.tentl</td>
-                            <td>@item.sochuong</td>
-                            <td>@item.tacgia.tentg</td>
-                            <td>@item.nhaxuatban.tennhaxuatban</td>
-                            <td>@item.phi</td>
-                        </tr>
-                    }
-                </tbody>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.tensach</td>
+                        <td>@item.masach</td>
+                        <td>@item.theloai.tentl</td>
+                        <td>@item.sochuong</td>
+                        <td>@item.tacgia.tentg</td>
+                        <td>@item.nhaxuatban.tennhaxuatban</td>
+                        <td>@item.phi</td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 </body>
