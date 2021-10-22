@@ -129,4 +129,6 @@ insert into sach values('S004','TL003','TG003','NXB002',N'Hoa vẫn nở mỗi n
 insert into sach values('S005','TL002','TG003','NXB001',N'Vạn sự tùy duyên',2017,30,0)
 insert into sach values('S006','TL004','TG002','NXB001',N'Đắc nhân tâm',2021,65,150000)
 
+drop database QLSACHONLINE
+
 
