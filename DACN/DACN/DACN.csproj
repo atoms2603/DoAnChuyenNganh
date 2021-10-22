@@ -238,6 +238,9 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\formQuanLySach.cshtml" />
+    <Content Include="Views\Home\formThemSach.cshtml" />
+    <Content Include="Views\Home\formXoaSach.cshtml" />
+    <Content Include="Views\Home\formQuyetDinhXoa.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
