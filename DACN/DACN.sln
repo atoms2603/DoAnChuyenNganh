@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DACN", "DACN\DACN.csproj", "{860D75C9-10F1-4E77-9CCD-D2E55A6E8089}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{860D75C9-10F1-4E77-9CCD-D2E55A6E8089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860D75C9-10F1-4E77-9CCD-D2E55A6E8089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860D75C9-10F1-4E77-9CCD-D2E55A6E8089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860D75C9-10F1-4E77-9CCD-D2E55A6E8089}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DCABA2FF-2404-4CA9-B0DA-B41E0B2BE620}
+	EndGlobalSection
+EndGlobal
