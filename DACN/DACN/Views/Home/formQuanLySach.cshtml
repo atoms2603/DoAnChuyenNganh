@@ -12,9 +12,10 @@
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <script src="~/Scripts/popper.min.js"></script>
-    <title>formQuanLySach</title>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>Quản lý sách</title>
 </head>
-<body>
+<body class="bg-secondary">
     <nav class="navbar navbar-expand-sm bg-info">
 
         <ul class="navbar-nav">
@@ -30,11 +31,21 @@
         </ul>
 
     </nav>
-    <div class="container"> 
+    <div class="container rounded bg-dark"> 
         <p>
-            <h3>Danh sách sách</h3>
+            <a href="@Url.Content("/Home/Index")" class="btn btn-primary">Trờ về</a>
+            <h3 class="text-light">Danh sách sách</h3>
         </p>
-        <table class="table-striped table-hover">
+        <div class="btn-group">
+            <a href="@Url.Content("/Home/formThemSach")" class="btn btn-outline-success">Thêm sách</a>
+            <a href="@Url.Content("/Home/formSuaSach")" class="btn btn-outline-success">Sửa sách</a>
+            <a href="@Url.Content("/Home/formXoaSach")" class="btn btn-outline-success">Xóa sách</a>
+            <form class="form-inline" action="#">
+                <input class="form-control mr-sm-2" type="text" placeholder="Nhập tên hoặc mã sách">
+                <button class="btn btn-success" type="submit">Tìm kiếm</button>
+            </form>
+        </div>
+        <table class="table-striped table-hover bg-warning">
             <thead>
                 <tr>
                     <th>Tên sách</th>
@@ -46,20 +57,20 @@
                     <th>Giá</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.tensach</td>
-                        <td>@item.masach</td>
-                        <td>@item.theloai.tentl</td>
-                        <td>@item.sochuong</td>
-                        <td>@item.tacgia.tentg</td>
-                        <td>@item.nhaxuatban.tennhaxuatban</td>
-                        <td>@item.phi</td>
-                    </tr>
-                }
-            </tbody>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.tensach</td>
+                            <td>@item.masach</td>
+                            <td>@item.theloai.tentl</td>
+                            <td>@item.sochuong</td>
+                            <td>@item.tacgia.tentg</td>
+                            <td>@item.nhaxuatban.tennhaxuatban</td>
+                            <td>@item.phi</td>
+                        </tr>
+                    }
+                </tbody>
         </table>
     </div>
 </body>

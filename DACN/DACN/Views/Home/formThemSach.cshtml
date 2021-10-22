@@ -1,0 +1,83 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>Thêm sách</title>
+</head>
+<body class="bg-secondary">
+    <div class="container bg-dark">
+        <p>
+            <a href="@Url.Content("/Home/formQuanLySach")" class="btn btn-primary">Trờ về</a>
+            <h3 class="text-light">Điền thông tin sách</h3>
+        </p>
+        <form action="@Url.Content("/Home/themSach/")" method="post">
+            <div class="form-group">
+                <label for="masach" class="text-light font-weight-bold">Mã sách:</label>
+                <input type="text" name="masach" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="tensach" class="text-light font-weight-bold">Tên sách:</label>
+                <input type="text" name="tensach" class="form-control" />
+            </div>
+            @{ 
+                List<DACN.Models.theloai> dsTheLoai =ViewBag.dsTheLoai as List<DACN.Models.theloai>;
+                List<DACN.Models.tacgia> dsTacGia = ViewBag.dsTacGia as List<DACN.Models.tacgia>;
+                List<DACN.Models.nhaxuatban> dsNXB = ViewBag.dsNhaXuatBan as List<DACN.Models.nhaxuatban>;
+            }
+            <div class="form-group">
+                <label for="maloai" class="text-light font-weight-bold">Mã loại:</label>
+                <select name="maloai" class="form-control">
+                    @foreach (var item in dsTheLoai)
+                    {
+                        <option value="@item.maloai">@item.maloai</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="matg" class="text-light font-weight-bold">Mã tác giả:</label>
+                <select name="matg" class="form-control">
+                    @foreach (var item in dsTacGia)
+                    {
+                        <option value="@item.matg">@item.matg</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="manhaxuatban" class="text-light font-weight-bold">Mã nhà xuất bản:</label>
+                <select name="manhaxuatban" class="form-control">
+                    @foreach (var item in dsNXB)
+                    {
+                        <option value="@item.manhaxuatban">@item.manhaxuatban</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="namxuatban" class="text-light font-weight-bold">Năm xuất bản:</label>
+                <input type="number" name="namxuatban" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="sochuong" class="text-light font-weight-bold">Số chương:</label>
+                <input type="number" name="sochuong" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="phi" class="text-light font-weight-bold">Giá:</label>
+                <input type="number" name="phi" class="form-control" />
+            </div>
+            <p>
+                <input type="submit" value="Thêm sách" class="btn btn-primary" />
+            </p>
+        </form>
+    </div>
+</body>
+</html>
