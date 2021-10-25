@@ -6,13 +6,13 @@ using System.Web.Mvc;
 
 namespace DACN.Controllers
 {
-    public class HomeController : Controller
+    //Quản lý các thông báo sẽ ở đây.
+    public class ThongBaoController : Controller
     {
-        // GET: Home
-        public ActionResult Index()
+        // GET: ThongBao
+        public ActionResult IndexThongBao()
         {
             return View();
         }
-        
     }
 }

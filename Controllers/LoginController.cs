@@ -6,13 +6,12 @@ using System.Web.Mvc;
 
 namespace DACN.Controllers
 {
-    public class HomeController : Controller
+    public class LoginController : Controller
     {
-        // GET: Home
-        public ActionResult Index()
+        // GET: Login
+        public ActionResult IndexLogin()
         {
             return View();
         }
-        
     }
 }

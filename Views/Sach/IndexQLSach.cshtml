@@ -1,0 +1,62 @@
+﻿@model IEnumerable<DACN.Models.sach>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <title>Quản lý sách</title>
+</head>
+<body class="bg-secondary">
+    <div class="container rounded bg-dark">
+        <p>
+            <a href="@Url.Content("/Home/Index")" class="btn btn-primary">Trờ về</a>
+            <h3 class="text-light">Danh sách sách</h3>
+        </p>
+        <div class="btn-group">
+            <a href="@Url.Content("/Sach/formThemSach")" class="btn btn-outline-success">Thêm sách</a>
+            <a href="@Url.Content("/Sach/formSuaSach")" class="btn btn-outline-success">Sửa sách</a>
+            <a href="@Url.Content("/Sach/formXoaSach")" class="btn btn-outline-success">Xóa sách</a>
+            <form class="form-inline" action="#">
+                <input class="form-control mr-sm-2" type="text" placeholder="Nhập tên hoặc mã sách">
+                <button class="btn btn-success" type="submit">Tìm kiếm</button>
+            </form>
+        </div>
+        <table class="table-striped table-hover bg-warning">
+            <thead>
+                <tr>
+                    <th>Tên sách</th>
+                    <th>Mã sách</th>
+                    <th>Thể loại</th>
+                    <th>Số chương</th>
+                    <th>Tác giả</th>
+                    <th>Nhà xuất bản</th>
+                    <th>Giá</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td><a href="@Url.Content("/Home/formChiTietSach")" class="text-decoration-none text-dark">@item.tensach</a></td>
+                        <td>@item.masach</td>
+                        <td>@item.theloai.tentl</td>
+                        <td>@item.sochuong</td>
+                        <td>@item.tacgia.tentg</td>
+                        <td>@item.nhaxuatban.tennhaxuatban</td>
+                        <td>@item.phi</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
