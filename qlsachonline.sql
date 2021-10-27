@@ -8,8 +8,9 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE tacgia(
-	[matg] [varchar](10) NOT NULL,
+	[matg] [varchar](20) NOT NULL,
 	[tentg] [nvarchar](50) NULL,
+	[ngaysinh] [datetime]null,
  CONSTRAINT [PK_tacgia] PRIMARY KEY CLUSTERED 
 (
 	[matg] ASC
@@ -25,6 +26,7 @@ GO
 CREATE TABLE theloai(
 	[maloai] [varchar](10) NOT NULL,
 	[tentl] [nvarchar](50) NULL,
+	[ghichu] [nvarchar](200)null,
  CONSTRAINT [PK_theloai] PRIMARY KEY CLUSTERED 
 (
 	[maloai] ASC
@@ -40,6 +42,7 @@ GO
 CREATE TABLE nhaxuatban(
 	[manhaxuatban] [varchar](10) NOT NULL,
 	[tennhaxuatban] [nvarchar](50) NULL,
+	[diachi] [nvarchar](50) null,
  CONSTRAINT [PK_nhaxuatban] PRIMARY KEY CLUSTERED 
 (
 	[manhaxuatban] ASC
@@ -74,7 +77,7 @@ GO
 CREATE TABLE sach(
 	[masach] [varchar](10) NOT NULL,
 	[maloai] [varchar](10) NOT NULL,
-	[matg] [varchar](10) NOT NULL,
+	[matg] [varchar](20) NOT NULL,
 	[manhaxuatban] [varchar](10) NOT NULL,
 	FOREIGN KEY (maloai) REFERENCES theloai(maloai),
 	FOREIGN KEY (matg) REFERENCES tacgia(matg),
@@ -107,6 +110,42 @@ CREATE TABLE giaodich(
  CONSTRAINT [PK_giaodich] PRIMARY KEY CLUSTERED 
 (
 	[magd] asc
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tacgia]    Script Date: 18/10/2021 2:00:00 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE sach_tacgia(
+	[masach] [varchar](10) NOT NULL,
+	[matg] [varchar](20) NOT NULL,
+	FOREIGN KEY (masach) REFERENCES sach(masach),
+	FOREIGN KEY (matg) REFERENCES tacgia(matg),
+ CONSTRAINT [PK_sach_tacgia] PRIMARY KEY CLUSTERED 
+(
+	[masach] asc,
+	[matg] asc
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[tacgia]    Script Date: 18/10/2021 2:00:00 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE sach_theloai(
+	[masach] [varchar](10) NOT NULL,
+	[maloai] [varchar](10) NOT NULL,
+	FOREIGN KEY (masach) REFERENCES sach(masach),
+	FOREIGN KEY (maloai) REFERENCES theloai(maloai),
+ CONSTRAINT [PK_sach_theloai] PRIMARY KEY CLUSTERED 
+(
+	[masach] asc,
+	[maloai] asc
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 
