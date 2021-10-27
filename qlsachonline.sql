@@ -76,11 +76,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE sach(
 	[masach] [varchar](10) NOT NULL,
-	[maloai] [varchar](10) NOT NULL,
-	[matg] [varchar](20) NOT NULL,
 	[manhaxuatban] [varchar](10) NOT NULL,
-	FOREIGN KEY (maloai) REFERENCES theloai(maloai),
-	FOREIGN KEY (matg) REFERENCES tacgia(matg),
 	FOREIGN KEY (manhaxuatban) REFERENCES nhaxuatban(manhaxuatban),
 	[tensach] [nvarchar](50) null,
 	[namxuatban] [int] null,
@@ -123,12 +119,7 @@ CREATE TABLE sach_tacgia(
 	[masach] [varchar](10) NOT NULL,
 	[matg] [varchar](20) NOT NULL,
 	FOREIGN KEY (masach) REFERENCES sach(masach),
-	FOREIGN KEY (matg) REFERENCES tacgia(matg),
- CONSTRAINT [PK_sach_tacgia] PRIMARY KEY CLUSTERED 
-(
-	[masach] asc,
-	[matg] asc
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+	FOREIGN KEY (matg) REFERENCES tacgia(matg)
 ) ON [PRIMARY]
 
 GO
@@ -142,31 +133,52 @@ CREATE TABLE sach_theloai(
 	[maloai] [varchar](10) NOT NULL,
 	FOREIGN KEY (masach) REFERENCES sach(masach),
 	FOREIGN KEY (maloai) REFERENCES theloai(maloai),
- CONSTRAINT [PK_sach_theloai] PRIMARY KEY CLUSTERED 
-(
-	[masach] asc,
-	[maloai] asc
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 
-insert into nhaxuatban values ('NXB001','Kim Dong')
-insert into nhaxuatban values ('NXB002','Nha xuat ban tre')
+insert into nhaxuatban values ('NXB001','Kim Dong',null)
+insert into nhaxuatban values ('NXB002','Nha xuat ban tre',null)
 
-insert into tacgia values ('TG001',N'Khải Đơn')
-insert into tacgia values ('TG002',N'Phạm Lữ Ân')
-insert into tacgia values ('TG003',N'Nguyễn Ngọc Thạch')
+insert into tacgia values ('TG001',N'Khải Đơn',16/02/1975)
+insert into tacgia values ('TG002',N'Phạm Lữ Ân',15/7/1988)
+insert into tacgia values ('TG003',N'Nguyễn Ngọc Thạch',12/8/1990)
 
-insert into theloai values ('TL001',N'Hành động')
-insert into theloai values ('TL002',N'Phiêu lưu')
-insert into theloai values ('TL003',N'Văn học')
-insert into theloai values ('TL004',N'Vũ trụ')
+insert into theloai values ('TL001',N'Hành động',null)
+insert into theloai values ('TL002',N'Phiêu lưu',null)
+insert into theloai values ('TL003',N'Văn học',null)
+insert into theloai values ('TL004',N'Vũ trụ',null)
 
-insert into sach values('S001','TL001','TG001','NXB001',N'Hoa rơi cửa phật',2015,10,0)
-insert into sach values('S002','TL001','TG002','NXB001',N'Cây cam ngọt của tôi',2018,20,0) 
-insert into sach values('S003','TL002','TG001','NXB002',N'Con đường tu tiên của tôi',2019,50,100000) 
-insert into sach values('S004','TL003','TG003','NXB002',N'Hoa vẫn nở mỗi ngày',2020,100,50000)
-insert into sach values('S005','TL002','TG003','NXB001',N'Vạn sự tùy duyên',2017,30,0)
-insert into sach values('S006','TL004','TG002','NXB001',N'Đắc nhân tâm',2021,65,150000)
+insert into sach values('S001','NXB001',N'Hoa rơi cửa phật',2015,10,0)
+insert into sach values('S002','NXB001',N'Cây cam ngọt của tôi',2018,20,0) 
+insert into sach values('S003','NXB002',N'Con đường tu tiên của tôi',2019,50,100000) 
+insert into sach values('S004','NXB002',N'Hoa vẫn nở mỗi ngày',2020,100,50000)
+insert into sach values('S005','NXB001',N'Vạn sự tùy duyên',2017,30,0)
+insert into sach values('S006','NXB001',N'Đắc nhân tâm',2021,65,150000)
+
+insert into sach_tacgia values('S001','TG001')
+insert into sach_tacgia values('S001','TG003')
+
+insert into sach_tacgia values('S002','TG001')
+insert into sach_tacgia values('S003','TG002')
+
+insert into sach_tacgia values('S004','TG002')
+insert into sach_tacgia values('S004','TG003')
+
+insert into sach_tacgia values('S005','TG001')
+insert into sach_tacgia values('S006','TG002')
+
+
+insert into sach_theloai values('S001','TL001')
+insert into sach_theloai values('S001','TL002')
+
+insert into sach_theloai values('S002','TL002')
+insert into sach_theloai values('S003','TL003')
+
+insert into sach_theloai values('S004','TL003')
+insert into sach_theloai values('S004','TL004')
+
+insert into sach_theloai values('S005','TL001')
+insert into sach_theloai values('S006','TL003')
+
 
 drop database QLSACHONLINE
 
