@@ -1,31 +1,13 @@
 Quản lý đọc sách online
 use case và class
 
-chức năng
-user guest:
--Đọc 
--tìm kiếm
-
-user thường:
--Đọc
--Tìm kiếm
--góp ý
--Báo lỗi
--có thể trả phí sách
-
-user admin:
-full option
-
-thuộc tính
 user:
 	-tài khoản:string
 	-mật khẩu:string
 	-sđt:string
 	-email:string
-giaodich:
-	-magd
-	-taikhoan
-	-masach
+	-trạng thái: boolean// (bit)
+	
 sách: 50	
 	- mã sách: string	
 	- mã loại: string
@@ -33,13 +15,26 @@ sách: 50
 	- nhà xuất bản: string
 	- mã tác giả: string
 	- tên sách: string
-	- phí : free , trả phí :boolean
+	- phí : free , trả phí : int
+	
 thể loại:10
 	-mã loại:string
 	-tên thể loại:string
+	-thể loại:
+	
 tác giả:
 	-mã tác giả:string
 	-tên tác giả:string
+	-ngày sinh:
+	-số lượng: int (số lượng sách đang có trong trang web)
+	-giới tính:
+	-quê quán:
+	-nghệ danh:
+	
 nhà sản xuất:
 	-mã nsx:string
 	-tên nsx:string
+	-địa chỉ: string
+
+giao dịch:
+	-
