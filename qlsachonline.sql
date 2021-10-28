@@ -152,6 +152,7 @@ CREATE TABLE luusach(
 	[id] int not null IDENTITY(1,1),
 	[masach] [varchar](10) NOT NULL,
 	[taikhoan] [varchar](50) NOT NULL,
+	[ngayluu] [datetime] null,
 	FOREIGN KEY (masach) REFERENCES sach(masach),
 	FOREIGN KEY (taikhoan) REFERENCES user_login(taikhoan),
 CONSTRAINT [PK_luusach] PRIMARY KEY CLUSTERED 
