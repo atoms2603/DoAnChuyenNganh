@@ -11,6 +11,9 @@ CREATE TABLE tacgia(
 	[matg] [varchar](20) NOT NULL,
 	[tentg] [nvarchar](50) NULL,
 	[ngaysinh] [datetime]null,
+	[quequan] [nvarchar](50)null,
+	[nghedanh] [nvarchar](20)null,
+	[gioitinh] [bit] null,
  CONSTRAINT [PK_tacgia] PRIMARY KEY CLUSTERED 
 (
 	[matg] ASC
@@ -116,10 +119,15 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE sach_tacgia(
-	[masach] [varchar](10) NOT NULL,
-	[matg] [varchar](20) NOT NULL,
+	[id] int not null IDENTITY(1,1),
+	[masach] [varchar](10) NOT NULL Unique,
+	[matg] [varchar](20) NOT NULL Unique,
 	FOREIGN KEY (masach) REFERENCES sach(masach),
-	FOREIGN KEY (matg) REFERENCES tacgia(matg)
+	FOREIGN KEY (matg) REFERENCES tacgia(matg),
+CONSTRAINT [PK_sach_tacgia] PRIMARY KEY CLUSTERED 
+(
+	[id] asc
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
@@ -129,10 +137,27 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE sach_theloai(
+	[id] int not null IDENTITY(1,1),
 	[masach] [varchar](10) NOT NULL,
 	[maloai] [varchar](10) NOT NULL,
 	FOREIGN KEY (masach) REFERENCES sach(masach),
 	FOREIGN KEY (maloai) REFERENCES theloai(maloai),
+CONSTRAINT [PK_sach_theloai] PRIMARY KEY CLUSTERED 
+(
+	[id] asc
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+
+CREATE TABLE luusach(
+	[id] int not null IDENTITY(1,1),
+	[masach] [varchar](10) NOT NULL,
+	[taikhoan] [varchar](50) NOT NULL,
+	FOREIGN KEY (masach) REFERENCES sach(masach),
+	FOREIGN KEY (taikhoan) REFERENCES user_login(taikhoan),
+CONSTRAINT [PK_luusach] PRIMARY KEY CLUSTERED 
+(
+	[id] asc
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 
 insert into nhaxuatban values ('NXB001','Kim Dong',null)
