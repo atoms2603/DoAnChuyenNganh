@@ -20,7 +20,6 @@ sách: 50
 thể loại:10
 	-mã loại:string
 	-tên thể loại:string
-	-thể loại:
 	
 tác giả:
 	-mã tác giả:string
