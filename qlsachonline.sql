@@ -84,7 +84,10 @@ CREATE TABLE sach(
 	[tensach] [nvarchar](50) null,
 	[namxuatban] [int] null,
 	[sochuong] [int] null,
-	[phi] [money] null
+	[hinhanh] [image] null,
+	[tomtat] [nvarchar] null,
+	[phi] [money] null,
+
 
  CONSTRAINT [PK_sach] PRIMARY KEY CLUSTERED 
 (
@@ -104,6 +107,7 @@ CREATE TABLE giaodich(
 	[magd] [varchar] (10)not null,
 	[taikhoan] [varchar](50) NOT NULL,
 	[masach] [varchar](10) NOT NULL,
+	[ngaygiaodich] [datetime] null,
 	FOREIGN KEY (taikhoan) REFERENCES user_login(taikhoan),
 	FOREIGN KEY (masach) REFERENCES sach(masach),
  CONSTRAINT [PK_giaodich] PRIMARY KEY CLUSTERED 
@@ -188,18 +192,18 @@ insert into theloai values ('TL010',N'Lịch sử',null)
 insert into theloai values ('TL011',N'Công nghệ',null)
 insert into theloai values ('TL012',N'Tôn giáo',null)
 
-insert into sach values('S001','NXB001',N'Hoa rơi cửa phật',2015,10,0)
-insert into sach values('S002','NXB001',N'Cây cam ngọt của tôi',2018,20,0) 
-insert into sach values('S003','NXB002',N'Con đường tu tiên của tôi',2019,50,100000) 
-insert into sach values('S004','NXB002',N'Hoa vẫn nở mỗi ngày',2020,100,50000)
-insert into sach values('S005','NXB001',N'Vạn sự tùy duyên',2017,30,0)
-insert into sach values('S006','NXB004',N'Đắc nhân tâm',2021,65,150000)
-insert into sach values('S007','NXB003',N'Muôn kiếp nhân sinh',2015,10,0)
-insert into sach values('S008','NXB005',N'Nóng giận là bản năng',2021,20,0) 
-insert into sach values('S009','NXB006',N'Nhà đầu tư thông minh',2019,50,100000) 
-insert into sach values('S010','NXB005',N'Hai số phận',2020,100,50000)
-insert into sach values('S011','NXB004',N'Hoàng tử bé',2019,30,0)
-insert into sach values('S012','NXB003',N'Tâm lý học',2021,10,150000)
+insert into sach values('S001','NXB001',N'Hoa rơi cửa phật',2015,10,null,null,0)
+insert into sach values('S002','NXB001',N'Cây cam ngọt của tôi',2018,20,null,null,0) 
+insert into sach values('S003','NXB002',N'Con đường tu tiên của tôi',2019,50,null,null,100000) 
+insert into sach values('S004','NXB002',N'Hoa vẫn nở mỗi ngày',2020,100,null,null,50000)
+insert into sach values('S005','NXB001',N'Vạn sự tùy duyên',2017,30,null,null,0)
+insert into sach values('S006','NXB004',N'Đắc nhân tâm',2021,65,null,null,150000)
+insert into sach values('S007','NXB003',N'Muôn kiếp nhân sinh',2015,10,null,null,0)
+insert into sach values('S008','NXB005',N'Nóng giận là bản năng',2021,20,null,null,0) 
+insert into sach values('S009','NXB006',N'Nhà đầu tư thông minh',2019,50,null,null,100000) 
+insert into sach values('S010','NXB005',N'Hai số phận',2020,100,null,null,50000)
+insert into sach values('S011','NXB004',N'Hoàng tử bé',2019,30,null,null,0)
+insert into sach values('S012','NXB003',N'Tâm lý học',2021,10,null,null,150000)
 
 insert into sach_tacgia values('S001','TG001')
 insert into sach_tacgia values('S001','TG003')
