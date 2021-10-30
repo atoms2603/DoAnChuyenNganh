@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý tác giả";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<h2>Quản lý tác giả</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <a href="@Url.Content("/TacGia/formThemTacGia")" class="btn btn-primary">Thêm tác giả</a>
+        </div>
+        <div class="col-md-8">
+            &nbsp;
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary">Sort</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            &nbsp;
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1 font-weight-bold">
+            MÃ TÁC GIẢ
+        </div>
+        <div class="col-md-3 font-weight-bold">
+            <a href="#">TÊN TÁC GIẢ</a>
+        </div>
+        <div class="col-md-1 font-weight-bold">
+            NGÀY SINH
+        </div>
+        <div class="col-md-1 font-weight-bold">
+            GIỚI TÍNH
+        </div>
+        <div class="col-md-2">
+            &nbsp;
+        </div>
+        <div class="col-md-1">
+            <a href="#">Chọn tất cả</a>
+        </div>
+        <div class="col-md-4">&nbsp;</div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            TG 1122
+        </div>
+        <div class="col-md-3">
+            <a href="@Url.Content("/TacGia/formChiTietTacGia")">Trần Bắc Huyền</a>
+        </div>
+        <div class="col-md-1">
+            20/10/2000
+        </div>
+        <div class="col-md-1">
+            Nam
+        </div>
+        <div class="col-md-1">
+            <a href="@Url.Content("/TacGia/formXoaTacGia")" class="btn btn-outline-primary">Xóa</a>
+        </div>
+        <div class="col-md-2">
+            <a href="@Url.Content("/TacGia/formChinhSuaTG")" class="btn btn-outline-primary">Chỉnh sửa</a>
+        </div>
+        <div class="col-md-1">
+            <input type="checkbox" name="name" value="" />
+        </div>
+        <div class="col-md-2">&nbsp;</div>
+    </div>
+
+</div>
