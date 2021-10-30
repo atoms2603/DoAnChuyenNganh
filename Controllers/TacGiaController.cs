@@ -8,26 +8,27 @@ namespace QLSachOnline.Controllers
 {
     public class TacGiaController : Controller
     {
+        private Models.QLySachOnline db = new Models.QLySachOnline();
         // GET: TacGia
         public ActionResult QuanLyTacGia()
         {
-            return View();
+            return View(db.tacgias);
         }
         public ActionResult formThemTacGia()
         {
             return View();
         }
-        public ActionResult formXoaTacGia()
+        public ActionResult formXoaTacGia(String id)
         {
-            return View();
+            return View(db.tacgias.Find(id));
         }
-        public ActionResult formChiTietTacGia()
+        public ActionResult formChiTietTacGia(String id)
         {
-            return View();
+            return View(db.tacgias.Find(id));
         }
-        public ActionResult formChinhSuaTG()
+        public ActionResult formChinhSuaTG(String id)
         {
-            return View();
+            return View(db.tacgias.Find(id));
         }
     }
 }

@@ -4,10 +4,12 @@ namespace QLSachOnline.Controllers
 {
     public class TheLoaiController : Controller
     {
+        private Models.QLySachOnline db = new Models.QLySachOnline();
         // GET: TheLoai
         public ActionResult QuanLyTheLoai()
         {
-            return View();
+            ViewBag.tl = db.theloais;
+            return View(db.theloais);
         }
         public ActionResult themTheLoai()
         {

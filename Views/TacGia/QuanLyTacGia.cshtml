@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<QLSachOnline.Models.tacgia>
 @{
     ViewBag.Title = "Quản lý tác giả";
     Layout = "~/Views/_LayoutPage1.cshtml";
@@ -27,7 +27,7 @@
             MÃ TÁC GIẢ
         </div>
         <div class="col-md-3 font-weight-bold">
-            <a href="#">TÊN TÁC GIẢ</a>
+            TÊN TÁC GIẢ
         </div>
         <div class="col-md-1 font-weight-bold">
             NGÀY SINH
@@ -44,29 +44,41 @@
         <div class="col-md-4">&nbsp;</div>
 
     </div>
-    <div class="row">
-        <div class="col-md-1">
-            TG 1122
+    @foreach(var item in Model) {
+        <div class="row">
+            <div class="col-md-1">
+                @item.matg
+            </div>
+            <div class="col-md-3">
+                <a href="@Url.Content("/TacGia/formChiTietTacGia/"+item.matg)">@item.tentg</a>
+            </div>
+            <div class="col-md-1">
+                @item.ngaysinh
+            </div>
+            
+            @if (item.gioitinh.Equals(true))
+            {
+                <div class="col-md-1">
+                    Nam
+                </div>
+            }
+            else
+            {
+                <div class="col-md-1">
+                    Nữ
+                </div>
+            }
+            
+            <div class="col-md-1">
+                <a href="@Url.Content("/TacGia/formXoaTacGia/"+item.matg)" class="btn btn-outline-primary">Xóa</a>
+            </div>
+            <div class="col-md-2">
+                <a href="@Url.Content("/TacGia/formChinhSuaTG/"+item.matg)" class="btn btn-outline-primary">Chỉnh sửa</a>
+            </div>
+            <div class="col-md-1">
+                <input type="checkbox" name="name" value="" />
+            </div>
+            <div class="col-md-2">&nbsp;</div>
         </div>
-        <div class="col-md-3">
-            <a href="@Url.Content("/TacGia/formChiTietTacGia")">Trần Bắc Huyền</a>
-        </div>
-        <div class="col-md-1">
-            20/10/2000
-        </div>
-        <div class="col-md-1">
-            Nam
-        </div>
-        <div class="col-md-1">
-            <a href="@Url.Content("/TacGia/formXoaTacGia")" class="btn btn-outline-primary">Xóa</a>
-        </div>
-        <div class="col-md-2">
-            <a href="@Url.Content("/TacGia/formChinhSuaTG")" class="btn btn-outline-primary">Chỉnh sửa</a>
-        </div>
-        <div class="col-md-1">
-            <input type="checkbox" name="name" value="" />
-        </div>
-        <div class="col-md-2">&nbsp;</div>
-    </div>
-
+    }
 </div>

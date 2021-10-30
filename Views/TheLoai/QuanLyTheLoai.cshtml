@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<QLSachOnline.Models.theloai>
 @{
     ViewBag.Title = "Quản lý thể loại";
     Layout = "~/Views/_LayoutPage1.cshtml";
@@ -78,119 +78,125 @@
     </div>
     <!-- Danh sách thể loại -->
     <div class="row">
-        <div class="col-md-2">&nbsp;</div>
-        <div class="col-md-2 font-weight-bold">Mã thể loại</div>
-        <div class="col-md-3 font-weight-bold">Tên thể loại</div>
-        <div class="col-md-5">&nbsp;</div>
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-1 font-weight-bold">Mã thể loại</div>
+        <div class="col-md-2 font-weight-bold">Tên thể loại</div>
+        <div class="col-md-4 font-weight-bold">Ghi chú</div>
+        <div class="col-md-4">&nbsp;</div>
     </div>
-    <div class="row">
-        <div class="col-md-2">&nbsp;</div>
-        <div class="col-md-2">TL001</div>
-        <div class="col-md-3">ABA S</div>
-        <div class="col-md-1">
+    @foreach (var item in Model)
+    {
+        <div class="row">
 
-            <!-- Model xóa thể loại -->
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modelXoa">Xóa</button>
-            <form action="@Url.Content("/TheLoai/xoaTheLoai")" method="post">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-1">@item.maloai</div>
+            <div class="col-md-2">@item.tentl</div>
+            <div class="col-md-4">@item.ghichu</div>
 
-                <div class="modal" id="modelXoa">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+            <div class="col-md-1">
+                <!-- Model xóa thể loại -->
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modelXoa">Xóa</button>
+                <form action="@Url.Content("/TheLoai/xoaTheLoai")" method="post">
 
-                            <div class="modal-header">
-                                <h4 class="modal-title">Xóa thể loại</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
+                    <div class="modal" id="modelXoa">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
 
-
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-3">Mã thể loại:</div>
-                                        <div class="col-md-3">MLA MLM!!</div>
-                                        <div class="col-md-6">&nbsp;</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">&nbsp;</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-3">Tên thể loại:</div>
-                                        <div class="col-md-3">AAASS</div>
-                                        <div class="col-md-6">&nbsp;</div>
-                                    </div>
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Xóa thể loại</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
-                            </div>
 
-                            <div class="modal-footer">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-1">&nbsp;</div>
-                                        <div class="col-md-2"><button type="submit" class="btn btn-primary">Xóa</button></div>
-                                        <div class="col-md-6">&nbsp;</div>
-                                        <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
-                                        <div class="col-md-1">&nbsp;</div>
+
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-3">Mã thể loại:</div>
+                                            <div class="col-md-3">MLA MLM!!</div>
+                                            <div class="col-md-6">&nbsp;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">&nbsp;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">Tên thể loại:</div>
+                                            <div class="col-md-3">AAASS</div>
+                                            <div class="col-md-6">&nbsp;</div>
+                                        </div>
                                     </div>
                                 </div>
 
-                            </div>
+                                <div class="modal-footer">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-1">&nbsp;</div>
+                                            <div class="col-md-2"><button type="submit" class="btn btn-primary">Xóa</button></div>
+                                            <div class="col-md-6">&nbsp;</div>
+                                            <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                            <div class="col-md-1">&nbsp;</div>
+                                        </div>
+                                    </div>
 
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
 
-        <div class="col-md-2">
+            <div class="col-md-1">
 
-            <!-- Model chỉnh sửa thể loại -->
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modelChinhSua">Chỉnh sửa</button>
-            <form action="@Url.Content("/TheLoai/xoaTheLoai")" method="post">
+                <!-- Model chỉnh sửa thể loại -->
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modelChinhSua">Chỉnh sửa</button>
+                <form action="@Url.Content("/TheLoai/xoaTheLoai")" method="post">
 
-                <div class="modal" id="modelChinhSua">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+                    <div class="modal" id="modelChinhSua">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
 
-                            <div class="modal-header">
-                                <h4 class="modal-title">Chỉnh sửa thể loại</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-
-
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-3">Mã thể loại:</div>
-                                        <div class="col-md-3">MLA MLM!!</div>
-                                        <div class="col-md-6">&nbsp;</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">&nbsp;</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-3">Tên thể loại:</div>
-                                        <div class="col-md-3"><input type="text" name="name" value="AAASS" /></div>
-                                        <div class="col-md-6">&nbsp;</div>
-                                    </div>
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Chỉnh sửa thể loại</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
                                 </div>
-                            </div>
 
-                            <div class="modal-footer">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-1">&nbsp;</div>
-                                        <div class="col-md-4"><button type="submit" class="btn btn-primary">Chỉnh sửa</button></div>
-                                        <div class="col-md-5">&nbsp;</div>
-                                        <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-3">Mã thể loại:</div>
+                                            <div class="col-md-3">MLA MLM!!</div>
+                                            <div class="col-md-6">&nbsp;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">&nbsp;</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">Tên thể loại:</div>
+                                            <div class="col-md-3"><input type="text" name="name" value="AAASS" /></div>
+                                            <div class="col-md-6">&nbsp;</div>
+                                        </div>
                                     </div>
                                 </div>
 
-                            </div>
+                                <div class="modal-footer">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-1">&nbsp;</div>
+                                            <div class="col-md-4"><button type="submit" class="btn btn-primary">Chỉnh sửa</button></div>
+                                            <div class="col-md-5">&nbsp;</div>
+                                            <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                        </div>
+                                    </div>
 
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
+            <div class="col-md-2">&nbsp;</div>
         </div>
-        <div class="col-md-2">&nbsp;</div>
+    }
     </div>
-</div>
