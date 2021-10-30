@@ -1,7 +1,9 @@
-﻿
+﻿@model QLSachOnline.Models.sach
 @{
     ViewBag.Title = "Thông tin chi tiết";
     Layout = "~/Views/_LayoutPage1.cshtml";
+    IEnumerable<QLSachOnline.Models.sach_theloai> dsS_TL = ViewBag.dsSach_TL as IEnumerable<QLSachOnline.Models.sach_theloai>;
+    IEnumerable<QLSachOnline.Models.sach_tacgia> dsS_TG = ViewBag.dsSach_TG as IEnumerable<QLSachOnline.Models.sach_tacgia>;
 }
 
 <p>
@@ -10,44 +12,56 @@
 <h2>Thông tin chi tiết</h2>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-1"><a href="@Url.Content("/Sach/indexSach")" class="btn btn-primary">Đọc</a></div>
+        <div class="col-md-1"><a href="@Url.Content("/Sach/indexSach/"+Model.masach)" class="btn btn-primary">Đọc</a></div>
         <div class="col-md-1">&nbsp;</div>
-        <div class="col-md-2"><a href="@Url.Content("/Sach/formChinhSua/")" class="btn btn-primary">Chỉnh sửa</a></div>
+        <div class="col-md-2"><a href="@Url.Content("/Sach/formChinhSua/"+Model.masach)" class="btn btn-primary">Chỉnh sửa</a></div>
         <div class="col-md-8">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Mã sách:</div>
-        <div class="col-md-4">ABC</div>
+        <div class="col-md-4">@Model.masach</div>
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Tên sách:</div>
-        <div class="col-md-4">AAAAA</div>
+        <div class="col-md-4">@Model.tensach</div>
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Thể loại:</div>
-        <div class="col-md-4">THEL A</div>
+        @foreach (var item in dsS_TL)
+        {
+            if (Model.masach.Equals(item.masach))
+            {
+                <div class="col-md-4">@item.theloai.tentl</div>
+            }
+        }
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Tác giả:</div>
-        <div class="col-md-4">DontKnow</div>
+        @foreach (var item in dsS_TG)
+        {
+            if (Model.masach.Equals(item.masach))
+            {
+                <div class="col-md-4">@item.tacgia.tentg</div>
+            }
+        }
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Nhà xuất bản:</div>
-        <div class="col-md-4">Tilee</div>
+        <div class="col-md-4">@Model.nhaxuatban.tennhaxuatban</div>
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Năm sản xuất:</div>
-        <div class="col-md-4">2000</div>
+        <div class="col-md-4">@Model.namxuatban</div>
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Giá:</div>
-        <div class="col-md-4">600000000$</div>
+        <div class="col-md-4">@Model.phi</div>
         <div class="col-md-6">&nbsp;</div>
     </div>
 </div>
