@@ -1,0 +1,102 @@
+﻿@model IEnumerable<QLSachOnline.Models.nhaxuatban>
+@{
+    ViewBag.Title = "Quản lý nhà xuất bản";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<h2>Quản lý nhà xuất bản</h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-2">
+            <!-- Model thêm nhà xuất bản -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modelThem">
+                Thêm nhà xuất bản
+            </button>
+            <form action="@Url.Content("/NhaXuatBan/themNhaXuatBan")" method="post">
+
+                <div class="modal" id="modelThem">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm nhà xuất bản</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-4">Mã nhà xuất bản:</div>
+                                        <div class="col-md-3"><input type="text" name="manhaxuatban" value=""/></div>
+                                        <div class="col-md-5">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">Tên nhà xuất bản:</div>
+                                        <div class="col-md-3"><input type="text" name="tennhaxuatban" value=""/></div>
+                                        <div class="col-md-5">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">Địa chỉ:</div>
+                                        <div class="col-md-3"><input type="text" name="diachi" value=""/></div>
+                                        <div class="col-md-5">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-1">&nbsp;</div>
+                                        <div class="col-md-2"><button type="submit" class="btn btn-primary">Thêm</button></div>
+                                        <div class="col-md-6">&nbsp;</div>
+                                        <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                        <div class="col-md-1">&nbsp;</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-md-8">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+    </div>
+    <!-- Danh sách nhà xuất bản -->
+    <div class="row">
+        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-2 font-weight-bold">Mã nhà xuất bản</div>
+        <div class="col-md-3 font-weight-bold">Tên nhà xuất bản</div>
+        <div class="col-md-2 font-weight-bold">Địa chỉ</div>
+        <div class="col-md-3">&nbsp;</div>
+    </div>
+    @foreach (var item in Model)
+    {
+    <div class="row">
+        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-2">@item.manhaxuatban</div>
+        <div class="col-md-3">@item.tennhaxuatban</div>
+        <div class="col-md-2">@item.diachi</div>
+        <div class="col-md-1">
+            <a href="@Url.Content("/NhaXuatBan/xoaNhaXuatBan/"+item.manhaxuatban)" class="btn btn-outline-primary">Xóa</a>
+        </div>
+        <div class="col-md-2">
+            <a href="@Url.Content("/NhaXuatBan/chinhSuaNhaXB/"+item.manhaxuatban)" class="btn btn-outline-primary" >Chỉnh sửa</a>
+        </div>
+    </div>
+    }
+</div>

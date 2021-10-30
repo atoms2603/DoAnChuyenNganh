@@ -1,7 +1,10 @@
-﻿
+﻿@model QLSachOnline.Models.sach
 @{
-    ViewBag.Title = "formChinhSua";
+    ViewBag.Title = "Chỉnh sửa sách";
     Layout = "~/Views/_LayoutPage1.cshtml";
+    IEnumerable<QLSachOnline.Models.sach_tacgia> dsS_TG = ViewBag.dsSach_TG as IEnumerable<QLSachOnline.Models.sach_tacgia>;
+    IEnumerable<QLSachOnline.Models.sach_theloai> dsS_TL = ViewBag.dsSach_TL as IEnumerable<QLSachOnline.Models.sach_theloai>;
+    IEnumerable<QLSachOnline.Models.nhaxuatban> dsNXB = ViewBag.dsNXB as IEnumerable<QLSachOnline.Models.nhaxuatban>;
 }
 
 
@@ -13,45 +16,60 @@
     <form action="/" method="post">
         <div class="row form-group">
             <div class="col-md-1 font-weight-bold">Mã sách:</div>
-            <div class="col-md-2"><input type="text" name="masach" value="" class="form-control" /></div>
+            <div class="col-md-2"><input type="text" name="masach" value="@Model.masach" readonly class="form-control" /></div>
             <div class="col-md-1 font-weight-bold">Tên sách:</div>
-            <div class="col-md-3"><input type="text" name="tensach" value="" class="form-control" /></div>
+            <div class="col-md-3"><input type="text" name="tensach" value="@Model.tensach" class="form-control" /></div>
             <div class="col-md-1 font-weight-bold">Năm sản xuất:</div>
-            <div class="col-md-2"><input type="number" name="namsanxuat" value="" class="form-control" /></div>
+            <div class="col-md-2"><input type="number" name="namsanxuat" value="@Model.namxuatban" class="form-control" /></div>
             <div class="col-md-2">&nbsp;</div>
         </div>
         <div class="row form-group">
             <div class="col-md-1 font-weight-bold">Thể loại:</div>
             <div class="col-md-2">
-                <select class="form-control">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
+                <select class="form-control" name="">
+                    @foreach (var item in dsS_TL)
+                    {
+                        if (Model.masach.Equals(item.masach))
+                        {
+                            <option value="@item.maloai" selected>@item.theloai.tentl</option>
+                        }
+                        <option value="@item.maloai">@item.theloai.tentl</option>
+                    }
                 </select>
             </div>
             <div class="col-md-1 font-weight-bold">Nhà xuất bản:</div>
             <div class="col-md-3">
-                <select class="form-control">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
+                <select class="form-control" name="">
+                    @foreach (var item in dsNXB)
+                    {
+                        if (Model.manhaxuatban.Equals(item.manhaxuatban))
+                        {
+                            <option value="@item.manhaxuatban" selected>@item.tennhaxuatban</option>
+                        }
+                        <option value="@item.manhaxuatban">@item.tennhaxuatban</option>
+                    }
                 </select>
             </div>
             <div class="col-md-1 font-weight-bold">Tác giả:</div>
             <div class="col-md-2">
-                <select class="form-control">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
+                <select class="form-control" name="">
+                    @foreach (var item in dsS_TG)
+                    {
+                        if (Model.masach.Equals(item.masach))
+                        {
+                            <option value="@item.matg" selected>@item.tacgia.tentg</option>
+                        }
+                        <option value="@item.matg">@item.tacgia.tentg</option>
+                    }
                 </select>
             </div>
             <div class="col-md-1 font-weight-bold">Giá:</div>
-            <div class="col-md-1"><input type="number" value="1000" class="form-control"/></div>
+            <div class="col-md-1"><input type="number" value="@Model.phi" class="form-control"/></div>
         </div>
         <div class="row">
             <div class="col-md-9">&nbsp;</div>
             <div class="col-md-1">
-                <input type="submit" name="name" value="Thêm" class="btn btn-primary form-control" />
+                <input type="submit" value="Thêm" class="btn btn-primary form-control" />
             </div>
             <div class="col-md-2">&nbsp;</div>
         </div>

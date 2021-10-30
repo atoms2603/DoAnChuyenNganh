@@ -1,0 +1,41 @@
+﻿@model QLSachOnline.Models.nhaxuatban
+@{
+    ViewBag.Title = "Xóa nhà xuất bản";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<p>
+    <a href="@Url.Content("/NhaXuatBan/QuanLyNhaXuatBan")" class="btn btn-primary">Trở về</a>
+</p>
+<h2>Xóa nhà xuất bản</h2>
+<hr />
+<h3>Thông tin nhà xuất</h3>
+<div class="container-fluid">
+    <form action="@Url.Content("/NhaXuatBan/xoaNXB/"+Model.manhaxuatban)" method="post">
+        <div class="row">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-3 font-weight-bold">Mã nhà xuất bản:</div>
+            <div class="col-md-3">@Model.manhaxuatban</div>
+            <div class="col-md-4">&nbsp;</div>
+        </div><hr />
+        <div class="row">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-3 font-weight-bold">Tên nhà xuất bản:</div>
+            <div class="col-md-3">@Model.tennhaxuatban</div>
+            <div class="col-md-4">&nbsp;</div>
+        </div><hr />
+        <div class="row">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-3 font-weight-bold">Địa chỉ:</div>
+            <div class="col-md-3">@Model.diachi</div>
+            <div class="col-md-4">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-1">
+                <input type="submit" value="Xóa" class="btn btn-outline-primary" />
+            </div>
+            <div class="col-md-9">&nbsp;</div>
+        </div>
+    </form>
+</div>

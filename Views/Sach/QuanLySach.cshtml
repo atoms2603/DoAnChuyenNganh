@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<QLSachOnline.Models.sach_theloai>
 @{
     ViewBag.Title = "Quản lý sách";
     Layout = "~/Views/_LayoutPage1.cshtml";
@@ -23,59 +23,50 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-1 font-weight-bold">
-            MÃ SÁCH
-        </div>
-        <div class="col-md-3 font-weight-bold">
-            <a href="#">TÊN SÁCH</a>
-        </div>
-        <div class="col-md-1 font-weight-bold">
-            THỂ LOẠI
-        </div>
-        <div class="col-md-1 font-weight-bold">
-            TÁC GIẢ
-        </div>
-        <div class="col-md-1 font-weight-bold">
-            Giá
-        </div>
-        <div class="col-md-1">
-            &nbsp;
-        </div>
-        <div class="col-md-1">
-            &nbsp;
-        </div>
-        <div class="col-md-1">
+        <div class="col-md-1 font-weight-bold">Mã </div>
+        <div class="col-md-2 font-weight-bold">Tên sách</div>
+        <div class="col-md-2 font-weight-bold">Thể loại</div>
+        <div class="col-md-2 font-weight-bold">Tác giả</div>
+        <div class="col-md-1 font-weight-bold">Giá</div>
+        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-2">
             <a href="#">Chọn tất cả</a>
         </div>
-        <div class="col-md-2">&nbsp;</div>
 
     </div>
+    @{ 
+        IEnumerable<QLSachOnline.Models.sach_tacgia> dsS_TG = ViewBag.dsSach_TG as IEnumerable<QLSachOnline.Models.sach_tacgia>;
+    }
+    @foreach (var item in Model)
+    { 
     <div class="row">
         <div class="col-md-1">
-            S1222
-        </div>
-        <div class="col-md-3">
-            <a href="@Url.Content("/Sach/formThongTinChiTiet")">The new House</a>
-        </div>
-        <div class="col-md-1">
-            Phiêu lưu
-        </div>
-        <div class="col-md-1">
-            ABC
-        </div>
-        <div class="col-md-1">
-            100000
-        </div>
-        <div class="col-md-1">
-            <a href="@Url.Content("/Sach/formXoaSach")" class="btn btn-outline-primary">Xóa</a>
+            @item.masach
         </div>
         <div class="col-md-2">
-            <a href="@Url.Content("/Sach/formChinhSua")" class="btn btn-outline-primary">Chỉnh sửa</a>
+            <a href="@Url.Content("/Sach/formThongTinChiTiet/"+item.masach)">@item.sach.tensach</a>
         </div>
+        <div class="col-md-2">@item.theloai.tentl</div>
+        @foreach (var item2 in dsS_TG)
+        {
+            if (item.masach.Equals(item2.masach))
+            {
+                <div class="col-md-2">
+                    @item2.tacgia.tentg
+                </div>
+                break;
+            }
+        }
         <div class="col-md-1">
-            <input type="checkbox" name="name" value="" />
+            @item.sach.phi
         </div>
-        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-2 btn-group">
+            <a href="@Url.Content("/Sach/formXoaSach/"+item.masach)" class="btn btn-outline-primary">Xóa</a>
+            <a href="@Url.Content("/Sach/formChinhSua/"+item.masach)" class="btn btn-outline-primary">Chỉnh sửa</a>
+        </div>
+        <div class="col-md-2">
+            <input type="checkbox" name="name" value=""  class="form-check"/>
+        </div>
     </div>
-
+    }
 </div>
