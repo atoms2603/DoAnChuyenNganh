@@ -27,25 +27,28 @@ namespace QLSachOnline.Controllers
 
         public ActionResult formThemSach()
         {
-            ViewBag.dsSach_TG = db.sach_tacgia;
+            ViewBag.dsTacGia = db.tacgias;
             ViewBag.dsNXB = db.nhaxuatbans;
-            return View(db.sach_theloai);
+            return View(db.theloais);
         }
         [HttpPost]
         public ActionResult themSach()
         {
             if (ModelState.IsValid)
             {
+                string[] dsID_TL = Request.Form.GetValues("maloai");
+                string[] dsID_TG = Request.Form.GetValues("matg");
+
                 string maSach = Request["masach"].ToString();
                 string tenSach = Request["tensach"].ToString();
                 int namxb = System.Convert.ToInt32(Request["namxuatban"].ToString());
-                string maLoai = Request["maloai"].ToString();
+                
                 string maNXB = Request["manhaxuatban"].ToString();
-                string maTacGia = Request["matg"].ToString();
+                
                 decimal gia = System.Convert.ToDecimal(Request["phi"].ToString());
 
-                QLSachOnline.Models.sach_theloai sach_Theloai = new Models.sach_theloai();
-                QLSachOnline.Models.sach_tacgia sach_Tacgia = new Models.sach_tacgia();
+                
+                
                 QLSachOnline.Models.sach sach = new Models.sach();
 
                 sach.masach = maSach;
@@ -54,15 +57,25 @@ namespace QLSachOnline.Controllers
                 sach.phi = gia;
                 sach.manhaxuatban = maNXB;
 
-                sach_Theloai.maloai = maLoai;
-                sach_Theloai.masach = maSach;
 
-                sach_Tacgia.masach = maSach;
-                sach_Tacgia.matg = maTacGia;
+
+                foreach (var item in dsID_TL)
+                {
+                    QLSachOnline.Models.sach_theloai sach_Theloai = new Models.sach_theloai();
+                    sach_Theloai.maloai= item;
+                    sach_Theloai.masach = maSach;
+                    db.sach_theloai.Add(sach_Theloai);
+                }
+                foreach (var item in dsID_TG)
+                {
+                    QLSachOnline.Models.sach_tacgia sach_Tacgia = new Models.sach_tacgia();
+                    sach_Tacgia.matg= item;
+                    sach_Tacgia.masach = maSach;
+                    db.sach_tacgia.Add(sach_Tacgia);
+                }
 
                 db.saches.Add(sach);
-                db.sach_theloai.Add(sach_Theloai);
-                db.sach_tacgia.Add(sach_Tacgia);
+
 
                 db.SaveChanges();
             }
