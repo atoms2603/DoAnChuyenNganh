@@ -29,13 +29,24 @@
             <div class="col-md-3 font-weight-bold">Địa chỉ:</div>
             <div class="col-md-3">@Model.diachi</div>
             <div class="col-md-4">&nbsp;</div>
-        </div>
+        </div> <hr />
         <div class="row">
             <div class="col-md-2">&nbsp;</div>
-            <div class="col-md-1">
-                <input type="submit" value="Xóa" class="btn btn-outline-primary" />
-            </div>
-            <div class="col-md-9">&nbsp;</div>
+            @if (ViewBag.flagXoa != null)
+                {
+                    <div class="col-md-3">
+                        <input type="submit" value="Xóa" class="btn btn-outline-primary" />
+                    </div>
+                }
+                else
+                {
+        <div class="col-md-3">
+            <h3 class="text-danger">Không thể xóa</h3>
+            <input type="submit" value="Xóa" disable class="btn btn-outline-primary" />
+        </div>
+                }
+
+            <div class="col-md-7">&nbsp;</div>
         </div>
     </form>
 </div>

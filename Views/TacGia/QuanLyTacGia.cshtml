@@ -23,52 +23,41 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-1 font-weight-bold">
-            MÃ TÁC GIẢ
+        <div class="col-md-2 font-weight-bold">
+            Mã tác giả
         </div>
         <div class="col-md-3 font-weight-bold">
-            TÊN TÁC GIẢ
+            Tên tác giả
+        </div>
+        <div class="col-md-2 font-weight-bold">
+            Ngày sinh
         </div>
         <div class="col-md-1 font-weight-bold">
-            NGÀY SINH
-        </div>
-        <div class="col-md-1 font-weight-bold">
-            GIỚI TÍNH
+            Giới tính
         </div>
         <div class="col-md-2">
             &nbsp;
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
             <a href="#">Chọn tất cả</a>
         </div>
-        <div class="col-md-4">&nbsp;</div>
 
     </div>
-    @foreach(var item in Model) {
+    @foreach (var item in Model) {
         <div class="row">
-            <div class="col-md-1">
+            <div class="col-md-2">
                 @item.matg
             </div>
             <div class="col-md-3">
-                <a href="@Url.Content("/TacGia/formChiTietTacGia/"+item.matg)">@item.tentg</a>
+                <a href="@Url.Content("/TacGia/formChiTietTacGia/" + item.matg)">@item.tentg</a>
             </div>
-            <div class="col-md-1">
-                @item.ngaysinh
+            <div class="col-md-2">
+                @item.ngaysinh.Value.ToShortDateString()
             </div>
             
-            @if (item.gioitinh.Equals(true))
-            {
-                <div class="col-md-1">
-                    Nam
-                </div>
-            }
-            else
-            {
-                <div class="col-md-1">
-                    Nữ
-                </div>
-            }
-            
+            <div class="col-md-1">@(item.gioitinh.Equals(true) ? "Nam" : "Nữ") </div>
+
+
             <div class="col-md-1">
                 <a href="@Url.Content("/TacGia/formXoaTacGia/"+item.matg)" class="btn btn-outline-primary">Xóa</a>
             </div>

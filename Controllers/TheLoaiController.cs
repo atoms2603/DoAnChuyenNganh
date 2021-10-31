@@ -11,9 +11,42 @@ namespace QLSachOnline.Controllers
             ViewBag.tl = db.theloais;
             return View(db.theloais);
         }
-        public ActionResult themTheLoai()
+
+        public ActionResult thaoTacTheLoai(string id)
         {
-            return View();
+            if (db.theloais.Find(id).sach_theloai.Count == 0)
+                ViewBag.flagXoa = true;
+            return View(db.theloais.Find(id));
+        }
+        public ActionResult formSuaTheLoai(string id)
+        {
+            return View(db.theloais.Find(id));
+        }
+        [HttpPost]
+        public ActionResult suaTheLoai(string id)
+        {
+            QLSachOnline.Models.theloai tl = db.theloais.Find(id);
+            tl.tentl = Request["tentl"].ToString();
+            tl.ghichu = Request["ghichu"].ToString();
+            db.SaveChanges();
+            return RedirectToAction("QuanLyTheLoai");
+        }
+        public ActionResult xoaTheLoai(string id)
+        {
+            db.theloais.Remove(db.theloais.Find(id));
+            db.SaveChanges();
+            return RedirectToAction("QuanLyTheLoai");   
+        }
+
+        [HttpPost]
+        public ActionResult themTheLoai(QLSachOnline.Models.theloai tl)
+        {
+            if (ModelState.IsValid)
+            {
+                db.theloais.Add(tl);
+                db.SaveChanges();
+            }
+            return RedirectToAction("QuanLyTheLoai");
         }
     }
 }

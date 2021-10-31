@@ -26,6 +26,8 @@ namespace QLSachOnline.Controllers
         }
         public ActionResult xoaNhaXuatBan(string id)
         {
+            if (db.nhaxuatbans.Find(id).saches.Count == 0)
+                ViewBag.flagXoa = true;
             return View(db.nhaxuatbans.Find(id));
         }
 
