@@ -1,4 +1,4 @@
-﻿
+﻿@model QLSachOnline.Models.tacgia
 @{
     ViewBag.Title = "Chi tiết tác giả";
     Layout = "~/Views/_LayoutPage1.cshtml";
@@ -12,25 +12,32 @@
     <div class="row">
         <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2 font-weight-bold">Mã tác giả:</div>
-        <div class="col-md-2">ABC ABC</div>
+        <div class="col-md-2">@Model.matg</div>
         <div class="col-md-2 font-weight-bold">Tên tác giả:</div>
-        <div class="col-md-3">AAAAA</div>
+        <div class="col-md-3">@Model.tentg</div>
         <div class="col-md-2">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2 font-weight-bold">Ngày sinh:</div>
-        <div class="col-md-2">20/10/2000</div>
+        <div class="col-md-2">@Model.ngaysinh</div>
         <div class="col-md-2 font-weight-bold">Giới tính:</div>
-        <div class="col-md-3">Nam</div>
+        @if (Model.gioitinh.Equals(true))
+        {
+            <div class="col-md-3">Nam</div>
+        }
+        else
+        {
+            <div class="col-md-3">Nữ</div>
+        }
         <div class="col-md-2">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2 font-weight-bold">Quê quán:</div>
-        <div class="col-md-2">Tiên giới</div>
+        <div class="col-md-2">@Model.quequan</div>
         <div class="col-md-2 font-weight-bold">Nghệ danh:</div>
-        <div class="col-md-2">Tiên tôn</div>
+        <div class="col-md-2">@Model.nghedanh</div>
         <div class="col-md-3">&nbsp;</div>
     </div>
     <div class="row">
@@ -41,7 +48,7 @@
     </div>
     <div class="row">
         <div class="col-md-1">&nbsp;</div>
-        <div class="col-md-2"><a href="@Url.Content("/TacGia/formChinhSuaTG")" class="btn btn-outline-primary">Chỉnh sửa</a></div>
+        <div class="col-md-2"><a href="@Url.Content("/TacGia/formChinhSuaTG/"+Model.matg)" class="btn btn-outline-primary">Chỉnh sửa</a></div>
         <div class="col-md-9">&nbsp;</div>
     </div>
 </div>

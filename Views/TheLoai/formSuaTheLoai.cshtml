@@ -1,0 +1,42 @@
+﻿@model QLSachOnline.Models.theloai
+@{
+    ViewBag.Title = "Sửa thể loại";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<h2>Thông tin thể loại</h2>
+<div class="container-fluid">
+    <form action="@Url.Content("/TheLoai/suaTheLoai/"+Model.maloai)" method="post">
+        <div class="row form-group">
+            <div class="col-md-3">Mã thể loại:</div>
+            <div class="col-md-3"><input type="text" name="maloai" value="@Model.maloai" readonly class="form-control"/></div>
+            <div class="col-md-6">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">&nbsp;</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-3">Tên thể loại:</div>
+            <div class="col-md-3"><input type="text" name="tentl" value="@Model.tentl" class="form-control"/></div>
+            <div class="col-md-6">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">&nbsp;</div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-3">Ghi chú:</div>
+            <div class="col-md-3"><textarea name="ghichu" class="form-control">@Model.ghichu</textarea></div>
+            <div class="col-md-6">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <input type="submit" value="Chỉnh sửa"  class="btn btn-outline-primary"/>
+            </div>
+            <div class="col-md-10">&nbsp;</div>
+        </div>
+    </form>
+</div>
+

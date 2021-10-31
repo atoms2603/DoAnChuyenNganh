@@ -1,4 +1,4 @@
-﻿
+﻿@model QLSachOnline.Models.tacgia
 @{
     ViewBag.Title = "Chỉnh sửa tác gỉả";
     Layout = "~/Views/_LayoutPage1.cshtml";
@@ -13,28 +13,39 @@
         <div class="row form-group">
             <div class="col-md-1">&nbsp;</div>
             <div class="col-md-2">Mã tác giả:</div>
-            <div class="col-md-2"><input type="text" name="name" value="ABC ABC" class="form-control" readonly/></div>
+            <div class="col-md-2"><input type="text" name="matg" value="@Model.matg" class="form-control" readonly/></div>
             <div class="col-md-2">Tên tác giả:</div>
-            <div class="col-md-3"><input type="text" name="name" value="AAAAA" class="form-control" /></div>
+            <div class="col-md-3"><input type="text" name="tentg" value="@Model.tentg" class="form-control" /></div>
             <div class="col-md-2">&nbsp;</div>
         </div>
         <div class="row form-group">
             <div class="col-md-1">&nbsp;</div>
             <div class="col-md-2">Ngày sinh:</div>
-            <div class="col-md-2"><input type="date" name="name" value="" class="form-control" /></div>
+            <div class="col-md-2"><input type="date" name="ngaysinh" value="@Model.ngaysinh" class="form-control" /></div>
             <div class="col-md-2">Giới tính:</div>
-            <div class="col-md-3">
-                <input type="radio" name="name" value="Nam" checked />Nam
-                <input type="radio" name="name" value="Nữ" />Nữ
-            </div>
+            @if (Model.gioitinh.Equals(true))
+            {
+                <div class="col-md-3">
+                    <input type="radio" name="name" value="Nam" checked />Nam
+                    <input type="radio" name="name" value="Nữ" />Nữ
+                </div>
+            }
+            else
+            {
+                <div class="col-md-3">
+                    <input type="radio" name="name" value="Nam"  />Nam
+                    <input type="radio" name="name" value="Nữ" checked/>Nữ
+                </div>
+            }
+
             <div class="col-md-2">&nbsp;</div>
         </div>
         <div class="row form-group">
             <div class="col-md-1">&nbsp;</div>
             <div class="col-md-2">Quê quán:</div>
-            <div class="col-md-2"><input type="text" name="name" value="Tiên giới" class="form-control" /></div>
+            <div class="col-md-2"><input type="text" name="quequan" value="@Model.quequan" class="form-control" /></div>
             <div class="col-md-2">Nghệ danh:</div>
-            <div class="col-md-2"><input type="text" name="name" value="Tiên tôn" class="form-control" /></div>
+            <div class="col-md-2"><input type="text" name="nghedanh" value="@Model.nghedanh" class="form-control" /></div>
             <div class="col-md-3">&nbsp;</div>
         </div>
         <div class="row">

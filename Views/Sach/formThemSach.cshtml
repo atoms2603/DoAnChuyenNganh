@@ -14,17 +14,18 @@
     <form action="@Url.Content("/Sach/themSach")" method="post">
         <div class="row form-group">
             <div class="col-md-1 font-weight-bold">Mã sách:</div>
-            <div class="col-md-2"><input type="text" name="masach" value="" class="form-control"/></div>
+            <div class="col-md-2"><input type="text" name="masach" value="" class="form-control" /></div>
             <div class="col-md-1 font-weight-bold">Tên sách:</div>
-            <div class="col-md-3"><input type="text" name="tensach" value="" class="form-control"/></div>
+            <div class="col-md-3"><input type="text" name="tensach" value="" class="form-control" /></div>
             <div class="col-md-1 font-weight-bold">Năm sản xuất:</div>
-            <div class="col-md-2"><input type="number" name="namsanxuat" value="" class="form-control"/></div>
+            <div class="col-md-2"><input type="number" name="namxuatban" value="" class="form-control" /></div>
             <div class="col-md-2">&nbsp;</div>
         </div>
+
         <div class="row form-group">
             <div class="col-md-1 font-weight-bold">Thể loại:</div>
             <div class="col-md-2">
-                <select class="form-control" name="">
+                <select class="form-control">
                     @foreach (var item in Model)
                     {
                         <option value="@item.maloai">@item.theloai.tentl</option>
@@ -33,7 +34,7 @@
             </div>
             <div class="col-md-1 font-weight-bold">Nhà xuất bản:</div>
             <div class="col-md-3">
-                <select class="form-control" name="">
+                <select class="form-control" name="manhaxuatban">
                     @foreach (var item in dsNXB)
                     {
                         <option value="@item.manhaxuatban">@item.tennhaxuatban</option>
@@ -42,15 +43,20 @@
             </div>
             <div class="col-md-1 font-weight-bold">Tác giả:</div>
             <div class="col-md-2">
-                <select class="form-control" name="">
+                <select class="form-control" name="matg">
                     @foreach (var item in dsS_TG)
                     {
                         <option value="@item.matg">@item.tacgia.tentg</option>
                     }
                 </select>
             </div>
+            <div class="col-md-2">&nbsp;</div>
+
+        </div>
+        <div class="row">
             <div class="col-md-1 font-weight-bold">Giá:</div>
-            <div class="col-md-1"><input type="number" name="phi" class="form-control" /></div>
+            <div class="col-md-3"><input type="number" name="phi" class="form-control" /></div>
+            <div class="col-md-8">&nbsp;</div>
         </div>
         <div class="row">
             <div class="col-md-11">&nbsp;</div>

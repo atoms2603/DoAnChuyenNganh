@@ -1,4 +1,4 @@
-﻿
+﻿@model QLSachOnline.Models.tacgia
 @{
     ViewBag.Title = "Xóa tác giả";
     Layout = "~/Views/_LayoutPage1.cshtml";
@@ -9,29 +9,42 @@
 </p>
 <h2>Xóa tác giả</h2>
 <div class="container-fluid">
-    <form action="@Url.Content("/TacGia/xoaTacGia/")" method="post">
+    <form action="@Url.Content("/TacGia/xoaTacGia/"+Model.matg)" method="post">
         <div class="row form-group">
             <div class="col-md-1">&nbsp;</div>
             <div class="col-md-2 font-weight-bold">Mã tác giả:</div>
-            <div class="col-md-2">ABC ABC</div>
+            <div class="col-md-2">@Model.matg</div>
             <div class="col-md-2 font-weight-bold">Tên tác giả:</div>
-            <div class="col-md-3">AAAAA</div>
+            <div class="col-md-3">@Model.tentg</div>
             <div class="col-md-2">&nbsp;</div>
         </div>
         <div class="row form-group">
             <div class="col-md-1">&nbsp;</div>
             <div class="col-md-2 font-weight-bold">Ngày sinh:</div>
-            <div class="col-md-2">20/10/2000</div>
+            <div class="col-md-2">@Model.ngaysinh</div>
             <div class="col-md-2 font-weight-bold">Giới tính:</div>
-            <div class="col-md-3">Nam</div>
+            <div class="col-md-3">@(Model.gioitinh.Equals(true)?"Nam":"Nữ")</div>
             <div class="col-md-2">&nbsp;</div>
         </div>
         <div class="row">
             <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-2">
-                <input type="submit" value="Xóa" class="btn btn-primary" />
-            </div>
-            <div class="col-md-9">&nbsp;</div>
+            @{
+                if (ViewBag.flagXoa != null)
+                {
+                    <div class="col-md-3">
+                        <input type="submit" value="Xóa" class="btn btn-primary" />
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-3">
+                        <h3 class="text-danger">Không thể xóa </h3><br /> <hr />
+                        <input type="submit" value="Xóa" disabled class="btn btn-primary" />
+                    </div>
+                }
+            }
+
+            <div class="col-md-8">&nbsp;</div>
         </div>
     </form>
 </div>
