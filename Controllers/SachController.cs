@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using System.Linq;
+
 
 namespace QLSachOnline.Controllers
 {
@@ -8,20 +10,16 @@ namespace QLSachOnline.Controllers
         // GET: Sach
         public ActionResult QuanLySach()
         {
-            ViewBag.dsSach_TG = db.sach_tacgia;
-            ViewBag.dsSach_TL = db.sach_theloai;
+            ViewBag.dsTG = db.tacgias;
+            ViewBag.dsTL = db.theloais;
             return View(db.saches);
         }
         public ActionResult formThongTinChiTiet(string id)
         {
-            ViewBag.dsSach_TL = db.sach_theloai;
-            ViewBag.dsSach_TG = db.sach_tacgia;
             return View(db.saches.Find(id));
         }
         public ActionResult indexSach(string id)
         {
-            ViewBag.dsSach_TL = db.sach_theloai;
-            ViewBag.dsSach_TG = db.sach_tacgia;
             return View(db.saches.Find(id));
         }
 
@@ -58,20 +56,24 @@ namespace QLSachOnline.Controllers
                 sach.manhaxuatban = maNXB;
 
 
-
+                
                 foreach (var item in dsID_TL)
                 {
-                    QLSachOnline.Models.sach_theloai sach_Theloai = new Models.sach_theloai();
-                    sach_Theloai.maloai= item;
-                    sach_Theloai.masach = maSach;
-                    db.sach_theloai.Add(sach_Theloai);
+                    foreach (var item2 in db.theloais)
+                    {
+                        if (item.Equals(item2.maloai))
+                            sach.theloais.Add(item2);
+                    }
                 }
+               
+                    
                 foreach (var item in dsID_TG)
                 {
-                    QLSachOnline.Models.sach_tacgia sach_Tacgia = new Models.sach_tacgia();
-                    sach_Tacgia.matg= item;
-                    sach_Tacgia.masach = maSach;
-                    db.sach_tacgia.Add(sach_Tacgia);
+                    foreach (var item2 in db.tacgias)
+                    {
+                        if (item.Equals(item2.matg))
+                            sach.tacgias.Add(item2);
+                    }
                 }
 
                 db.saches.Add(sach);
@@ -83,16 +85,56 @@ namespace QLSachOnline.Controllers
         }
         public ActionResult formChinhSua(string id)
         {
-            ViewBag.dsSach_TG = db.sach_tacgia;
+            ViewBag.dsTG = db.tacgias;
+            ViewBag.dsTL = db.theloais;
             ViewBag.dsNXB = db.nhaxuatbans;
-            ViewBag.dsSach_TL = db.sach_theloai;
             return View(db.saches.Find(id));
+        }
+        [HttpPost]
+        public ActionResult ChinhSuaSach(Models.sach sach)
+        {
+            if (ModelState.IsValid)
+            {
+                Models.sach sachsua = db.saches.Find(sach.masach);
+
+                sachsua.tensach = sach.tensach;
+                sachsua.namxuatban = sach.namxuatban;
+                sachsua.phi = sach.phi;
+                sachsua.manhaxuatban = sach.manhaxuatban;
+                sachsua.theloais = sach.theloais;
+                sachsua.tacgias = sach.tacgias;
+                sachsua.tomtat = sach.tomtat;
+                sachsua.giaodiches = sach.giaodiches;
+                sachsua.hinhanh = sach.hinhanh;
+                sachsua.chuongs = sach.chuongs;
+                sachsua.luusaches = sach.luusaches;
+
+                db.SaveChanges();
+            }
+            return RedirectToAction("QuanLySach");
         }
         public ActionResult formXoaSach(string id)
         {
-            ViewBag.dsSach_TL = db.sach_theloai;
-            ViewBag.dsSach_TG = db.sach_tacgia;
+            ViewBag.dsTG = db.tacgias;
+            ViewBag.dsTL = db.theloais;
+            Models.sach x = db.saches.Find(id);
+            if (x != null)
+            {
+                int count = db.luusaches.Where(t => t.masach == id).ToList().Count;
+                if (count <= 0) ViewBag.flagXoa = true;
+                else ViewBag.flagXoa = false;
+                return View(x);
+            }
             return View(db.saches.Find(id));
+        }
+        public ActionResult xoaSach(string id)
+        {
+            Models.sach sach = db.saches.Find(id);
+            sach.tacgias.Clear();
+            sach.theloais.Clear();
+            db.saches.Remove(sach);
+            db.SaveChanges();
+            return RedirectToAction("QuanLySach");
         }
     }
 }

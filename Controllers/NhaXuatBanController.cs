@@ -42,10 +42,6 @@ namespace QLSachOnline.Controllers
             }
             return RedirectToAction("QuanLyNhaXuatBan");
         }
-        public ActionResult chinhSuaNhaXB(string id)
-        {
-            return View(db.nhaxuatbans.Find(id));
-        }
         [HttpPost]
         public ActionResult chinhSuaNXB(string id)
         {

@@ -4,21 +4,21 @@
     Layout = "~/Views/_LayoutPage1.cshtml";
 }
 <div class="container-fluid">
-    @{ int dem = 0;
-        foreach (var item in Model)
-        {
-            <span id="FrameProduct">
-                @item.tensach
-            </span>
-            
+    <ul class="nav nav-tabs justify-content-center">
 
-            dem++;
-            if (dem == 3)
+        @{
+            foreach (var item in Model)
             {
-                <br />
-                dem = 0;
+                <li class="border w-25" style="padding:20px;margin:20px">
+                    <a href="@Url.Content("/Sach/indexSach/"+item.masach)"><img src="@Url.Content("/Images/Images_SP/Pro1.jpg")" class="img-fluid h-75 w-100" /></a>
+                    <span class="font-weight-bold">Tên sách:</span>@item.tensach <br />
+                    <span class="font-weight-bold">Thể loại:</span>
+                    @foreach (var item2 in item.theloais)
+                    {
+                        <span>@item2.tentl &nbsp;</span>
+                    }
+                </li>
             }
         }
-
-    }
+    </ul>
 </div>

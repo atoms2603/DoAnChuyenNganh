@@ -3,10 +3,7 @@
     ViewBag.Title = "Tên sách";
     Layout = "~/Views/_LayoutPage1.cshtml";
 }
-@{
-    IEnumerable<QLSachOnline.Models.sach_theloai> dsS_TL = ViewBag.dsSach_TL as IEnumerable<QLSachOnline.Models.sach_theloai>;
-    IEnumerable<QLSachOnline.Models.sach_tacgia> dsS_TG = ViewBag.dsSach_TG as IEnumerable<QLSachOnline.Models.sach_tacgia>;
-}
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-1">&nbsp;</div>
@@ -21,27 +18,22 @@
                     </div>
                     <div class="row">
                         <div class="col-md-2 font-weight-bold">Thể loại:</div>
-                        @foreach (var item in dsS_TL)
-                        {
-                            if (Model.masach.Equals(item.masach))
+                        <div class="col-md-8">
+                            @foreach (var item in Model.theloais)
                             {
-                                <div class="col-md-8">@item.theloai.tentl</div>
-                                break;
+                                <span>@item.tentl</span>
                             }
-                        }
-
+                        </div>
                         <div class="col-md-2">&nbsp;</div>
                     </div>
                     <div class="row">
                         <div class="col-md-2 font-weight-bold">Tác gỉả:</div>
-                        @foreach (var item in dsS_TG)
-                        {
-                            if (Model.masach.Equals(item.masach))
+                        <div class="col-md-8">
+                            @foreach (var item in Model.tacgias)
                             {
-                                <div class="col-md-8">@item.tacgia.tentg</div>
-                                break;
+                                <span>@item.tentg</span>
                             }
-                        }
+                        </div>
                         <div class="col-md-2">&nbsp;</div>
                     </div>
                     <div class="row">
@@ -83,15 +75,13 @@
                 <div class="col-md-2 font-weight-bold">Chương:</div>
                 <div class="col-md-10">&nbsp;</div>
             </div>
-            <div class="row">
-                <div class="col-md-2"><a href="#">Chương 1</a></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"><a href="#">Chương 2</a></div>
-            </div>
-            <div class="row">
-                <div class="col-md-2"><a href="#">Chương 3</a></div>
-            </div>
+            @foreach (var item in Model.chuongs)
+            {
+                <div class="row">
+                    <div class="col-md-2"><a href="#">@item.tenchuong</a></div>
+                </div>
+            }
+
         </div>
     </div>
 </div>
