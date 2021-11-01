@@ -18,6 +18,7 @@ namespace QLSachOnline.Controllers
         {
             return View();
         }
+        
         [HttpPost]
         public ActionResult themTacGia(QLSachOnline.Models.tacgia tg)
         {
@@ -30,8 +31,8 @@ namespace QLSachOnline.Controllers
         }
         public ActionResult formXoaTacGia(String id)
         {
-            if (db.tacgias.Find(id).sach_tacgia.Count == 0)
-                ViewBag.flagXoa = true;
+            //if (db.tacgias.Find(id).sach_tacgia.Count == 0)
+            //    ViewBag.flagXoa = true;
             return View(db.tacgias.Find(id));
         }
         [HttpPost]

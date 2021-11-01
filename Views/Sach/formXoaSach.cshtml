@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "Xóa sách";
     Layout = "~/Views/_LayoutPage1.cshtml";
-    IEnumerable<QLSachOnline.Models.sach_theloai> dsS_TL = ViewBag.dsSach_TL as IEnumerable<QLSachOnline.Models.sach_theloai>;
-    IEnumerable<QLSachOnline.Models.sach_tacgia> dsS_TG = ViewBag.dsSach_TG as IEnumerable<QLSachOnline.Models.sach_tacgia>;
+    IEnumerable<QLSachOnline.Models.theloai> dsTL = ViewBag.dsTL as IEnumerable<QLSachOnline.Models.theloai>;
+    IEnumerable<QLSachOnline.Models.tacgia> dsTG = ViewBag.dsTG as IEnumerable<QLSachOnline.Models.tacgia>;
 }
 
 <p>
@@ -23,24 +23,22 @@
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Thể loại:</div>
-        @foreach (var item in dsS_TL)
+        @foreach (var item in dsTL)
         {
-            if (Model.masach.Equals(item.masach))
+            if (Model.theloai.Contains(item))
             {
-                <div class="col-md-4">@item.theloai.tentl</div>
-                break;
+                <div class="col-md-4">@item.tentl</div>
             }
         }
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Tác giả:</div>
-        @foreach (var item in dsS_TG)
+        @foreach (var item in dsTG)
         {
-            if (Model.masach.Equals(item.masach))
+            if (Model.tacgia.Contains(item))
             {
-                <div class="col-md-4">@item.tacgia.tentg</div>
-                break;
+                <div class="col-md-4">@item.tentg</div>
             }
         }
         <div class="col-md-6">&nbsp;</div>
@@ -61,7 +59,16 @@
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row">
-        <div class="col-md-3"><a href="@Url.Content("/Sach/xoaSach/"+Model.masach)" class="btn btn-primary">Xóa</a></div>
-        <div class="col-md-9">&nbsp;</div>
+        @if ((bool)ViewBag.flagXoa)
+        {
+            <h4 class="text-danger">Bạn có thật sự muốn xóa sách này không?</h4>
+            <div class="col-md-3"><a href="@Url.Content("/Sach/xoaSach/"+Model.masach)" class="btn btn-primary">Xóa</a></div>
+            <div class="col-md-9">&nbsp;</div>
+        }
+        else
+        {
+            <h4 class="text-danger">Bạn không thể xóa học viên này!!!</h4>
+        }
+
     </div>
 </div>

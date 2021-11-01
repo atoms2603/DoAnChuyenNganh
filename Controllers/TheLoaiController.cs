@@ -14,8 +14,8 @@ namespace QLSachOnline.Controllers
 
         public ActionResult thaoTacTheLoai(string id)
         {
-            if (db.theloais.Find(id).sach_theloai.Count == 0)
-                ViewBag.flagXoa = true;
+            //if (db.theloais.Find(id).sach_theloai.Count == 0)
+            //    ViewBag.flagXoa = true;
             return View(db.theloais.Find(id));
         }
         public ActionResult formSuaTheLoai(string id)

@@ -1,9 +1,9 @@
-﻿@model IEnumerable<QLSachOnline.Models.sach_theloai>
+﻿@model IEnumerable<QLSachOnline.Models.theloai>
 @{
     ViewBag.Title = "Thêm sách";
     Layout = "~/Views/_LayoutPage1.cshtml";
     IEnumerable<QLSachOnline.Models.nhaxuatban> dsNXB = ViewBag.dsNXB as IEnumerable<QLSachOnline.Models.nhaxuatban>;
-    IEnumerable<QLSachOnline.Models.sach_tacgia> dsS_TG = ViewBag.dsSach_TG as IEnumerable<QLSachOnline.Models.sach_tacgia>;
+    IEnumerable<QLSachOnline.Models.tacgia> dsTacGia = ViewBag.dsTacGia as IEnumerable<QLSachOnline.Models.tacgia>;
 }
 
 <p>
@@ -24,17 +24,24 @@
 
         <div class="row form-group">
             <div class="col-md-1 font-weight-bold">Thể loại:</div>
+            
             <div class="col-md-2">
-                <select class="form-control">
+                <select class="form-control selectpicker" name="maloai" multiple data-live-search="true">
                     @foreach (var item in Model)
                     {
-                        <option value="@item.maloai">@item.theloai.tentl</option>
+                        <option value="@item.maloai">@item.tentl</option>
                     }
                 </select>
             </div>
+
+            <script type="text/javascript">
+                $('select').selectpicker();
+            </script>
+
+
             <div class="col-md-1 font-weight-bold">Nhà xuất bản:</div>
             <div class="col-md-3">
-                <select class="form-control" name="manhaxuatban">
+                <select class="form-control" name="manhaxuatban" >
                     @foreach (var item in dsNXB)
                     {
                         <option value="@item.manhaxuatban">@item.tennhaxuatban</option>
@@ -43,10 +50,10 @@
             </div>
             <div class="col-md-1 font-weight-bold">Tác giả:</div>
             <div class="col-md-2">
-                <select class="form-control" name="matg">
-                    @foreach (var item in dsS_TG)
+                <select class="form-control selectpicker" name="matg" multiple data-live-search="true">
+                    @foreach (var item in dsTacGia)
                     {
-                        <option value="@item.matg">@item.tacgia.tentg</option>
+                        <option value="@item.matg">@item.tentg</option>
                     }
                 </select>
             </div>

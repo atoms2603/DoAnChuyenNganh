@@ -2,8 +2,8 @@
 @{
     ViewBag.Title = "Quản lý sách";
     Layout = "~/Views/_LayoutPage1.cshtml";
-    IEnumerable<QLSachOnline.Models.sach_tacgia> dsS_TG = ViewBag.dsSach_TG as IEnumerable<QLSachOnline.Models.sach_tacgia>;
-    IEnumerable<QLSachOnline.Models.sach_theloai> dsS_TL = ViewBag.dsSach_TL as IEnumerable<QLSachOnline.Models.sach_theloai>;
+    IEnumerable<QLSachOnline.Models.tacgia> dsTG = ViewBag.dsTG as IEnumerable<QLSachOnline.Models.tacgia>;
+    IEnumerable<QLSachOnline.Models.theloai> dsTL = ViewBag.dsTL as IEnumerable<QLSachOnline.Models.theloai>;
 }
 
 <h2>Quản lý sách</h2>
@@ -46,20 +46,20 @@
         <a href="@Url.Content("/Sach/formThongTinChiTiet/"+item.masach)">@item.tensach</a>
     </div>
     <div class="col-md-2">
-        @foreach (var item2 in dsS_TL)
+        @foreach (var item2 in dsTL)
         {
-            if (item.masach.Equals(item2.masach))
+            if (item.theloai.Contains(item2))
             {
-                <span> @item2.theloai.tentl &nbsp;</span>
+                <span> @item2.tentl &nbsp;</span>
             }
         }
      </div>
     <div class="col-md-2">
-        @foreach (var item2 in dsS_TG)
+        @foreach (var item2 in dsTG)
         {
-            if (item.masach.Equals(item2.masach))
+            if (item.tacgia.Contains(item2))
             {
-                <span>@item2.tacgia.tentg &nbsp;</span>
+                <span>@item2.tentg &nbsp;</span>
             }
         }
     </div>
