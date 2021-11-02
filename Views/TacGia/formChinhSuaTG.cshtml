@@ -21,20 +21,20 @@
         <div class="row form-group">
             <div class="col-md-1">&nbsp;</div>
             <div class="col-md-2">Ngày sinh:</div>
-            <div class="col-md-2"><input type="date" name="ngaysinh" value="@Model.ngaysinh" class="form-control" /></div>
+            <div class="col-md-2"><input type="date" name="ngaysinh" value="@System.Convert.ToDateTime(Model.ngaysinh.Value.ToShortDateString())" class="form-control" /></div>
             <div class="col-md-2">Giới tính:</div>
             @if (Model.gioitinh.Equals(true))
             {
                 <div class="col-md-3">
-                    <input type="radio" name="name" value="Nam" checked />Nam
-                    <input type="radio" name="name" value="Nữ" />Nữ
+                    <input type="radio" name="gioitinh" value="Nam" checked />Nam
+                    <input type="radio" name="gioitinh" value="Nữ" />Nữ
                 </div>
             }
             else
             {
                 <div class="col-md-3">
-                    <input type="radio" name="name" value="Nam"  />Nam
-                    <input type="radio" name="name" value="Nữ" checked/>Nữ
+                    <input type="radio" name="gioitinh" value="Nam"  />Nam
+                    <input type="radio" name="gioitinh" value="Nữ" checked/>Nữ
                 </div>
             }
 
