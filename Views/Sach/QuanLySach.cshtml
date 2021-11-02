@@ -48,7 +48,7 @@
     <div class="col-md-2">
         @foreach (var item2 in dsTL)
         {
-            if (item.theloai.Contains(item2))
+            if (item.theloais.Contains(item2))
             {
                 <span> @item2.tentl &nbsp;</span>
             }
@@ -57,7 +57,7 @@
     <div class="col-md-2">
         @foreach (var item2 in dsTG)
         {
-            if (item.tacgia.Contains(item2))
+            if (item.tacgias.Contains(item2))
             {
                 <span>@item2.tentg &nbsp;</span>
             }

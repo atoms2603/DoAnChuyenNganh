@@ -28,6 +28,9 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
+    @{ 
+        QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
+    }
     <div class="container-fluid">
         <div class="card" style="background-color:#BBBBBB">
             <div class="card-header bg-dark text-light">
@@ -59,13 +62,26 @@
                             <li class="nav-item list-group-item bg-secondary dropdown">
                                 <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light" id="dropdownMenuButton"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;Thể loại</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    @* xài vòng lặp foreach xuất <a> danh sách thể loại trong menu*@
+                                    <ul class="nav nav-tabs">
+                                        @foreach (var item in db.theloais)
+                                        {
+                                            <li class="w-100" style="margin:10px">
+                                                <a href="#" class="text-decoration-none text-dark">@item.tentl</a>
+                                            </li>
+                                        }
+                                    </ul>
                                 </div>
                             </li>
                             <li class="nav-item list-group-item bg-secondary dropdown">
-                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light" id="dropdownMenuButton"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Năm phát hành</a>
+                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light" id="dropdownMenuButton"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;....</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    @* xài vòng lặp foreach xuất <a> danh sách năm trong menu*@
+                                    @* xài vòng lặp foreach*@
+                                </div>
+                            </li>
+                            <li class="nav-item list-group-item bg-secondary dropdown">
+                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light" id="dropdownMenuButton"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;....</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @* xài vòng lặp foreach*@
                                 </div>
                             </li>
                             <li class="nav-item list-group-item bg-secondary">

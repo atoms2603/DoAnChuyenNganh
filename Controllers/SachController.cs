@@ -16,8 +16,6 @@ namespace QLSachOnline.Controllers
         }
         public ActionResult formThongTinChiTiet(string id)
         {
-            ViewBag.dsTG = db.tacgias;
-            ViewBag.dsTL = db.theloais;
             return View(db.saches.Find(id));
         }
         public ActionResult indexSach(string id)
@@ -64,7 +62,7 @@ namespace QLSachOnline.Controllers
                     foreach (var item2 in db.theloais)
                     {
                         if (item.Equals(item2.maloai))
-                            sach.theloai.Add(item2);
+                            sach.theloais.Add(item2);
                     }
                 }
                
@@ -74,7 +72,7 @@ namespace QLSachOnline.Controllers
                     foreach (var item2 in db.tacgias)
                     {
                         if (item.Equals(item2.matg))
-                            sach.tacgia.Add(item2);
+                            sach.tacgias.Add(item2);
                     }
                 }
 
@@ -103,13 +101,13 @@ namespace QLSachOnline.Controllers
                 sachsua.namxuatban = sach.namxuatban;
                 sachsua.phi = sach.phi;
                 sachsua.manhaxuatban = sach.manhaxuatban;
-                sachsua.theloai = sach.theloai;
-                sachsua.tacgia = sach.tacgia;
+                sachsua.theloais = sach.theloais;
+                sachsua.tacgias = sach.tacgias;
                 sachsua.tomtat = sach.tomtat;
-                sachsua.giaodich = sach.giaodich;
+                sachsua.giaodiches = sach.giaodiches;
                 sachsua.hinhanh = sach.hinhanh;
-                sachsua.chuong = sach.chuong;
-                sachsua.luusach = sach.luusach;
+                sachsua.chuongs = sach.chuongs;
+                sachsua.luusaches = sach.luusaches;
 
                 db.SaveChanges();
             }
@@ -122,7 +120,7 @@ namespace QLSachOnline.Controllers
             Models.sach x = db.saches.Find(id);
             if (x != null)
             {
-                int count = db.luusachs.Where(t => t.masach == id).ToList().Count;
+                int count = db.luusaches.Where(t => t.masach == id).ToList().Count;
                 if (count <= 0) ViewBag.flagXoa = true;
                 else ViewBag.flagXoa = false;
                 return View(x);
@@ -132,8 +130,8 @@ namespace QLSachOnline.Controllers
         public ActionResult xoaSach(string id)
         {
             Models.sach sach = db.saches.Find(id);
-            sach.tacgia.Clear();
-            sach.theloai.Clear();
+            sach.tacgias.Clear();
+            sach.theloais.Clear();
             db.saches.Remove(sach);
             db.SaveChanges();
             return RedirectToAction("QuanLySach");

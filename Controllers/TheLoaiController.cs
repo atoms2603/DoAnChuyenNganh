@@ -18,10 +18,7 @@ namespace QLSachOnline.Controllers
             //    ViewBag.flagXoa = true;
             return View(db.theloais.Find(id));
         }
-        public ActionResult formSuaTheLoai(string id)
-        {
-            return View(db.theloais.Find(id));
-        }
+
         [HttpPost]
         public ActionResult suaTheLoai(string id)
         {
