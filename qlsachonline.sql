@@ -102,7 +102,7 @@ CREATE TABLE chuong(
 	[machuong] [varchar](10) NOT NULL,
 	[masach] [varchar](10) NOT NULL,
 	[tenchuong] [nvarchar](100) null,
-	[noidung][nvarchar](50) null,
+	[noidung][nvarchar](100) null,
  CONSTRAINT [PK_chuong] PRIMARY KEY CLUSTERED 
 (
 	[machuong] ASC,
