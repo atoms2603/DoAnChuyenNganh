@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<QLSachOnline.Models.sach>
 @{
     ViewBag.Title = "Trang chủ";
-    Layout = "~/Views/_LayoutPage1.cshtml";
+    Layout = "~/Views/_LayoutMain.cshtml";
 }
 <div class="container-fluid">
     <ul class="nav nav-tabs justify-content-center">
@@ -9,7 +9,7 @@
         @{
             foreach (var item in Model)
             {
-                <li class="border w-25" style="padding:20px;margin:20px">
+                <li class="border w-25" style="padding:20px;margin:20px; background-color:white">
                     <a href="@Url.Content("/Sach/indexSach/"+item.masach)"><img src="@Url.Content("/Images/Images_SP/Pro1.jpg")" class="img-fluid h-75 w-100" /></a>
                     <span class="font-weight-bold">Tên sách:</span>@item.tensach <br />
                     <span class="font-weight-bold">Thể loại:</span>

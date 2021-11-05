@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+    <link href="~/Content/custom_Design.css" rel="stylesheet" />
+    <style>
+        .dropdown:hover > .dropdown-menu {
+            display: block;
+        }
+    </style>
+
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    @{ 
+        QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
+    }
+
+        <div class="card overflow-hidden">
+            <div class="card-header bg-dark text-light">
+                <div class="row">
+                    <div class="col-md-4">
+                        <a href="@Url.Content("/Home/Index")" class="text-decoration-none" >
+                            <img src="~/Images/LogoIconReal.png" height="45">
+                            <span class="text-light font-weight-bold">AtsBOOKS</span>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <form class="form-inline" action="#">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                            <button class="btn btn-outline-light" type="submit">Search</button>
+                        </form>
+                    </div>
+                    <div class="col-md-4 justify-content-center" style="text-align:center">
+                        <a href="#" class="text-light text-decoration-none">Đăng nhập/Đăng ký</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-title bg-secondary">
+                <div class="row">
+                    <div class="col-md-8">
+                        <ul class="nav list-group-horizontal">
+                            <li class="nav-item list-group-item bg-secondary">
+                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Trang chủ</a>
+                            </li>
+                            <li class="nav-item list-group-item bg-secondary dropdown">
+                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light" id="dropdownMenuButton"><i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;Thể loại</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <ul class="nav nav-tabs">
+                                        @foreach (var item in db.theloais)
+                                        {
+                                            <li class="w-100" style="margin:10px">
+                                                <a href="#" class="text-decoration-none text-dark">@item.tentl</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="nav-item list-group-item bg-secondary dropdown">
+                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light" id="dropdownMenuButton"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;....</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @* xài vòng lặp foreach*@
+                                </div>
+                            </li>
+                            <li class="nav-item list-group-item bg-secondary dropdown">
+                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light" id="dropdownMenuButton"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;....</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @* xài vòng lặp foreach*@
+                                </div>
+                            </li>
+                            <li class="nav-item list-group-item bg-secondary">
+                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light"><i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;Góp ý</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-1">&nbsp;</div>
+
+                    <div class="col-md-3">
+                        <ul class="nav list-group-horizontal">
+                            <li class="nav-item list-group-item bg-secondary dropdown">
+                                <a href="#" class="text-decoration-none text-light" style="text-align:center"><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;Quản lý</a>
+                                <div class="dropdown-menu bg-secondary">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a href="@Url.Content("/Sach/QuanLySach")" class="text-decoration-none text-light">Quản lý sách</a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a href="@Url.Content("/TheLoai/QuanLyTheLoai")" class="text-decoration-none text-light">Quản thể loại</a>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a href="@Url.Content("/TacGia/QuanLyTacGia")" class="text-decoration-none text-light">Quản lý tác giả</a>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <a href="@Url.Content("/NhaXuatBan/QuanLyNhaXuatBan")" class="text-decoration-none text-light">Quản lý nhà xuất bản</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-body" style="background-color:#EEEEEE">
+                <div class="row">
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col-md-8" style="background-color:#CCCCCC">
+                        @RenderBody()
+                    </div>
+                    <div class="col-md-2">&nbsp;</div>
+                </div>
+            </div>
+            <div class="card-footer bg-dark text-light">
+                Footer
+            </div>
+        </div>
+
+</body>
+</html>
