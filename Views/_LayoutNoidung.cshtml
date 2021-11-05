@@ -31,8 +31,8 @@
     @{ 
         QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
     }
-    <div class="container-fluid">
-        <div class="card" style="background-color:#BBBBBB">
+
+        <div class="card overflow-hidden">
             <div class="card-header bg-dark text-light">
                 <div class="row">
                     <div class="col-md-4">
@@ -128,30 +128,19 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="background-color:#EEEEEE">
                 <div class="row">
-                    <div class="col-md-10">
+                    <div class="col-md-2">&nbsp;</div>
+                    <div class="col-md-8" style="background-color:#CCCCCC">
                         @RenderBody()
                     </div>
-                    <div class="col-md-2">
-                        <ul class="nav list-group">
-                            <li class="nav-item list-group-item bg-secondary ">
-                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light">TOP 1</a>
-                            </li>
-                            <li class="nav-item list-group-item bg-secondary ">
-                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light">TOP 2</a>
-                            </li>
-                            <li class="nav-item list-group-item bg-secondary ">
-                                <a href="@Url.Content("/Home/Index")" class="text-decoration-none text-light">TOP 3</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <div class="col-md-2">&nbsp;</div>
                 </div>
             </div>
             <div class="card-footer bg-dark text-light">
                 Footer
             </div>
         </div>
-    </div>
+
 </body>
 </html>

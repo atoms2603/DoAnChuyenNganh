@@ -1,31 +1,68 @@
 ﻿@model IEnumerable<QLSachOnline.Models.theloai>
 @{
     ViewBag.Title = "Thêm sách";
-    Layout = "~/Views/_LayoutPage1.cshtml";
+    Layout = "~/Views/_LayoutAdmin.cshtml";
     IEnumerable<QLSachOnline.Models.nhaxuatban> dsNXB = ViewBag.dsNXB as IEnumerable<QLSachOnline.Models.nhaxuatban>;
     IEnumerable<QLSachOnline.Models.tacgia> dsTacGia = ViewBag.dsTacGia as IEnumerable<QLSachOnline.Models.tacgia>;
 }
 
-<p>
-    <a href="@Url.Content("/Sach/QuanLySach")" class="btn btn-primary">Trở về</a>
-</p>
-<h2>Thêm sách</h2>
-<div class="container-fluid">
-    <form action="@Url.Content("/Sach/themSach")" method="post">
-        <div class="row form-group">
-            <div class="col-md-1 font-weight-bold">Mã sách:</div>
-            <div class="col-md-2"><input type="text" name="masach" value="" class="form-control" /></div>
-            <div class="col-md-1 font-weight-bold">Tên sách:</div>
-            <div class="col-md-3"><input type="text" name="tensach" value="" class="form-control" /></div>
-            <div class="col-md-1 font-weight-bold">Năm sản xuất:</div>
-            <div class="col-md-2"><input type="number" name="namxuatban" value="" class="form-control" /></div>
-            <div class="col-md-2">&nbsp;</div>
-        </div>
 
-        <div class="row form-group">
-            <div class="col-md-1 font-weight-bold">Thể loại:</div>
-            
-            <div class="col-md-2">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-2">
+            <a href="@Url.Content("/Sach/QuanLySach")" class="btn btn-primary">Trở về</a>
+        </div>
+        <div class="col-md-9">&nbsp;</div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-11"><h2>Thêm sách</h2></div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <form action="@Url.Content("/Sach/themSach")" method="post">
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Mã sách</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="masach" value="" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Tên sách</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="tensach" value="" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Năm sản xuất</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="number" name="namxuatban" value="" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Thể loại</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6">
                 <select class="form-control selectpicker" name="maloai" multiple data-live-search="true">
                     @foreach (var item in Model)
                     {
@@ -33,23 +70,38 @@
                     }
                 </select>
             </div>
-
-            <script type="text/javascript">
-                $('select').selectpicker();
-            </script>
-
-
-            <div class="col-md-1 font-weight-bold">Nhà xuất bản:</div>
-            <div class="col-md-3">
-                <select class="form-control" name="manhaxuatban" >
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <script type="text/javascript">
+            $('select').selectpicker();
+        </script>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Nhà xuất bản</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6">
+                <select class="form-control" name="manhaxuatban">
                     @foreach (var item in dsNXB)
                     {
                         <option value="@item.manhaxuatban">@item.tennhaxuatban</option>
                     }
                 </select>
             </div>
-            <div class="col-md-1 font-weight-bold">Tác giả:</div>
-            <div class="col-md-2">
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Tác giả:</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6">
                 <select class="form-control selectpicker" name="matg" multiple data-live-search="true">
                     @foreach (var item in dsTacGia)
                     {
@@ -57,22 +109,121 @@
                     }
                 </select>
             </div>
-            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-5">&nbsp;</div>
         </div>
-
-        <div class="row form-group">
-            <div class="col-md-1 font-weight-bold">Giá:</div>
-            <div class="col-md-2"><input type="number" name="phi" class="form-control" /></div>
-            <div class="col-md-1 font-weight-bold">Tóm tắt</div>
-            <div class="col-md-4"><textarea class="form-control"></textarea></div>
-            <div class="col-md-4">&nbsp;</div>
-        </div>
-
+        <div class="row">&nbsp;</div>
         <div class="row">
-            <div class="col-md-11">&nbsp;</div>
-            <div class="col-md-1">
-                <input type="submit" value="Thêm" class="btn btn-primary form-control" />
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Giá</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="number" name="phi" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Tóm tắt</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><textarea class="form-control"></textarea></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Hình ảnh</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="file" name="hinhanh" value="" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-2">
+
+                <!-- Model thêm chương -->
+                <button type="button" class="btn btn-primary selectpicker" data-toggle="modal" data-target="#modalThemChuong">Thêm chương</button>
+                <div class="modal" id="modalThemChuong">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm chương</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8 font-weight-bold">Mã chương</div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8"><input type="text" name="machuong" class="form-control" /></div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">&nbsp;</div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8 font-weight-bold">Tên chương</div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8"><input type="text" name="tenchuong" class="form-control" /></div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">&nbsp;</div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8 font-weight-bold">Nội dung</div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8"><input type="text" name="noidung" class="form-control" /></div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">&nbsp;</div>
+                                </div>
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-2"><button type="button" class="btn btn-primary">Thêm</button></div>
+                                        <div class="col-md-5">&nbsp;</div>
+                                        <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                        <div class="col-md-1">&nbsp;</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            <div class="col-md-9">&nbsp;</div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-md-6">&nbsp;</div>
+            <div class="col-md-1"><input type="submit" value="Thêm" class="btn btn-primary form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
         </div>
     </form>
 </div>

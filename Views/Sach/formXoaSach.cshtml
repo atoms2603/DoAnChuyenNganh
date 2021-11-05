@@ -25,7 +25,7 @@
         <div class="col-md-2 font-weight-bold">Thể loại:</div>
         @foreach (var item in dsTL)
         {
-            if (Model.theloai.Contains(item))
+            if (Model.theloais.Contains(item))
             {
                 <div class="col-md-4">@item.tentl</div>
             }
@@ -36,7 +36,7 @@
         <div class="col-md-2 font-weight-bold">Tác giả:</div>
         @foreach (var item in dsTG)
         {
-            if (Model.tacgia.Contains(item))
+            if (Model.tacgias.Contains(item))
             {
                 <div class="col-md-4">@item.tentg</div>
             }
