@@ -1,28 +1,70 @@
 ﻿@model QLSachOnline.Models.tacgia
 @{
     ViewBag.Title = "Chỉnh sửa tác gỉả";
-    Layout = "~/Views/_LayoutPage1.cshtml";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
 }
 
-<p>
-    <a href="@Url.Content("/TacGia/QuanLyTacGia")" class="btn btn-primary">Trở về</a>
-</p>
-<h2>Chỉnh sửa tác giả</h2>
+
+
 <div class="container-fluid">
     <form action="@Url.Content("/TacGia/chinhSuaTG")" method="post">
-        <div class="row form-group">
+        <div>&nbsp;</div>
+        <div class="row">
             <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-2">Mã tác giả:</div>
-            <div class="col-md-2"><input type="text" name="matg" value="@Model.matg" class="form-control" readonly/></div>
-            <div class="col-md-2">Tên tác giả:</div>
-            <div class="col-md-3"><input type="text" name="tentg" value="@Model.tentg" class="form-control" /></div>
-            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-1">
+                <p><a href="@Url.Content("/TacGia/QuanLyTacGia")" class="btn btn-primary">Trở về</a></p>
+            </div>
+            <div class="col-md-10">&nbsp;</div>
         </div>
-        <div class="row form-group">
+        <div class="row">
             <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-2">Ngày sinh:</div>
-            <div class="col-md-2"><input type="date" name="ngaysinh" value="@System.Convert.ToDateTime(Model.ngaysinh.Value.ToShortDateString())" class="form-control" /></div>
-            <div class="col-md-2">Giới tính:</div>
+            <div class="col-md-6"><h2>Chỉnh sửa tác giả</h2></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Mã tác giả</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="matg" value="@Model.matg" class="form-control" readonly /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Tên tác giả</div>
+            <div class="col-md-1">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="tentg" value="@Model.tentg" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Ngày sinh</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            @if (Model.ngaysinh != null)
+            {
+                <div class="col-md-6"><input type="date" name="ngaysinh" value="@System.Convert.ToDateTime(Model.ngaysinh.Value.ToShortDateString())" class="form-control" /></div>
+            }
+            else
+            {
+                <div class="col-md-6">&nbsp;</div>
+            }
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-1">Giới tính</div>
             @if (Model.gioitinh.Equals(true))
             {
                 <div class="col-md-3">
@@ -33,21 +75,35 @@
             else
             {
                 <div class="col-md-3">
-                    <input type="radio" name="gioitinh" value="Nam"  />Nam
-                    <input type="radio" name="gioitinh" value="Nữ" checked/>Nữ
+                    <input type="radio" name="gioitinh" value="Nam" />Nam
+                    <input type="radio" name="gioitinh" value="Nữ" checked />Nữ
                 </div>
             }
-
-            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-7">&nbsp;</div>
         </div>
-        <div class="row form-group">
+        <div>&nbsp;</div>
+        <div class="row">
             <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-2">Quê quán:</div>
-            <div class="col-md-2"><input type="text" name="quequan" value="@Model.quequan" class="form-control" /></div>
-            <div class="col-md-2">Nghệ danh:</div>
-            <div class="col-md-2"><input type="text" name="nghedanh" value="@Model.nghedanh" class="form-control" /></div>
-            <div class="col-md-3">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Quê quán</div>
+            <div class="col-md-5">&nbsp;</div>
         </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="quequan" value="@Model.quequan" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Nghệ danh</div>
+            <div class="col-md-1">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="nghedanh" value="@Model.nghedanh" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
         <div class="row">
             <div class="col-md-1">&nbsp;</div>
             <div class="col-md-2">
@@ -55,5 +111,6 @@
             </div>
             <div class="col-md-9">&nbsp;</div>
         </div>
+        <div>&nbsp;</div>
     </form>
 </div>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<QLSachOnline.Models.tacgia>
 @{
     ViewBag.Title = "Quản lý tác giả";
-    Layout = "~/Views/_LayoutPage1.cshtml";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
 }
 
 <h2>Quản lý tác giả</h2>
@@ -51,9 +51,14 @@
             <div class="col-md-3">
                 <a href="@Url.Content("/TacGia/formChiTietTacGia/" + item.matg)">@item.tentg</a>
             </div>
-            <div class="col-md-2">
-                @item.ngaysinh.Value.ToShortDateString()
-            </div>
+            
+            @if (item.ngaysinh != null)
+            {
+                <div class="col-md-2">@item.ngaysinh.Value.ToShortDateString()</div>
+            }
+            else
+            {<div class="col-md-2">&nbsp;</div>}
+        
             
             <div class="col-md-1">@(item.gioitinh.Equals(true) ? "Nam" : "Nữ") </div>
 
