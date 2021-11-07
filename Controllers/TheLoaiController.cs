@@ -8,15 +8,12 @@ namespace QLSachOnline.Controllers
         // GET: TheLoai
         public ActionResult QuanLyTheLoai()
         {
-            ViewBag.tl = db.theloais;
-            return View(db.theloais);
-        }
+            if (TempData["maRong"] != null)
+                ViewBag.flagMaRong = true;
+            if (TempData["matrung"] != null)
+                ViewBag.flagCo = true;
 
-        public ActionResult thaoTacTheLoai(string id)
-        {
-            //if (db.theloais.Find(id).sach_theloai.Count == 0)
-            //    ViewBag.flagXoa = true;
-            return View(db.theloais.Find(id));
+            return View(db.theloais);
         }
 
         [HttpPost]
@@ -38,10 +35,21 @@ namespace QLSachOnline.Controllers
         [HttpPost]
         public ActionResult themTheLoai(QLSachOnline.Models.theloai tl)
         {
+            if(Request["maloai"].ToString()=="")
+            {
+                TempData["maRong"] = true;
+                return RedirectToAction("QuanLyTheLoai");
+            }
             if (ModelState.IsValid)
             {
-                db.theloais.Add(tl);
-                db.SaveChanges();
+                Models.theloai x = db.theloais.Find(tl.maloai);
+                if (x == null)
+                {
+                    tl.maloai = tl.maloai.ToUpper();
+                    db.theloais.Add(tl);
+                    db.SaveChanges();
+                }
+                else TempData["maTrung"] = true;
             }
             return RedirectToAction("QuanLyTheLoai");
         }

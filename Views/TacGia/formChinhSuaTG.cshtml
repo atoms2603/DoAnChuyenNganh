@@ -51,32 +51,27 @@
         </div>
         <div class="row">
             <div class="col-md-1">&nbsp;</div>
-            @if (Model.ngaysinh != null)
-            {
-                <div class="col-md-6"><input type="date" name="ngaysinh" value="@System.Convert.ToDateTime(Model.ngaysinh.Value.ToShortDateString())" class="form-control" /></div>
-            }
-            else
-            {
-                <div class="col-md-6">&nbsp;</div>
-            }
+                <div class="col-md-6">
+                    <input type="date" name="ngaysinh" value="@System.Convert.ToDateTime(Model.ngaysinh)" class="form-control" />
+                </div>
             <div class="col-md-5">&nbsp;</div>
         </div>
         <div>&nbsp;</div>
         <div class="row">
             <div class="col-md-1">&nbsp;</div>
             <div class="col-md-1">Giới tính</div>
-            @if (Model.gioitinh.Equals(true))
+            @if (Model.gioitinh.Value ==  true)
             {
                 <div class="col-md-3">
-                    <input type="radio" name="gioitinh" value="Nam" checked />Nam
-                    <input type="radio" name="gioitinh" value="Nữ" />Nữ
+                    <input type="radio" name="gioitinh" value="true" checked />Nam
+                    <input type="radio" name="gioitinh" value="false" />Nữ
                 </div>
             }
             else
             {
                 <div class="col-md-3">
-                    <input type="radio" name="gioitinh" value="Nam" />Nam
-                    <input type="radio" name="gioitinh" value="Nữ" checked />Nữ
+                    <input type="radio" name="gioitinh" value="true" />Nam
+                    <input type="radio" name="gioitinh" value="false" checked />Nữ
                 </div>
             }
             <div class="col-md-7">&nbsp;</div>

@@ -35,7 +35,7 @@
             <div class="col-md-1">&nbsp;</div>
             <div class="col-md-2 font-weight-bold">Ngày sinh:</div>
             @if (Model.ngaysinh != null)
-            {<div class="col-md-2">@Model.ngaysinh</div>}
+            {<div class="col-md-2">@Model.ngaysinh.Value.ToShortDateString()</div>}
         else
         {<div class="col-md-2">&nbsp;</div>}
 

@@ -24,7 +24,7 @@ namespace QLSachOnline.Controllers
         }
         
         [HttpPost]
-        public ActionResult themTacGia()
+        public ActionResult themTacGia(Models.tacgia tg)
         {
             string maTG = Request["matg"].ToString().ToUpper();
             if ( maTG == "")
@@ -39,17 +39,7 @@ namespace QLSachOnline.Controllers
                     TempData["flagCo"] = true;
                     return RedirectToAction("formThemTacGia");
                 }
-
-                QLSachOnline.Models.tacgia tg = new Models.tacgia();
-                tg.matg = maTG;
-                tg.tentg = Request["tentg"].ToString();
-                if (Request["ngaysinh"].ToString() != "")
-                    tg.ngaysinh = System.Convert.ToDateTime(Request["ngaysinh"].ToString());
-                else tg.ngaysinh = null;
-                tg.gioitinh = System.Convert.ToBoolean(Request["gioitinh"]);
-                tg.quequan = Request["quequan"].ToString();
-                tg.nghedanh = Request["nghedanh"].ToString();
-
+                tg.matg = tg.matg.ToUpper();
                 db.tacgias.Add(tg);
                 db.SaveChanges();
                 return RedirectToAction("QuanLyTacGia");
@@ -80,18 +70,15 @@ namespace QLSachOnline.Controllers
         }
         
         [HttpPost]
-        public ActionResult chinhSuaTG(string id)
+        public ActionResult chinhSuaTG(Models.tacgia x)
         {
-            QLSachOnline.Models.tacgia tg = db.tacgias.Find(id);
-            tg.tentg = Request["tentg"].ToString();
-            tg.ngaysinh = System.Convert.ToDateTime(Request["ngaysinh"].ToString());
-            tg.gioitinh = System.Convert.ToBoolean(Request["gioitinh"].ToString());
-            tg.quequan = Request["quequan"].ToString();
-            tg.nghedanh = Request["nghedanh"].ToString();
-
+            Models.tacgia tg = db.tacgias.Find(x.matg);
+            tg.tentg = x.tentg;
+            tg.ngaysinh = x.ngaysinh;
+            tg.gioitinh = x.gioitinh;
+            tg.quequan = x.quequan;
+            tg.nghedanh = x.nghedanh;
             db.SaveChanges();
-
-
             return RedirectToAction("QuanLyTacGia");
         }
     }

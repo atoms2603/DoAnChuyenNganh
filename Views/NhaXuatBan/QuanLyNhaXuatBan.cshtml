@@ -4,13 +4,37 @@
     Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
 }
 
-<h2>Quản lý nhà xuất bản</h2>
 <div class="container-fluid">
+    <div>&nbsp;</div>
     <div class="row">
-        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-4">
+            <h2>Quản lý nhà xuất bản</h2>
+            @if (ViewBag.flagCo != null)
+            {
+                <div class="alert alert-danger" id="pointCheck"><strong>Mã trùng!</strong></div>
+            }
+            @if (ViewBag.flagMaRong != null)
+            {
+                <div class="alert alert-danger" id="pointCheck"><strong>Mã rỗng, vui lòng nhập mã!</strong></div>
+            }
+            <script type="text/javascript">
+                function checkcheck() {
+                    if (!$('#pointCheck').is("hidden")) {
+                        document.getElementById("pointCheck").setAttribute("hidden", true);
+                    }
+                }
+            </script>
+        </div>
+        <div class="col-md-7">&nbsp;</div>
+    </div>
+    <div>&nbsp;</div>
+    <div class="row">
+        <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2">
+
             <!-- Model thêm nhà xuất bản -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modelThem">
+            <button type="button" class="btn btn-primary" onclick="checkcheck()" data-toggle="modal" data-target="#modelThem">
                 Thêm nhà xuất bản
             </button>
             <form action="@Url.Content("/NhaXuatBan/themNhaXuatBan")" method="post">
@@ -24,12 +48,11 @@
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
 
-
                             <div class="modal-body">
                                 <div class="container-fluid">
                                     <div class="row form-group">
                                         <div class="col-md-4">Mã nhà xuất bản:</div>
-                                        <div class="col-md-6"><input type="text" name="manhaxuatban" value=""class="form-control"/></div>
+                                        <div class="col-md-6"><input type="text" name="manhaxuatban" value="" class="form-control" /></div>
                                         <div class="col-md-2">&nbsp;</div>
                                     </div>
                                     <div class="row">
@@ -37,7 +60,7 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-md-4">Tên nhà xuất bản:</div>
-                                        <div class="col-md-6"><input type="text" name="tennhaxuatban" value=""class="form-control"/></div>
+                                        <div class="col-md-6"><input type="text" name="tennhaxuatban" value="" class="form-control" /></div>
                                         <div class="col-md-2">&nbsp;</div>
                                     </div>
                                     <div class="row">
@@ -45,12 +68,11 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-md-4">Địa chỉ:</div>
-                                        <div class="col-md-6"><input type="text" name="diachi" value=""class="form-control"/></div>
+                                        <div class="col-md-6"><input type="text" name="diachi" value="" class="form-control" /></div>
                                         <div class="col-md-2">&nbsp;</div>
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="modal-footer">
                                 <div class="container-fluid">
@@ -71,171 +93,173 @@
             </form>
 
         </div>
-        <div class="col-md-8">&nbsp;</div>
+        <div class="col-md-9">&nbsp;</div>
     </div>
+
     <div class="row">
         <div class="col-md-12">&nbsp;</div>
     </div>
     <!-- Danh sách nhà xuất bản -->
     <div class="row">
-        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2 font-weight-bold">Mã nhà xuất bản</div>
         <div class="col-md-3 font-weight-bold">Tên nhà xuất bản</div>
-        <div class="col-md-2 font-weight-bold">Địa chỉ</div>
+        <div class="col-md-3 font-weight-bold">Địa chỉ</div>
         <div class="col-md-3">&nbsp;</div>
     </div>
-    @{ 
+    @{
         int dem = 0;
         foreach (var item in Model)
         {
-    <div class="row">
-        <div class="col-md-2">&nbsp;</div>
-        <div class="col-md-2">@item.manhaxuatban</div>
-        <div class="col-md-3">@item.tennhaxuatban</div>
-        <div class="col-md-2">@item.diachi</div>
-        <div class="col-md-1">
-            <!-- Model xóa nhà xuất bản -->
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalXoa_@dem">
-                Xóa
-            </button>
-            <form action="@Url.Content("/NhaXuatBan/xoaNXB/" + item.manhaxuatban)" method="post">
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-2">@item.manhaxuatban</div>
+                <div class="col-md-3">@item.tennhaxuatban</div>
+                <div class="col-md-3">@item.diachi</div>
+                <div class="col-md-1">
+                    <!-- Model xóa nhà xuất bản -->
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalXoa_@dem">
+                        Xóa
+                    </button>
+                    <form action="@Url.Content("/NhaXuatBan/xoaNXB/" + item.manhaxuatban)" method="post">
 
-                <div class="modal" id="modalXoa_@dem">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+                        <div class="modal" id="modalXoa_@dem">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                            <div class="modal-header">
-                                <h4 class="modal-title">Xóa nhà xuất bản</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-
-
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-4">Mã nhà xuất bản:</div>
-                                        <div class="col-md-6">@item.manhaxuatban</div>
-                                        <div class="col-md-2">&nbsp;</div>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Xóa nhà xuất bản</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">&nbsp;</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">Tên nhà xuất bản:</div>
-                                        <div class="col-md-6">@item.tennhaxuatban</div>
-                                        <div class="col-md-2">&nbsp;</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">&nbsp;</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4">Địa chỉ:</div>
-                                        <div class="col-md-6">@item.diachi</div>
-                                        <div class="col-md-2">&nbsp;</div>
-                                    </div>
-                                </div>
-                            </div>
 
 
-                            <div class="modal-footer">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-1">&nbsp;</div>
-                                        @{
-                                            bool flagXoa = false;
-                                            foreach (var item2 in item.saches)
-                                            {
-                                                if (item2.manhaxuatban.Equals(item.manhaxuatban))
-                                                {
-                                                    flagXoa = true;
-                                                    break;
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-4">Mã nhà xuất bản:</div>
+                                                <div class="col-md-6">@item.manhaxuatban</div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">Tên nhà xuất bản:</div>
+                                                <div class="col-md-6">@item.tennhaxuatban</div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">Địa chỉ:</div>
+                                                <div class="col-md-6">@item.diachi</div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-1">&nbsp;</div>
+                                                @{
+                                                    bool flagXoa = false;
+                                                    foreach (var item2 in item.saches)
+                                                    {
+                                                        if (item2.manhaxuatban.Equals(item.manhaxuatban))
+                                                        {
+                                                            flagXoa = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if (flagXoa)
+                                                    {
+                                                        <div class="col-md-7"><h3 class="text-danger">Không thể xóa</h3></div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-7"><button type="submit" class="btn btn-primary">Xóa</button></div>
+                                                    }
                                                 }
-                                            }
-                                            if (flagXoa)
-                                            {
-                                                <div class="col-md-7"><h3 class="text-danger">Không thể xóa</h3></div>
-                                            }
-                                            else
-                                            {
-                                                <div class="col-md-7"><button type="submit" class="btn btn-primary">Xóa</button></div>
-                                            }
-                                        }
-                                        <div class="col-md-1">&nbsp;</div>
-                                        <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
-                                        <div class="col-md-1">&nbsp;</div>
+                                                <div class="col-md-1">&nbsp;</div>
+                                                <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                                <div class="col-md-1">&nbsp;</div>
+                                            </div>
+                                        </div>
+
                                     </div>
+
                                 </div>
-
                             </div>
-
                         </div>
-                    </div>
+                    </form>
+
                 </div>
-            </form>
+                <div class="col-md-2">
+                    <!-- Model thêm nhà xuất bản -->
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalChinhsua_@dem">Chỉnh sửa</button>
+                    <form action="@Url.Content("/NhaXuatBan/chinhSuaNXB/"+item.manhaxuatban)" method="post">
 
-        </div>
-        <div class="col-md-2">
-            <!-- Model thêm nhà xuất bản -->
-            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalChinhsua_@dem">Chỉnh sửa</button>
-            <form action="@Url.Content("/NhaXuatBan/chinhSuaNXB/"+item.manhaxuatban)" method="post">
+                        <div class="modal" id="modalChinhsua_@dem">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
 
-                <div class="modal" id="modalChinhsua_@dem">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4 class="modal-title">Chỉnh sửa nhà xuất bản</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Chỉnh sửa nhà xuất bản</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
 
 
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row form-group">
-                                        <div class="col-md-4">Mã nhà xuất bản:</div>
-                                        <div class="col-md-6"><input type="text" name="manhaxuatban" value="@item.manhaxuatban" class="form-control"/></div>
-                                        <div class="col-md-2">&nbsp;</div>
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <div class="row form-group">
+                                                <div class="col-md-4">Mã nhà xuất bản:</div>
+                                                <div class="col-md-6"><input type="text" name="manhaxuatban" value="@item.manhaxuatban" readonly class="form-control" /></div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">&nbsp;</div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-4">Tên nhà xuất bản:</div>
+                                                <div class="col-md-6"><input type="text" name="tennhaxuatban" value="@item.tennhaxuatban" class="form-control" /></div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">&nbsp;</div>
+                                            </div>
+                                            <div class="row form-group">
+                                                <div class="col-md-4">Địa chỉ:</div>
+                                                <div class="col-md-6"><input type="text" name="diachi" value="@item.diachi" class="form-control" /></div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-12">&nbsp;</div>
+
+
+                                    <div class="modal-footer">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-1">&nbsp;</div>
+                                                <div class="col-md-4"><button type="submit" class="btn btn-primary">Chỉnh sửa</button></div>
+                                                <div class="col-md-4">&nbsp;</div>
+                                                <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                                <div class="col-md-1">&nbsp;</div>
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="row form-group">
-                                        <div class="col-md-4">Tên nhà xuất bản:</div>
-                                        <div class="col-md-6"><input type="text" name="tennhaxuatban" value="@item.tennhaxuatban" class="form-control"/></div>
-                                        <div class="col-md-2">&nbsp;</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">&nbsp;</div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-md-4">Địa chỉ:</div>
-                                        <div class="col-md-6"><input type="text" name="diachi" value="@item.diachi" class="form-control"/></div>
-                                        <div class="col-md-2">&nbsp;</div>
-                                    </div>
+
                                 </div>
                             </div>
-
-
-                            <div class="modal-footer">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-1">&nbsp;</div>
-                                        <div class="col-md-4"><button type="submit" class="btn btn-primary">Chỉnh sửa</button></div>
-                                        <div class="col-md-4">&nbsp;</div>
-                                        <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
-                                        <div class="col-md-1">&nbsp;</div>
-                                    </div>
-                                </div>
-
-                            </div>
-
                         </div>
-                    </div>
+                    </form>
                 </div>
-            </form>
-        </div>
-    </div>
+            </div>
             dem++;
         }
-        }
+    }
+    <div>&nbsp;</div>
 </div>

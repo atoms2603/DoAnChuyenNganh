@@ -12,15 +12,32 @@ namespace QLSachOnline.Controllers
         // GET: NhaXuatBan
         public ActionResult QuanLyNhaXuatBan()
         {
+            if (TempData["maTrung"] != null)
+                ViewBag.flagCo = true;
+            if (TempData["maRong"] != null)
+                ViewBag.flagMaRong = true;
             return View(db.nhaxuatbans);
         }
         [HttpPost]
         public ActionResult themNhaXuatBan(Models.nhaxuatban nxb)
         {
+            Models.nhaxuatban x = db.nhaxuatbans.Find(nxb.manhaxuatban);
+            if (Request["manhaxuatban"].ToString() == "")
+            {
+                TempData["maRong"] = true;
+                return RedirectToAction("QuanLyNhaXuatBan");
+            }
             if (ModelState.IsValid)
             {
-                db.nhaxuatbans.Add(nxb);
-                db.SaveChanges();
+                if(x == null) {
+                    nxb.manhaxuatban = nxb.manhaxuatban.ToUpper();
+                    db.nhaxuatbans.Add(nxb);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    TempData["maTrung"] = true;
+                }
             }
             return RedirectToAction("QuanLyNhaXuatBan");
         }

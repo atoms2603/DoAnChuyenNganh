@@ -18,6 +18,10 @@ namespace QLSachOnline.Controllers
         {
             if (TempData["chuongSach"] != null)
             {
+                if (TempData["trungMa"] != null)
+                    ViewBag.flagCo = true;
+                if (TempData["maRong"] != null)
+                    ViewBag.flagMaRong = true;
                 return View(TempData["chuongSach"] as Models.sach);
             }
             return View(db.saches.Find(id));
@@ -66,7 +70,7 @@ namespace QLSachOnline.Controllers
                         decimal gia = System.Convert.ToDecimal(Request["phi"].ToString());
                         sach.phi = gia;
                     }
-                    sach.masach = maSach;
+                    sach.masach = maSach.ToUpper();
                     sach.tensach = tenSach;
                     sach.manhaxuatban = maNXB;
 
