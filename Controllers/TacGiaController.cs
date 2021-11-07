@@ -16,21 +16,40 @@ namespace QLSachOnline.Controllers
         }
         public ActionResult formThemTacGia()
         {
+            if (TempData["flagRong"] != null)
+                ViewBag.flagMaRong = true;
+            if(TempData["flagCo"]!=null)
+                ViewBag.flagCo = true;
             return View();
         }
         
         [HttpPost]
-        public ActionResult themTacGia(QLSachOnline.Models.tacgia tg)
+        public ActionResult themTacGia(Models.tacgia tg)
         {
-            if (ModelState.IsValid)
+            string maTG = Request["matg"].ToString().ToUpper();
+            if ( maTG == "")
             {
+                TempData["flagRong"] = true;
+                return RedirectToAction("formThemTacGia");
+            }
+            else
+            {
+                if(db.tacgias.Find(maTG)!=null)
+                {
+                    TempData["flagCo"] = true;
+                    return RedirectToAction("formThemTacGia");
+                }
+
                 db.tacgias.Add(tg);
                 db.SaveChanges();
+                return RedirectToAction("QuanLyTacGia");
             }
-            return RedirectToAction("QuanLyTacGia");
+                
         }
-        public ActionResult formXoaTacGia(String id)
+        public ActionResult formXoaTacGia(string id)
         {
+            if (db.tacgias.Find(id).saches.Count == 0)
+                ViewBag.flagXoa = true;
             return View(db.tacgias.Find(id));
         }
         [HttpPost]
@@ -51,18 +70,15 @@ namespace QLSachOnline.Controllers
         }
         
         [HttpPost]
-        public ActionResult chinhSuaTG(string id)
+        public ActionResult chinhSuaTG(Models.tacgia x)
         {
-            QLSachOnline.Models.tacgia tg = db.tacgias.Find(id);
-            tg.tentg = Request["tentg"].ToString();
-            tg.ngaysinh = System.Convert.ToDateTime(Request["ngaysinh"].ToString());
-            tg.gioitinh = System.Convert.ToBoolean(Request["gioitinh"].ToString());
-            tg.quequan = Request["quequan"].ToString();
-            tg.nghedanh = Request["nghedanh"].ToString();
-
+            Models.tacgia tg = db.tacgias.Find(x.matg);
+            tg.tentg = x.tentg;
+            tg.ngaysinh = x.ngaysinh;
+            tg.gioitinh = x.gioitinh;
+            tg.quequan = x.quequan;
+            tg.nghedanh = x.nghedanh;
             db.SaveChanges();
-
-
             return RedirectToAction("QuanLyTacGia");
         }
     }

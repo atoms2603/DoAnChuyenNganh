@@ -1,7 +1,7 @@
 ﻿@model QLSachOnline.Models.tacgia
 @{
     ViewBag.Title = "Chi tiết tác giả";
-    Layout = "~/Views/_LayoutPage1.cshtml";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
 }
 
 <p>
@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2 font-weight-bold">Ngày sinh:</div>
-        <div class="col-md-2">@Model.ngaysinh</div>
+        <div class="col-md-2">@Model.ngaysinh.Value.ToShortDateString()</div>
         <div class="col-md-2 font-weight-bold">Giới tính:</div>
         @if (Model.gioitinh.Equals(true))
         {

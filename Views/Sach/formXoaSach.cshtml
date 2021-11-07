@@ -1,9 +1,7 @@
 ﻿@model QLSachOnline.Models.sach
 @{
     ViewBag.Title = "Xóa sách";
-    Layout = "~/Views/_LayoutPage1.cshtml";
-    IEnumerable<QLSachOnline.Models.theloai> dsTL = ViewBag.dsTL as IEnumerable<QLSachOnline.Models.theloai>;
-    IEnumerable<QLSachOnline.Models.tacgia> dsTG = ViewBag.dsTG as IEnumerable<QLSachOnline.Models.tacgia>;
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
 }
 
 <p>
@@ -23,23 +21,17 @@
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Thể loại:</div>
-        @foreach (var item in dsTL)
+        @foreach (var item in Model.theloais)
         {
-            if (Model.theloais.Contains(item))
-            {
-                <div class="col-md-4">@item.tentl</div>
-            }
+            <div class="col-md-4">@item.tentl</div>
         }
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Tác giả:</div>
-        @foreach (var item in dsTG)
+        @foreach (var item in Model.tacgias)
         {
-            if (Model.tacgias.Contains(item))
-            {
-                <div class="col-md-4">@item.tentg</div>
-            }
+            <div class="col-md-4">@item.tentg</div>
         }
         <div class="col-md-6">&nbsp;</div>
     </div>

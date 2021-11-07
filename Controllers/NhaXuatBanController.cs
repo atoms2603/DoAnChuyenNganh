@@ -17,10 +17,13 @@ namespace QLSachOnline.Controllers
         [HttpPost]
         public ActionResult themNhaXuatBan(Models.nhaxuatban nxb)
         {
+            Models.nhaxuatban x = db.nhaxuatbans.Find(nxb.manhaxuatban);
             if (ModelState.IsValid)
             {
-                db.nhaxuatbans.Add(nxb);
-                db.SaveChanges();
+                if(x == null) {
+                    db.nhaxuatbans.Add(nxb);
+                    db.SaveChanges();
+                }
             }
             return RedirectToAction("QuanLyNhaXuatBan");
         }

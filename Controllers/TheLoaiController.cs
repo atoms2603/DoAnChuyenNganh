@@ -12,13 +12,6 @@ namespace QLSachOnline.Controllers
             return View(db.theloais);
         }
 
-        public ActionResult thaoTacTheLoai(string id)
-        {
-            //if (db.theloais.Find(id).sach_theloai.Count == 0)
-            //    ViewBag.flagXoa = true;
-            return View(db.theloais.Find(id));
-        }
-
         [HttpPost]
         public ActionResult suaTheLoai(string id)
         {
@@ -40,8 +33,12 @@ namespace QLSachOnline.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.theloais.Add(tl);
-                db.SaveChanges();
+                Models.theloai x = db.theloais.Find(tl.maloai);
+                if (x == null)
+                {
+                    db.theloais.Add(tl);
+                    db.SaveChanges();
+                }
             }
             return RedirectToAction("QuanLyTheLoai");
         }

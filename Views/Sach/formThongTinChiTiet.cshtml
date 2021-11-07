@@ -1,7 +1,7 @@
 ﻿@model QLSachOnline.Models.sach
 @{
     ViewBag.Title = "Thông tin chi tiết";
-    Layout = "~/Views/_LayoutPage1.cshtml";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
 }
 
 <p>
@@ -14,71 +14,7 @@
         <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2"><a href="@Url.Content("/Sach/formChinhSua/"+Model.masach)" class="btn btn-primary">Chỉnh sửa</a></div>
 
-        <div class="col-md-1">&nbsp;</div>
-
-        <div class="col-md-2">
-            <!-- Model thêm chương sách -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThemChuong">Thêm chương</button>
-            <form action="@Url.Content("/Sach/themChuongSach")" method="post">
-
-                <div class="modal" id="modalThemChuong">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h4 class="modal-title">Thêm chương</h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-
-
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row"><div class="col-md-12"><hr /></div></div>
-                                    <div class="row form-group">
-                                        <div class="col-md-5 font-weight-bold">Mã chương:</div>
-                                        <div class="col-md-6"><input type="text" name="machuong" class="form-control" /></div>
-                                        <div class="col-md-1">&nbsp;</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">&nbsp;</div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-md-5 font-weight-bold">Tên chương:</div>
-                                        <div class="col-md-6"><input type="text" name="tenchuong" class="form-control" /></div>
-                                        <div class="col-md-1">&nbsp;</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">&nbsp;</div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div class="col-md-5 font-weight-bold">Nội dung:</div>
-                                        <div class="col-md-6"><input type="file" name="noidung" value="" class="form-control" /></div>
-                                        <div class="col-md-1">&nbsp;</div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="modal-footer">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-md-1">&nbsp;</div>
-                                        <div class="col-md-2"><button type="submit" class="btn btn-primary">Thêm</button></div>
-                                        <div class="col-md-6">&nbsp;</div>
-                                        <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
-                                        <div class="col-md-1">&nbsp;</div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <div class="col-md-5">&nbsp;</div>
+        <div class="col-md-8">&nbsp;</div>
     </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Mã sách:</div>
@@ -126,19 +62,254 @@
         <div class="col-md-4"><h3>Danh sách các chương</h3></div>
         <div class="col-md-8">&nbsp;</div>
     </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-2">
+
+            <!-- Model thêm chương -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThemChuong">Thêm chương</button>
+            <form action="@Url.Content("/Chuong/themChuong")" method="post">
+                <div class="modal" id="modalThemChuong">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h4 class="modal-title">Thêm chương</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8 font-weight-bold">Mã chương</div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8"><input type="text" name="machuong" class="form-control" /></div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">&nbsp;</div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8 font-weight-bold">Mã sách</div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8"><input type="text" name="masach" class="form-control" value="@Model.masach" readonly /></div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">&nbsp;</div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8 font-weight-bold">Tên chương</div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8"><input type="text" name="tenchuong" class="form-control" /></div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">&nbsp;</div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8 font-weight-bold">Nội dung</div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-8"><input type="file" name="noidung" class="form-control" /></div>
+                                        <div class="col-md-2">&nbsp;</div>
+                                    </div>
+                                    <div class="row">&nbsp;</div>
+                                </div>
+                            </div>
+
+
+                            <div class="modal-footer">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-2">&nbsp;</div>
+                                        <div class="col-md-2"><button type="submit" class="btn btn-primary">Thêm</button></div>
+                                        <div class="col-md-5">&nbsp;</div>
+                                        <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                        <div class="col-md-1">&nbsp;</div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-md-10">&nbsp;</div>
+    </div>
     <div class="row">
         <div class="col-md-2 font-weight-bold">Mã chương</div>
-        <div class="col-md-2">&nbsp;</div>
+        <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2 font-weight-bold">Tên chương</div>
-        <div class="col-md-6">&nbsp;</div>
+        <div class="col-md-7">&nbsp;</div>
     </div>
-    @foreach (var item in Model.chuongs)
-    {
-        <div class="row">
-            <div class="col-md-2">@item.machuong</div>
-            <div class="col-md-2">&nbsp;</div>
-            <div class="col-md-2"><a href="#">@item.tenchuong</a></div>
-            <div class="col-md-6">&nbsp;</div>
-        </div>
+    @{
+            int dem = 0;
+            foreach (var item in Model.chuongs)
+            {
+            <div class="row">
+                <div class="col-md-2">@item.machuong</div>
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-2">@item.tenchuong</div>
+                <div class="col-md-1">
+
+
+                    <!-- Model xóa chương -->
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalXoa_@dem">Xóa</button>
+                    <form action="@Url.Content("/Chuong/xoaChuong/"+Model.masach)" method="post">
+                        <div class="modal" id="modalXoa_@dem">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Xác nhận xóa chương</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8 font-weight-bold">Mã chương</div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8"><input type="text" name="machuong" class="form-control" value="@item.machuong" readonly/></div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8 font-weight-bold">Tên chương</div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8"><input type="text" name="tenchuong" class="form-control" value="@item.tenchuong" readonly/></div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-2"><button type="submit" class="btn btn-primary">Xóa</button></div>
+                                                <div class="col-md-5">&nbsp;</div>
+                                                <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                                <div class="col-md-1">&nbsp;</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="col-md-2">
+
+                    <!-- Model sửa chương -->
+                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalSuaChuong_@dem">Sửa chương</button>
+                    <form action="@Url.Content("/Chuong/chinhSuaChuong")" method="post">
+                        <div class="modal" id="modalSuaChuong_@dem">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Sửa chương</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8 font-weight-bold">Mã chương</div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8"><input type="text" name="machuong" class="form-control" value="@item.machuong" readonly/></div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8 font-weight-bold">Mã sách</div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8"><input type="text" name="masach" class="form-control" value="@Model.masach" readonly /></div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8 font-weight-bold">Tên chương</div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8"><input type="text" name="tenchuong" class="form-control" value="@item.tenchuong"/></div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8 font-weight-bold">Nội dung</div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-8"><input type="file" name="noidung" class="form-control" value="@item.noidung"/></div>
+                                                <div class="col-md-2">&nbsp;</div>
+                                            </div>
+                                            <div class="row">&nbsp;</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="modal-footer">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-md-2">&nbsp;</div>
+                                                <div class="col-md-2"><button type="submit" class="btn btn-primary">Sửa</button></div>
+                                                <div class="col-md-5">&nbsp;</div>
+                                                <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                                <div class="col-md-1">&nbsp;</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">&nbsp;</div>
+            </div>
+            dem++;
+        }
     }
 </div>
