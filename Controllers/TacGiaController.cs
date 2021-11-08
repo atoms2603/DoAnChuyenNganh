@@ -39,7 +39,7 @@ namespace QLSachOnline.Controllers
                     TempData["flagCo"] = true;
                     return RedirectToAction("formThemTacGia");
                 }
-
+                tg.matg = tg.matg.ToUpper();
                 db.tacgias.Add(tg);
                 db.SaveChanges();
                 return RedirectToAction("QuanLyTacGia");

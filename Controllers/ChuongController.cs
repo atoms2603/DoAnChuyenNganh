@@ -15,12 +15,26 @@ namespace QLSachOnline.Controllers
         [HttpPost]
         public ActionResult themChuong(Models.chuong ch)
         {
-            Models.sach s = db.saches.Find(ch.masach);
-            if (!s.chuongs.Contains(ch))
+            Models.sach s = db.saches.Find(Request["masach"].ToString());
+
+            if (Request["machuong"].ToString() == "")
             {
-                s.chuongs.Add(ch);
-                db.SaveChanges();
+                TempData["maRong"] = true;
+                TempData["chuongSach"] = s;
+                return RedirectToAction("formThongTinChiTiet", "Sach");
             }
+            foreach (var item in db.chuongs)
+            {
+                if (item.machuong == ch.machuong && item.masach == s.masach)
+                {
+                    TempData["trungMa"] = true;
+                    TempData["chuongSach"] = s;
+                    return RedirectToAction("formThongTinChiTiet", "Sach");
+                }
+            }
+            ch.machuong = ch.machuong.ToUpper();
+            s.chuongs.Add(ch);
+            db.SaveChanges();
             TempData["chuongSach"] = s;
             return RedirectToAction("formThongTinChiTiet", "Sach");
         }
