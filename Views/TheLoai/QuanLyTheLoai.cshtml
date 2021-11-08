@@ -5,17 +5,46 @@
 }
 
 
-<p>
-    <a href="@Url.Content("/TheLoai/QuanLyTheLoai")" class="btn btn-primary">Trở về</a>
-</p>
-<h2>Quản lý thể loại</h2>
+
+
 <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-2">
+            <p>
+                <a href="@Url.Content("/TheLoai/QuanLyTheLoai")" class="btn btn-primary">Trở về</a>
+            </p>
+        </div>
+        <div class="col-md-9">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-11">
+            <h2>Quản lý thể loại</h2>
+            @if (ViewBag.flagCo != null)
+            {
+                <div class="alert alert-danger" id="pointCheck"><strong>Mã trùng!</strong></div>
+            }
+            @if (ViewBag.flagMaRong != null)
+            {
+                <div class="alert alert-danger" id="pointCheck"><strong>Mã rỗng, vui lòng nhập mã!</strong></div>
+            }
+            <script type="text/javascript">
+                function checkcheck() {
+                    if (!$('#pointCheck').is("hidden")) {
+                        document.getElementById("pointCheck").setAttribute("hidden", true);
+                    }
+                }
+            </script>
+        </div>
+    </div>
+    <div>&nbsp;</div>
     <div class="row">
         <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2">
 
             <!-- Model thêm thể loại -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalThem">Thêm thể loại</button>
+            <button type="button" class="btn btn-primary" onclick="checkcheck()" data-toggle="modal" data-target="#modalThem">Thêm thể loại</button>
             <form action="@Url.Content("/TheLoai/themTheLoai")" method="post">
 
                 <div class="modal" id="modalThem">
@@ -242,4 +271,5 @@
             dem++;
         }
         }
+    <div>&nbsp;</div>
 </div>

@@ -4,13 +4,19 @@
     Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
 }
 
-<h2>Quản lý tác giả</h2>
+
 <div class="container-fluid">
+    <div>&nbsp;</div>
     <div class="row">
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-11"><h2>Quản lý tác giả</h2></div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2">
             <a href="@Url.Content("/TacGia/formThemTacGia")" class="btn btn-primary">Thêm tác giả</a>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-7">
             &nbsp;
         </div>
         <div class="col-md-2">
@@ -23,6 +29,7 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-1">&nbsp;</div>
         <div class="col-md-2 font-weight-bold">
             Mã tác giả
         </div>
@@ -35,43 +42,37 @@
         <div class="col-md-1 font-weight-bold">
             Giới tính
         </div>
-        <div class="col-md-2">
-            &nbsp;
-        </div>
-        <div class="col-md-2">
-            <a href="#">Chọn tất cả</a>
-        </div>
+        <div class="col-md-3">&nbsp;</div>
 
     </div>
     @foreach (var item in Model) {
-        <div class="row">
-            <div class="col-md-2">
-                @item.matg
-            </div>
-            <div class="col-md-3">
-                <a href="@Url.Content("/TacGia/formChiTietTacGia/" + item.matg)">@item.tentg</a>
-            </div>
-            
-            @if (item.ngaysinh != null)
-            {
-                <div class="col-md-2">@item.ngaysinh.Value.ToShortDateString()</div>
-            }
-            else
-            {<div class="col-md-2">&nbsp;</div>}
-        
-            
-            <div class="col-md-1">@(item.gioitinh.Equals(true) ? "Nam" : "Nữ") </div>
+<div class="row">
+    <div class="col-md-1">&nbsp;</div>
+    <div class="col-md-2">
+        @item.matg
+    </div>
+    <div class="col-md-3">
+        <a href="@Url.Content("/TacGia/formChiTietTacGia/" + item.matg)">@item.tentg</a>
+    </div>
 
-
-            <div class="col-md-1">
-                <a href="@Url.Content("/TacGia/formXoaTacGia/"+item.matg)" class="btn btn-outline-primary">Xóa</a>
-            </div>
-            <div class="col-md-2">
-                <a href="@Url.Content("/TacGia/formChinhSuaTG/"+item.matg)" class="btn btn-outline-primary">Chỉnh sửa</a>
-            </div>
-            <div class="col-md-1">
-                <input type="checkbox" name="name" value="" />
-            </div>
-        </div>
+    @if (item.ngaysinh != null)
+    {
+        <div class="col-md-2">@item.ngaysinh.Value.ToShortDateString()</div>
     }
+    else
+    {<div class="col-md-2">&nbsp;</div>}
+
+
+    <div class="col-md-1">@(item.gioitinh.Equals(true) ? "Nam" : "Nữ") </div>
+
+
+    <div class="col-md-1">
+        <a href="@Url.Content("/TacGia/formXoaTacGia/"+item.matg)" class="btn btn-outline-primary">Xóa</a>
+    </div>
+    <div class="col-md-2">
+        <a href="@Url.Content("/TacGia/formChinhSuaTG/"+item.matg)" class="btn btn-outline-primary">Chỉnh sửa</a>
+    </div>
+</div>
+    }
+<div>&nbsp;</div>
 </div>
