@@ -60,11 +60,11 @@ namespace QLSachOnline.Controllers
             db.SaveChanges();
             return RedirectToAction("QuanLyTacGia");
         }
-        public ActionResult formChiTietTacGia(String id)
+        public ActionResult formChiTietTacGia(string id)
         {
             return View(db.tacgias.Find(id));
         }
-        public ActionResult formChinhSuaTG(String id)
+        public ActionResult formChinhSuaTG(string id)
         {
             return View(db.tacgias.Find(id));
         }
