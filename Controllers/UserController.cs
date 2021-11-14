@@ -12,11 +12,16 @@ namespace QLSachOnline.Controllers
         // GET: User
         public ActionResult IndexDangNhap()
         {
+            ViewBag.isLogin = null;
             return View();
         }
         public ActionResult IndexDangKy()
         {
             return View();
+        }
+        public ActionResult ThongTinChiTietUser(string id)
+        {
+            return View(db.userlogins.Find(id));
         }
         [HttpPost]
         public ActionResult DangKy()
@@ -39,7 +44,6 @@ namespace QLSachOnline.Controllers
             }
             return View("~/Views/Home/Index.cshtml",db.saches);
         }
-        [HttpGet]
         public ActionResult DangNhap()
         {
             string taikhoan = Request["taikhoan"].ToString();
@@ -47,15 +51,28 @@ namespace QLSachOnline.Controllers
             string mk = Request["matkhau"].ToString();
             if (x != null)
             {
-                if(x.matkhau == mk)
-                    return View("~/Views/User/DangNhapThanhCong.cshtml");
-                else return View("~/Views/Home/Index.cshtml", db.saches);
+                if (x.matkhau == mk)
+                {
+                    ViewBag.isLogin = true;
+                    ViewBag.userLogin = x;
+                    return View("~/Views/Home/Index.cshtml", db.saches);
+                }
+                else {
+                    ViewBag.isLogin = false;
+                    return View("~/Views/Home/Index.cshtml", db.saches); 
+                }
             }
             else
             {
+                ViewBag.isLogin = false;
                 return View("~/Views/Home/Index.cshtml", db.saches);
             }
             
+        }
+        public ActionResult logout()
+        {
+            ViewBag.isLogin = false;
+            return View("~/Views/Home/Index.cshtml", db.saches);
         }
     }
 }

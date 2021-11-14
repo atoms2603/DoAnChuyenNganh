@@ -24,9 +24,19 @@
                     </label>
                 </div>
                 <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                @if (ViewBag.isLogin != null && (bool)ViewBag.isLogin == false)
+                { 
+                    <div class="form-group">
+                        <div class="control-label col-md-12">
+                            <span class="font-weight-bold text-danger">
+                                Bạn nhập
+                                "Tên tài khoản" hay "Mật khẩu" bị sai!
+                            </span>
+                        </div>
+                    </div>
+                }
             </div>
             <div class="col-md-3">&nbsp;</div>
-            
         </div>
     </form>
 </div>

@@ -113,23 +113,41 @@ namespace QLSachOnline.Controllers
             return View(db.saches.Find(id));
         }
         [HttpPost]
-        public ActionResult ChinhSuaSach(Models.sach sach)
+        public ActionResult ChinhSuaSach(string id)
         {
             if (ModelState.IsValid)
             {
-                Models.sach sachsua = db.saches.Find(sach.masach);
+                string[] dsID_TL = Request.Form.GetValues("maloai");
+                string[] dsID_TG = Request.Form.GetValues("matg");
+                Models.sach sachsua = db.saches.Find(id);
 
-                sachsua.tensach = sach.tensach;
-                sachsua.namxuatban = sach.namxuatban;
-                sachsua.phi = sach.phi;
-                sachsua.manhaxuatban = sach.manhaxuatban;
-                sachsua.theloais = sach.theloais;
-                sachsua.tacgias = sach.tacgias;
-                sachsua.tomtat = sach.tomtat;
-                sachsua.giaodiches = sach.giaodiches;
-                sachsua.hinhanh = sach.hinhanh;
-                sachsua.chuongs = sach.chuongs;
-                sachsua.luusaches = sach.luusaches;
+                if (dsID_TL != null) {
+                    sachsua.theloais.Clear();
+                    foreach (var item in dsID_TL)
+                    {
+                        foreach (var item2 in db.theloais)
+                        {
+                            if (item.Equals(item2.maloai))
+                                sachsua.theloais.Add(item2);
+                        }
+                    }
+                }
+
+                if (dsID_TG != null) {
+                    sachsua.tacgias.Clear();
+                    foreach (var item in dsID_TG)
+                    {
+                        foreach (var item2 in db.tacgias)
+                        {
+                            if (item.Equals(item2.matg))
+                                sachsua.tacgias.Add(item2);
+                        }
+                    }
+                }
+                sachsua.tensach = Request["tensach"].ToString();
+                sachsua.namxuatban = System.Convert.ToInt32(Request["namxuatban"].ToString());
+                sachsua.manhaxuatban = Request["manhaxuatban"].ToString();
+                sachsua.phi = System.Convert.ToDecimal(Request["phi"].ToString());
 
                 db.SaveChanges();
             }
