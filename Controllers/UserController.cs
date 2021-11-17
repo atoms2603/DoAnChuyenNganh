@@ -45,7 +45,7 @@ namespace QLSachOnline.Controllers
             return View("~/Views/Home/Index.cshtml",db.saches);
         }
         public ActionResult DangNhap()
-        {
+        {   
             string taikhoan = Request["taikhoan"].ToString();
             Models.userlogin x = db.userlogins.Find(taikhoan);
             string mk = Request["matkhau"].ToString();
@@ -53,25 +53,25 @@ namespace QLSachOnline.Controllers
             {
                 if (x.matkhau == mk)
                 {
-                    ViewBag.isLogin = true;
-                    ViewBag.userLogin = x;
+                    Session["Login"] = x;
+                    Session["isLogin"] = true;
                     return View("~/Views/Home/Index.cshtml", db.saches);
                 }
                 else {
-                    ViewBag.isLogin = false;
+                    Session["isLogin"] = false;
                     return View("~/Views/Home/Index.cshtml", db.saches); 
                 }
             }
             else
             {
-                ViewBag.isLogin = false;
+                Session["isLogin"] = false;
                 return View("~/Views/Home/Index.cshtml", db.saches);
             }
             
         }
         public ActionResult logout()
         {
-            ViewBag.isLogin = false;
+            Session["isLogin"] = false;
             return View("~/Views/Home/Index.cshtml", db.saches);
         }
     }

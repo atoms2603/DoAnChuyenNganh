@@ -30,7 +30,7 @@
 <body>
     @{ 
         QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
-        QLSachOnline.Models.userlogin userlogin = ViewBag.userLogin as QLSachOnline.Models.userlogin;
+        QLSachOnline.Models.userlogin userlogin = Session["Login"] as QLSachOnline.Models.userlogin;
     }
 
         <div class="card overflow-hidden">
@@ -50,38 +50,39 @@
                     </div>
                     <div class="col-md-4 justify-content-center" style="text-align:center">
                         <!-- Kiểm tra tình trạng đăng nhập -->
-                        @if (ViewBag.isLogin == null || (bool)ViewBag.isLogin == false)
+                        @if ((bool)Session["isLogin"] == false)
                         {
-                            <a href="@Url.Content("/User/IndexDangNhap")" class="text-light text-decoration-none">Đăng nhập/Đăng ký</a>
+                            <a href="@Url.Content("/User/IndexDangNhap")" class="text-light text-decoration-none">Đăng nhập/</a>
+                            <a href="@Url.Content("/User/IndexDangKy")" class="text-light text-decoration-none">Đăng ký</a>
                         }
                         else
                         {
-                            <div class="bg-dark row">
-                                <div class="col-md-4">
-                                    &nbsp;
-                                </div>
-                                <div class="col-md-4 dropdown">
-                                    <a href="@Url.Content("/User/ThongTinChiTietUser/"+@userlogin.taikhoan)" class="text-light text-decoration-none">@userlogin.taikhoan</a>
-                                    <div class="dropdown-menu bg-secondary text-wrap">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-md-12 text-md-left">
-                                                    <a href="@Url.Content("/User/ThongTinChiTietUser/"+@userlogin.taikhoan)" class="text-decoration-none text-light">Tài khoản</a>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12 text-md-left">
-                                                    <a href="@Url.Content("/User/logout")" class="text-decoration-none text-light">Logout</a>
-                                                </div>
-                                            </div>
+                    <div class="bg-dark row">
+                        <div class="col-md-4">
+                            &nbsp;
+                        </div>
+                        <div class="col-md-4 dropdown">
+                            <a href="@Url.Content("/User/ThongTinChiTietUser/"+@userlogin.taikhoan)" class="text-light text-decoration-none">@userlogin.taikhoan</a>
+                            <div class="dropdown-menu bg-secondary text-wrap">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12 text-md-left">
+                                            <a href="@Url.Content("/User/ThongTinChiTietUser/"+@userlogin.taikhoan)" class="text-decoration-none text-light">Tài khoản</a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-md-left">
+                                            <a href="@Url.Content("/User/logout")" class="text-decoration-none text-light">Logout</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    &nbsp;
-                                </div>
                             </div>
-                        }
+                        </div>
+                        <div class="col-md-4">
+                            &nbsp;
+                        </div>
+                    </div>
+                                                                }
                         <!-- ------------------------ -->
                     </div>
                 </div>

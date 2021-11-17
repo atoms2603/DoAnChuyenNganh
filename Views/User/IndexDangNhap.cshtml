@@ -6,7 +6,7 @@
 }
 
 <div class="container-fluid">
-    <form action="@Url.Content("/User/DangNhap/")" method="get">
+    <form action="@Url.Content("/User/DangNhap/")" method="post">
         <div class="row">
             <div class="col-md-3">&nbsp;</div>
             <div class="col-md-6">
@@ -24,7 +24,7 @@
                     </label>
                 </div>
                 <button type="submit" class="btn btn-primary">Đăng nhập</button>
-                @if (ViewBag.isLogin != null && (bool)ViewBag.isLogin == false)
+                @if ((bool)Session["isLogin"] == false)
                 { 
                     <div class="form-group">
                         <div class="control-label col-md-12">
