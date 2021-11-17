@@ -6,7 +6,7 @@
 }
 
 <div class="container-fluid">
-    <form action="@Url.Content("/User/DangNhap/")" method="get">
+    <form action="@Url.Content("/User/DangNhap/")" id="formID" method="post">
         <div class="row">
             <div class="col-md-3">&nbsp;</div>
             <div class="col-md-6">
@@ -23,10 +23,13 @@
                         <input class="form-check-input" type="checkbox"> Remember me
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                <input type="submit" class="btn btn-primary" id="btnLogin" value="Đăng nhập">
+                @if (ViewBag.flagCheckError != null)
+                {
+                    <div class="text-danger" id="divDanger">Bạn đã nhập sai tài khoản hoặc mật khẩu</div>
+                }
             </div>
             <div class="col-md-3">&nbsp;</div>
-            
         </div>
     </form>
 </div>

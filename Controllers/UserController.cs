@@ -12,11 +12,17 @@ namespace QLSachOnline.Controllers
         // GET: User
         public ActionResult IndexDangNhap()
         {
+            if (TempData["flagCheckError"] != null)
+                ViewBag.flagCheckError = true;
             return View();
         }
         public ActionResult IndexDangKy()
         {
             return View();
+        }
+        public ActionResult ThongTinChiTietUser(string id)
+        {
+            return View(db.userlogins.Find(id));
         }
         [HttpPost]
         public ActionResult DangKy()
@@ -39,23 +45,37 @@ namespace QLSachOnline.Controllers
             }
             return View("~/Views/Home/Index.cshtml",db.saches);
         }
-        [HttpGet]
         public ActionResult DangNhap()
         {
-            string taikhoan = Request["taikhoan"].ToString();
-            Models.userlogin x = db.userlogins.Find(taikhoan);
-            string mk = Request["matkhau"].ToString();
-            if (x != null)
+            
+            if (Request["taikhoan"] == null || Request["matkhau"] == null)
             {
-                if(x.matkhau == mk)
-                    return View("~/Views/User/DangNhapThanhCong.cshtml");
-                else return View("~/Views/Home/Index.cshtml", db.saches);
+                TempData["flagCheckError"] = true;
+                return RedirectToAction("IndexDangNhap");
             }
             else
             {
-                return View("~/Views/Home/Index.cshtml", db.saches);
+                string tk = Request["taikhoan"].ToString();
+                Models.userlogin x = db.userlogins.Find(tk);
+                string mk = Request["matkhau"].ToString();
+                if (x != null)
+                {
+                    if (x.matkhau == mk)
+                    {
+                        Session["Login"] = x;
+                        Session["isLogin"] = true;
+                        return View("~/Views/Home/Index.cshtml", db.saches);
+                    }
+                }
+                TempData["flagCheckError"] = true;
+                return RedirectToAction("IndexDangNhap");
             }
-            
+        }
+
+        public ActionResult logout()
+        {
+            Session["isLogin"] = false;
+            return View("~/Views/Home/Index.cshtml", db.saches);
         }
     }
 }
