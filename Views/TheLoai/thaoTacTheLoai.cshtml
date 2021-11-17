@@ -1,0 +1,48 @@
+﻿@model QLSachOnline.Models.theloai
+@{
+    ViewBag.Title = "Thao tác thể loại";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<h2>Thông tin thể loại</h2>
+<div class="container-fluid">
+    <form action="@Url.Content("/TheLoai/xoaTheLoai/"+Model.maloai)" method="post">
+        <div class="row">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-3">Mã thể loại:</div>
+            <div class="col-md-3">@Model.maloai</div>
+            <div class="col-md-4">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-3">Tên thể loại:</div>
+            <div class="col-md-3">@Model.tentl</div>
+            <div class="col-md-4">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">&nbsp;</div>
+            @{
+                if (ViewBag.flagXoa!=null)
+                {
+                    <div class="col-md-2"><input type="submit" value="Xóa" class="btn btn-outline-primary" /></div>
+                }
+                else
+                {
+                    <div class="col-md-2">
+                        <h3 class="text-danger">Không thể xóa</h3><br /><hr />
+                        <input type="submit" value="Xóa" disabled class="btn btn-outline-primary" />
+                    </div>
+                }
+            }
+
+            <div class="col-md-2">&nbsp;</div>
+            <div class="col-md-2"><a href="@Url.Content("/TheLoai/formSuaTheLoai/"+Model.maloai)" class="btn btn-outline-primary">Chỉnh sửa</a></div>
+        </div>
+    </form>
+</div>

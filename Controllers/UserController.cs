@@ -12,7 +12,8 @@ namespace QLSachOnline.Controllers
         // GET: User
         public ActionResult IndexDangNhap()
         {
-            ViewBag.isLogin = null;
+            if (TempData["flagCheckError"] != null)
+                ViewBag.flagCheckError = true;
             return View();
         }
         public ActionResult IndexDangKy()
@@ -45,30 +46,32 @@ namespace QLSachOnline.Controllers
             return View("~/Views/Home/Index.cshtml",db.saches);
         }
         public ActionResult DangNhap()
-        {   
-            string taikhoan = Request["taikhoan"].ToString();
-            Models.userlogin x = db.userlogins.Find(taikhoan);
-            string mk = Request["matkhau"].ToString();
-            if (x != null)
+        {
+            
+            if (Request["taikhoan"] == null || Request["matkhau"] == null)
             {
-                if (x.matkhau == mk)
-                {
-                    Session["Login"] = x;
-                    Session["isLogin"] = true;
-                    return View("~/Views/Home/Index.cshtml", db.saches);
-                }
-                else {
-                    Session["isLogin"] = false;
-                    return View("~/Views/Home/Index.cshtml", db.saches); 
-                }
+                TempData["flagCheckError"] = true;
+                return RedirectToAction("IndexDangNhap");
             }
             else
             {
-                Session["isLogin"] = false;
-                return View("~/Views/Home/Index.cshtml", db.saches);
+                string tk = Request["taikhoan"].ToString();
+                Models.userlogin x = db.userlogins.Find(tk);
+                string mk = Request["matkhau"].ToString();
+                if (x != null)
+                {
+                    if (x.matkhau == mk)
+                    {
+                        Session["Login"] = x;
+                        Session["isLogin"] = true;
+                        return View("~/Views/Home/Index.cshtml", db.saches);
+                    }
+                }
+                TempData["flagCheckError"] = true;
+                return RedirectToAction("IndexDangNhap");
             }
-            
         }
+
         public ActionResult logout()
         {
             Session["isLogin"] = false;

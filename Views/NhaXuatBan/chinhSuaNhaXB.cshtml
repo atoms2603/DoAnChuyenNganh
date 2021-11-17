@@ -1,0 +1,35 @@
+﻿@model QLSachOnline.Models.nhaxuatban
+@{
+    ViewBag.Title = "Chỉnh sửa nhà xuất bản";
+    Layout = "~/Views/_LayoutPage1.cshtml";
+}
+
+<h2>Chỉnh sửa</h2>
+<div class="container-fluid">
+    <form action="@Url.Content("/NhaXuatBan/chinhSuaNXB/"+Model.manhaxuatban)" method="post">
+        <div class="row form-group">
+            <div class="col-md-4">Mã nhà xuất bản:</div>
+            <div class="col-md-3"><input type="text" name="manhaxuatban" value="@Model.manhaxuatban" readonly class="form-control"/></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><hr /></div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-4">Tên nhà xuất bản:</div>
+            <div class="col-md-3"><input type="text" name="tennhaxuatban" value="@Model.tennhaxuatban" class="form-control"/></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><hr /></div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-4">Địa chỉ:</div>
+            <div class="col-md-3"><input type="text" name="diachi" value="@Model.diachi" class="form-control"/></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <p>
+            <input type="submit" value="Chỉnh sửa" class="btn btn-outline-primary"/>
+        </p>
+    </form>
+</div>
