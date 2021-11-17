@@ -173,6 +173,22 @@ CONSTRAINT [PK_luusach] PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
+
+GO
+/****** Object:  Table [dbo].[tacgia]    Script Date: 18/10/2021 2:00:00 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE adminlogin(
+	[taikhoan] [varchar](50) NOT NULL,
+	[matkhau] [varchar](50)not NULL,
+ CONSTRAINT [PK_adminlogin] PRIMARY KEY CLUSTERED 
+(
+	[taikhoan] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 GO
 ALTER TABLE [dbo].[sach]  WITH CHECK ADD  CONSTRAINT [FK_sach_nhaxuatban] FOREIGN KEY([manhaxuatban])
 REFERENCES [dbo].[nhaxuatban] ([manhaxuatban])
@@ -236,7 +252,7 @@ REFERENCES [dbo].[sach] ([masach])
 GO
 ALTER TABLE [dbo].[luusach] CHECK CONSTRAINT [FK_luusach_sach]
 
-
+insert into adminlogin values('admin','admin')
 
 insert into nhaxuatban values ('NXB001',N'Kim Đồng',null)
 insert into nhaxuatban values ('NXB002',N'Nhà xuất bản trẻ',null)
