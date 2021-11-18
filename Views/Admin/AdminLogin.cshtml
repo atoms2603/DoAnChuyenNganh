@@ -1,11 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "IndexDangNhap";
+    ViewBag.Title = "AdminLogin";
     Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
 }
 
 <div class="container-fluid">
-    <form action="@Url.Content("/User/DangNhap/")" id="formID" method="post">
+    <h2 class="text-center">Đăng nhập quyền admin</h2>
+    <form action="@Url.Content("/Admin/DangNhap")" id="formID" method="post">
         <div class="row">
             <div class="col-md-3">&nbsp;</div>
             <div class="col-md-6">
@@ -21,7 +22,6 @@
                     <label class="form-check-label">
                         <input class="form-check-input" type="checkbox"> Remember me
                     </label>
-                    <label class="text-right float-right"><a href="@Url.Content("/Admin/AdminLogin")" class="text-decoration-none">Đăng nhập với quyền quản trị</a></label>
                 </div>
                 <input type="submit" class="btn btn-primary" id="btnLogin" value="Đăng nhập">
                 @if (ViewBag.flagCheckError != null)

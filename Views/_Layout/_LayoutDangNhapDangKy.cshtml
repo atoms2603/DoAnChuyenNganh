@@ -57,17 +57,32 @@
                         }
                         else
                         {
+
+
                             <div class="bg-dark row">
                                 <div class="col-md-4">
                                     &nbsp;
                                 </div>
                                 <div class="col-md-4 dropdown">
-                                    <a href="@Url.Content("/User/ThongTinChiTietUser/"+@userlogin.taikhoan)" class="text-light text-decoration-none">@userlogin.taikhoan</a>
+                                    @if ((bool)Session["AdminCheckLogin"] == false) {
+                                        <a href="@Url.Content("/User/ThongTinChiTietUser/"+userlogin.taikhoan)" class="text-light text-decoration-none">@userlogin.taikhoan</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Content("/Sach/QuanLySach")" class="text-light text-decoration-none">Quản trị viên</a>
+                                    }
                                     <div class="dropdown-menu bg-secondary text-wrap">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-md-12 text-md-left">
-                                                    <a href="@Url.Content("/User/ThongTinChiTietUser/"+@userlogin.taikhoan)" class="text-decoration-none text-light">Tài khoản</a>
+                                                    @if((bool)Session["AdminCheckLogin"] == false)
+                                                    {
+                                                        <a href="@Url.Content("/User/ThongTinChiTietUser/"+userlogin.taikhoan)" class="text-decoration-none text-light">Tài khoản</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@Url.Content("/Sach/QuanLySach")" class="text-decoration-none text-light">Quản lý</a>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -135,10 +150,16 @@
                     @if ((bool)Session["isLogin"])
                     {
 
+
+
                         <div class="col-md-2" style="background-color:#CCCCCC">
                             <div class="card-header"><h3 class="text-center">Tài khoản người dùng</h3></div>
                             <div class="list-group rounded">
                                 <a href="#" class="text-decoration-none text-dark list-group-item-action list-group-item list-group-item-dark">Thông tin người dùng</a>
+                                @if (Session["AdminLogin"] != null)
+                                {
+                                    <a href="#" class="text-decoration-none text-dark list-group-item-action list-group-item list-group-item-success">Quản lý web & người dùng</a>
+                                }
                                 <a href="#" class="text-decoration-none text-dark list-group-item-action list-group-item list-group-item-secondary">Bảo mật tài khoản</a>
                                 <a href="#" class="text-decoration-none text-dark list-group-item-action list-group-item list-group-item-dark">Sách đã lưu</a>
                                 <a href="#" class="text-decoration-none list-group-item-action text-dark list-group-item list-group-item-secondary">Thiết lập tài khoản</a>

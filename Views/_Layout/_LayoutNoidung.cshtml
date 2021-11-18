@@ -62,12 +62,25 @@
                                     &nbsp;
                                 </div>
                                 <div class="col-md-4 dropdown">
-                                    <a href="@Url.Content("/User/ThongTinChiTietUser/"+@userlogin.taikhoan)" class="text-light text-decoration-none">@userlogin.taikhoan</a>
+                                    @if ((bool)Session["AdminCheckLogin"] == false)
+                                    {
+                                        <a href="@Url.Content("/User/ThongTinChiTietUser/"+@userlogin.taikhoan)" class="text-light text-decoration-none">@userlogin.taikhoan</a>
+                                    }else
+                                    {
+                                        <a href="@Url.Content("/Sach/QuanLySach")" class="text-light text-decoration-none">Quản trị viên</a>
+                                    }
                                     <div class="dropdown-menu bg-secondary text-wrap">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-md-12 text-md-left">
-                                                    <a href="@Url.Content("/User/ThongTinChiTietUser/"+@userlogin.taikhoan)" class="text-decoration-none text-light">Tài khoản</a>
+                                                    @if ((bool)Session["AdminCheckLogin"] == false)
+                                                    {
+                                                        <a href="@Url.Content("/User/ThongTinChiTietUser/" + @userlogin.taikhoan)" class="text-decoration-none text-light">Tài khoản</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@Url.Content("/Sach/QuanLySach")" class="text-light text-decoration-none">Quản lý</a>
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -124,42 +137,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-1">&nbsp;</div>
-                    <div class="col-md-3">
-                        <ul class="nav list-group-horizontal">
-                            <li class="nav-item list-group-item bg-secondary dropdown">
-                                <a href="#" class="text-decoration-none text-light" style="text-align:center"><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;Quản lý</a>
-                                <div class="dropdown-menu bg-secondary">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <a href="@Url.Content("/Sach/QuanLySach")" class="text-decoration-none text-light">Quản lý sách</a>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <a href="@Url.Content("/TheLoai/QuanLyTheLoai")" class="text-decoration-none text-light">Quản thể loại</a>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <a href="@Url.Content("/TacGia/QuanLyTacGia")" class="text-decoration-none text-light">Quản lý tác giả</a>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <a href="@Url.Content("/NhaXuatBan/QuanLyNhaXuatBan")" class="text-decoration-none text-light">Quản lý nhà xuất bản</a>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        
-                    </div>
+                    <div class="col-md-4">&nbsp;</div>
                 </div>
             </div>
             <div class="card-body" style="background-color:#EEEEEE">

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Linq;
-
+using BitMiracle.Docotic.Pdf;
 
 namespace QLSachOnline.Controllers
 {
@@ -174,9 +174,48 @@ namespace QLSachOnline.Controllers
         //HIỂN THỊ NỘI DUNG CHƯƠNG
         public ActionResult formNoiDung(string id)
         {
-            return View();
+            string pathFile = @"D:\Lập trình\ĐỒ ÁN CHUYÊN NGÀNH\Dữ liệu và phân tích\QLSachOnline\QLSachOnline\Files_Truyen\";
+            //Lấy mã sách và mã chương
+            string[] arrayMa = id.Split('-');
+            string maSach = arrayMa[0];
+            string maChuong = arrayMa[1];
+
+            Models.chuong chuong = new Models.chuong();
+            Models.sach sach = db.saches.Find(maSach);
+
+
+            foreach (var item in sach.chuongs)
+            {
+                if (item.machuong == maChuong)
+                {
+                    if (item.noidung != null) { 
+                        string[] fotmatNoiDung = item.noidung.Split(',');
+                        if(fotmatNoiDung.Count() < 1) ViewBag.noiDung = docPdf(pathFile + item.noidung);
+                        else ViewBag.noiDung = docPdf(pathFile+fotmatNoiDung[0]);
+
+                        chuong = item;
+                        break;
+                    }
+                }
+            }
+
+            ViewBag.sachChon = chuong;
+            return View(sach);
         }
+        //ĐỌC FILE PDF
+        public string docPdf(string path)
+        {
+            using (PdfDocument pdf = new PdfDocument(path))
+            {
+                var options = new PdfTextExtractionOptions
+                {
+                    SkipInvisibleText = true,
+                    WithFormatting = true
+                };
 
-
+                string formattedText = pdf.GetText(options);
+                return formattedText;
+            }
+        }
     }
 }
