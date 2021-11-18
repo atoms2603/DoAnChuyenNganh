@@ -171,7 +171,12 @@ namespace QLSachOnline.Controllers
             return RedirectToAction("QuanLySach");
         }
 
-        
-        
+        //HIỂN THỊ NỘI DUNG CHƯƠNG
+        public ActionResult formNoiDung(string id)
+        {
+            return View();
+        }
+
+
     }
 }

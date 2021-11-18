@@ -101,7 +101,7 @@
                                         @foreach (var item in db.theloais)
                                         {
                                             <li class="w-100" style="margin:10px">
-                                                <a href="#" class="text-decoration-none text-dark">@item.tentl</a>
+                                                <a href="@Url.Content("/Home/formTheLoaiFilter/"+item.maloai)" class="text-decoration-none text-dark">@item.tentl</a>
                                             </li>
                                         }
                                     </ul>
@@ -131,10 +131,24 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-2">
-                        &nbsp;
-                    </div>
+                <div class="row h-100">
+                    @if ((bool)Session["isLogin"])
+                    {
+
+                        <div class="col-md-2" style="background-color:#CCCCCC">
+                            <div class="card-header"><h3 class="text-center">Tài khoản người dùng</h3></div>
+                            <div class="list-group rounded">
+                                <a href="#" class="text-decoration-none text-dark list-group-item-action list-group-item list-group-item-dark">Thông tin người dùng</a>
+                                <a href="#" class="text-decoration-none text-dark list-group-item-action list-group-item list-group-item-secondary">Bảo mật tài khoản</a>
+                                <a href="#" class="text-decoration-none text-dark list-group-item-action list-group-item list-group-item-dark">Sách đã lưu</a>
+                                <a href="#" class="text-decoration-none list-group-item-action text-dark list-group-item list-group-item-secondary">Thiết lập tài khoản</a>
+                                <a href="@Url.Content("/User/logout")" class="text-decoration-none list-group-item-action text-danger list-group-item list-group-item-dark">Đăng xuất</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {<div class="col-md-2">&nbsp;</div>}
+
                     <div class="col-md-8">
                         @RenderBody()
                     </div>

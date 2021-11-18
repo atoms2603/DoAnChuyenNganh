@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using System.Collections.Generic;
+
 
 namespace QLSachOnline.Controllers
 {
@@ -9,6 +11,18 @@ namespace QLSachOnline.Controllers
         public ActionResult Index()
         {
             return View(db.saches);
+        }
+
+        public ActionResult formTheLoaiFilter(string id)
+        {
+            List<Models.sach> dsSach = new List<Models.sach>();
+            Models.theloai tl = db.theloais.Find(id);
+            foreach (var item in tl.saches)
+            {
+                dsSach.Add(item);
+            }
+            ViewBag.tenTheLoai = tl.tentl;
+            return View(dsSach);
         }
     }
 }

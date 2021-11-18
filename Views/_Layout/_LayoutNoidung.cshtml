@@ -101,7 +101,7 @@
                                         @foreach (var item in db.theloais)
                                         {
                                             <li class="w-100" style="margin:10px">
-                                                <a href="#" class="text-decoration-none text-dark">@item.tentl</a>
+                                                <a href="@Url.Content("/Home/formTheLoaiFilter/"+item.maloai)" class="text-decoration-none text-dark">@item.tentl</a>
                                             </li>
                                         }
                                     </ul>
@@ -126,39 +126,7 @@
                     </div>
                     <div class="col-md-1">&nbsp;</div>
                     <div class="col-md-3">
-                        <ul class="nav list-group-horizontal">
-                            <li class="nav-item list-group-item bg-secondary dropdown">
-                                <a href="#" class="text-decoration-none text-light" style="text-align:center"><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;Quản lý</a>
-                                <div class="dropdown-menu bg-secondary">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <a href="@Url.Content("/Sach/QuanLySach")" class="text-decoration-none text-light">Quản lý sách</a>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <a href="@Url.Content("/TheLoai/QuanLyTheLoai")" class="text-decoration-none text-light">Quản thể loại</a>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <a href="@Url.Content("/TacGia/QuanLyTacGia")" class="text-decoration-none text-light">Quản lý tác giả</a>
-                                            </div>
-                                            
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <a href="@Url.Content("/NhaXuatBan/QuanLyNhaXuatBan")" class="text-decoration-none text-light">Quản lý nhà xuất bản</a>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        
+                        &nbsp;
                     </div>
                 </div>
             </div>
