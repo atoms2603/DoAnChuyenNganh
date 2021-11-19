@@ -24,5 +24,13 @@ namespace QLSachOnline.Controllers
             ViewBag.tenTheLoai = tl.tentl;
             return View(dsSach);
         }
+        public ActionResult logout()
+        {
+            Session["isLogin"] = false;
+            Session["AdminCheckLogin"] = false;
+            return RedirectToAction("Index", "Home", db.saches);
+        }
+
+
     }
 }

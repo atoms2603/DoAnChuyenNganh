@@ -18,6 +18,9 @@ namespace QLSachOnline
         {
             Session["Login"] = new Models.userlogin();
             Session["isLogin"] = false;
+
+            Session["AdminLogin"] = new Models.adminlogin();
+            Session["AdminCheckLogin"] = false;
         }
     }
 }

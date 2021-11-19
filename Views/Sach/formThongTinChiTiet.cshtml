@@ -300,7 +300,17 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-2">&nbsp;</div>
-                                                <div class="col-md-8"><input type="file" name="noidung" class="form-control" value="@item.noidung"/></div>
+                                                <div class="col-md-8">
+                                                    <input type="file" name="noidung" id="fileNoiDung" class="form-control" value="@item.noidung"/>
+                                                    <input type="text" name="noidung" id="txtNoiDung" value="" hidden/>
+                                                    <script type="text/javascript">
+                                                        $().ready(function () {
+                                                            $('fileNoiDung').change(function () {
+                                                                $('txtNoiDung').val($('fileNoiDung').val());
+                                                            });
+                                                        })
+                                                    </script>
+                                                </div>
                                                 <div class="col-md-2">&nbsp;</div>
                                             </div>
                                             <div class="row">&nbsp;</div>

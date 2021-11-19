@@ -34,7 +34,8 @@ namespace QLSachOnline.Controllers
                     if (x.matkhau == mk)
                     {
                         Session["AdminLogin"] = x;
-                        Session["isAdminLogin"] = true;
+                        Session["AdminCheckLogin"] = true;
+                        Session["isLogin"] = true;
                         return RedirectToAction("QuanLySach","Sach");
                     }
                 }
@@ -42,10 +43,6 @@ namespace QLSachOnline.Controllers
                 return RedirectToAction("AdminLogin");
             }
         }
-        public ActionResult logout()
-        {
-            Session["isAdminLogin"] = false;
-            return View("~/Views/Home/Index.cshtml", db.saches);
-        }
+
     }
 }

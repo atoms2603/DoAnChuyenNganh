@@ -72,10 +72,6 @@ namespace QLSachOnline.Controllers
             }
         }
 
-        public ActionResult logout()
-        {
-            Session["isLogin"] = false;
-            return View("~/Views/Home/Index.cshtml", db.saches);
-        }
+        
     }
 }
