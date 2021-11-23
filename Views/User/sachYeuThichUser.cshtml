@@ -1,0 +1,95 @@
+﻿@model IEnumerable<QLSachOnline.Models.sach>
+@{
+    ViewBag.Title = "sachYeuThichUser";
+    Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-md-1">&nbsp;</div>
+    <div class="col-md-11"><h2>Danh sách yêu thích</h2></div>
+</div>
+<div>
+    <div class="row">
+        <div class="col-md-9 form-group">
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-4 font-weight-bold">Tên sách</div>
+                <div class="col-md-4 font-weight-bold">Thể loại</div>
+                <div class="col-md-2 font-weight-bold">Giá</div>
+                <div class="col-md-1">&nbsp;</div>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="row">
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-4">
+                        <a href="@Url.Content("/Sach/formThongTinChiTiet/" + item.masach)">@item.tensach</a>
+                    </div>
+                    <div class="col-md-4">
+                        @foreach (var item2 in item.theloais)
+                        {
+                            <span> @item2.tentl &nbsp;</span>
+                        }
+                    </div>
+                    <div class="col-md-2">
+                        @item.phi
+                    </div>
+                    <div class="col-md-1">&nbsp;</div>
+                </div>
+            }
+            <!--DATA FAKE-->
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-4">
+                    Hành trình tìm lại cuộc sống
+                </div>
+                <div class="col-md-4">
+                    Phiêu lưu Hành động
+                </div>
+                <div class="col-md-2">
+                    0
+                </div>
+                <div class="col-md-1">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-4">
+                   cuộc sống 22
+                </div>
+                <div class="col-md-4">
+                    Phiêu lưu
+                </div>
+                <div class="col-md-2">
+                    100000
+                </div>
+                <div class="col-md-1">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-11"><h2>Danh sách chưa trả phí</h2></div>
+                <!--DATA FAKE-->
+                <div class="row">
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-4">
+                        cuộc sống 22
+                    </div>
+                    <div class="col-md-4">
+                        Phiêu lưu
+                    </div>
+                    <div class="col-md-2">
+                        100000
+                    </div>
+                    <div class="col-md-1">&nbsp;</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 form-group">
+            <div class="row"><h4>Lọc</h4></div>
+            <div class="row"><div class="col-md-12 form-control"><input type="checkbox" name="name" value="" class="form-check" />Tất cả</div></div>
+            <div class="row"><div class="col-md-12 form-control"><input type="checkbox" name="name" value="" class="form-check" />Chưa thanh toán</div></div>
+            <div class="row"><div class="col-md-12 form-control"><input type="checkbox" name="name" value="" class="form-check" />Đã thanh toán</div></div>
+            <div class="row"><div class="col-md-12 form-control"><input type="button" name="name" value="Lọc" class="btn btn-primary" /></div></div>
+        </div>
+    </div>
+</div>

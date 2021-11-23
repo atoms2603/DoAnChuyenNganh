@@ -9,7 +9,7 @@
 <div>&nbsp;</div>
 <div class="row">
     <div class="col-md-5">&nbsp;</div>
-    
+
     <div class="col-md-2">
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,21 +38,89 @@
 
 <div>&nbsp;</div>
 
+@if (ViewBag.oneChuong != null)
+{
+
+
+<!----o dau-->
+
+
 <div class="row">
-    <div class="col-md-4">&nbsp;</div>
-    <div class="col-md-4">
-        <div class="row">
-            <div class="col-md-6">
-                <ul class="pagination">
-                    <li class="page-item" ><a class="page-link" href="#">Tập trước</a></li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <ul class="pagination">
-                    <li class="page-item" ><a class="page-link" href="#">Tập tiếp</a></li>
-                </ul>
+        <div class="col-md-5">&nbsp;</div>
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="pagination">
+                        <li class="page-item"><button type="button" class="page-link" disabled>Tập tiếp</button></li>
+                    </ul>
+                </div>
             </div>
         </div>
+        <div class="col-md-5">&nbsp;</div>
     </div>
-    <div class="col-md-4">&nbsp;</div>
-</div>
+}
+else { 
+if (ViewBag.previousChuong == null)
+{
+
+    <!----o dau-->
+    <div class="row">
+        <div class="col-md-5">&nbsp;</div>
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+ ViewBag.nextChuong as string)">Tập tiếp</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">&nbsp;</div>
+    </div>
+
+
+}
+else if (ViewBag.nextChuong == null)
+{
+
+
+    <!----o cuoi-->
+    <div class="row">
+        <div class="col-md-5">&nbsp;</div>
+        <div class="col-md-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+ ViewBag.previousChuong as string)">Tập trước</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">&nbsp;</div>
+    </div>
+
+
+}
+else
+{
+    <!----o giua-->
+    <div class="row">
+        <div class="col-md-4">&nbsp;</div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+ ViewBag.previousChuong as string)">Tập trước</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+ ViewBag.nextChuong as string)">Tập tiếp</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">&nbsp;</div>
+    </div>
+}
+}
