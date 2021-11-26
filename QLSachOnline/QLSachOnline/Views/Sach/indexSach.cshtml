@@ -1,0 +1,95 @@
+﻿@model QLSachOnline.Models.sach
+@{
+    ViewBag.Title = "Tên sách";
+    Layout = "~/Views/_Layout/_LayoutNoidung.cshtml";
+}
+
+<!-- ======= Portfolio Details Section ======= -->
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+
+        <div class="row gy-4">
+
+            <div class="col-lg-6">
+                <div class="col-md-6 col-lg-6 mb-5 mb-lg-0">
+
+                    <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+                        <img src="@Model.hinhanh" class="img-fluid" alt="">
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="portfolio-info">
+                    <h3>Giới thiệu</h3>
+                    <ul>
+                        <li><strong>Tên truyện</strong>: @Model.tensach</li>
+
+                        <li>
+                            <strong>Thể loại</strong>:
+                            @foreach (var item in Model.theloais)
+                            {
+                                <p>@item.tentl &nbsp;&nbsp;&nbsp;</p>
+                            }
+                        </li>
+                        <li>
+                            <strong>Tác giả</strong>:
+                            @foreach (var item in Model.tacgias)
+                            {
+                                <p>@item.tentg &nbsp;&nbsp;</p>
+                            }
+                        </li>
+
+                        <li><strong>Năm xuất bản</strong>: @Model.namxuatban</li>
+                        <li><strong>Nhà xuất bản</strong>: @Model.nhaxuatban.tennhaxuatban</li>
+                        <li>&nbsp;</li>
+                        <li>
+                            <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+Model.chuongs.First().machuong)" class="btn btn-primary">Đọc</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="#" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="portfolio-description">
+                    <h2>Tóm tắt</h2>
+                    <p>
+                        Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- ======= Chuong Section ======= -->
+        <section id="faq" class="faq section-bg">
+            <div class="container" data-aos="fade-up">
+
+                <div class="section-title">
+                    <h2>Chương</h2>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-xl-10">
+                        <ul class="faq-list">
+                            @foreach (var item in Model.chuongs)
+                            {
+                                <li>
+                                    <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+item.machuong)" class="collapsed question">@item.tenchuong</a>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </section><!-- End Frequently Asked Questions Section -->
+
+
+
+    </div>
+</section><!-- End Portfolio Details Section -->

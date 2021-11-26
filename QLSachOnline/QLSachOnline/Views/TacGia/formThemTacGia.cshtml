@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "Thêm tác giả";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
+}
+
+
+<div class="container-fluid">
+    <form action="@Url.Content("/TacGia/themTacGia")" method="post">
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-1">
+                <p>
+                    <a href="@Url.Content("/TacGia/QuanLyTacGia")" class="btn btn-primary">Trở về</a>
+                </p>
+            </div>
+            <div class="col-md-10">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-11"><h2>Thêm tác giả</h2></div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Mã tác giả</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6">
+                <input type="text" name="matg" value="" class="form-control" onkeydown="checkcheck()"/>
+                @if (ViewBag.flagCo != null)
+                {
+                    <div class="alert alert-danger" id="pointCheck"><strong>Mã trùng!</strong></div>
+                }
+                @if (ViewBag.flagMaRong != null)
+                {
+                    <div class="alert alert-danger" id="pointCheck"><strong>Mã rỗng, vui lòng nhập mã!</strong></div>
+                }
+                <script type="text/javascript">
+                    function checkcheck() {
+                        if (!$('#pointCheck').is("hidden")) {
+                            document.getElementById("pointCheck").setAttribute("hidden", true);
+                        }
+                    }
+                </script>
+            </div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Tên tác giả</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="tentg" value="" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Ngày sinh</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="date" name="ngaysinh" value="" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-1 font-weight-bold">Giới tính</div>
+            <div class="col-md-3">
+                <input type="radio" name="gioitinh" value="true" checked />Nam
+                <input type="radio" name="gioitinh" value="false" />Nữ
+            </div>
+            <div class="col-md-7">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Quê quán</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="quequan" value="" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Nghệ danh</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="nghedanh" value="" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-2">
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </div>
+            <div class="col-md-9">&nbsp;</div>
+        </div>
+    </form>
+</div>

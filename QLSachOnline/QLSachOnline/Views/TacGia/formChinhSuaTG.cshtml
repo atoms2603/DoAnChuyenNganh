@@ -1,0 +1,120 @@
+﻿@model QLSachOnline.Models.tacgia
+@{
+    ViewBag.Title = "Chỉnh sửa tác gỉả";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
+}
+
+
+
+<div class="container-fluid">
+    <form action="@Url.Content("/TacGia/chinhSuaTG")" method="post">
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-1">
+                <p><a href="@Url.Content("/TacGia/QuanLyTacGia")" class="btn btn-primary">Trở về</a></p>
+            </div>
+            <div class="col-md-10">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><h2>Chỉnh sửa tác giả</h2></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Mã tác giả</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="matg" value="@Model.matg" class="form-control" readonly /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Tên tác giả</div>
+            <div class="col-md-1">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="tentg" value="@Model.tentg" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Ngày sinh</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            @if (Model.ngaysinh != null)
+            {
+                <div class="col-md-6">
+                    <input type="date" name="ngaysinh" value="@Model.ngaysinh.Value.ToString("yyyy-MM-dd")" class="form-control" />
+                </div>
+            }
+            else
+            {
+                <div class="col-md-6">
+                    <input type="date" name="ngaysinh" value="" class="form-control" />
+                </div>
+            }
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-1">Giới tính</div>
+            @if (Model.gioitinh.Value ==  true)
+            {
+                <div class="col-md-3">
+                    <input type="radio" name="gioitinh" value="true" checked />Nam
+                    <input type="radio" name="gioitinh" value="false" />Nữ
+                </div>
+            }
+            else
+            {
+                <div class="col-md-3">
+                    <input type="radio" name="gioitinh" value="true" />Nam
+                    <input type="radio" name="gioitinh" value="false" checked />Nữ
+                </div>
+            }
+            <div class="col-md-7">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Quê quán</div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="quequan" value="@Model.quequan" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6 font-weight-bold">Nghệ danh</div>
+            <div class="col-md-1">&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-6"><input type="text" name="nghedanh" value="@Model.nghedanh" class="form-control" /></div>
+            <div class="col-md-5">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+        <div class="row">
+            <div class="col-md-1">&nbsp;</div>
+            <div class="col-md-2">
+                <input type="submit" value="Chỉnh sửa" class="btn btn-primary" />
+            </div>
+            <div class="col-md-9">&nbsp;</div>
+        </div>
+        <div>&nbsp;</div>
+    </form>
+</div>

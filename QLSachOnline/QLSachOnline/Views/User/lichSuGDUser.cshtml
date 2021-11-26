@@ -1,0 +1,67 @@
+﻿@model QLSachOnline.Models.userlogin
+@{
+    ViewBag.Title = "lichSuGDUser";
+    Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-1">&nbsp;</div>
+    <div class="col-md-11"><h2>Lịch sử giao dịch</h2></div>
+</div>
+<div>
+    <div class="row">
+        <div class="col-md-9 form-group">
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-4 font-weight-bold">Ngày giao dịch</div>
+                <div class="col-md-3 font-weight-bold">Giá</div>
+                <div class="col-md-4">&nbsp;</div>
+            </div>
+            @foreach (var item in Model.giaodiches)
+            {
+                <div class="row">
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-4">
+                        @item.ngaygiaodich.ToString()
+                    </div>
+
+                    <div class="col-md-3">
+                        @item.sach.phi
+                    </div>
+                    <div class="col-md-4">&nbsp;</div>
+                </div>
+            }
+            <!--DATA FAKE-->
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-4">
+                    12 - 12 - 2019 21:33:10
+                </div>
+
+                <div class="col-md-3">
+                    300000
+                </div>
+                <div class="col-md-4">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-1">&nbsp;</div>
+                <div class="col-md-4">
+                    7 - 10 - 2021 8:34:20
+                </div>
+
+                <div class="col-md-3">
+                    5000000
+                </div>
+                <div class="col-md-4">&nbsp;</div>
+            </div>
+
+        </div>
+        <div class="col-md-3 form-group">
+            <div class="row"><h4>Lọc</h4></div>
+            <div class="row"><div class="col-md-12 form-control"><input type="checkbox" name="name" value="" class="form-check" />Tất cả</div></div>
+            <div class="row"><div class="col-md-12 form-control"><input type="checkbox" name="name" value="" class="form-check" />...</div></div>
+            <div class="row"><div class="col-md-12 form-control"><input type="checkbox" name="name" value="" class="form-check" />...</div></div>
+            <div class="row"><div class="col-md-12 form-control"><input type="button" name="name" value="Lọc" class="btn btn-primary" /></div></div>
+        </div>
+    </div>
+</div>
