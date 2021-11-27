@@ -1,26 +1,30 @@
 ﻿@model IEnumerable<QLSachOnline.Models.sach>
 @{
     ViewBag.Title = "formTheLoaiFilter";
-    Layout = "~/Views/_Layout/_LayoutMain.cshtml";
+    Layout = "~/Views/_Layout/_LayoutNoidung.cshtml";
 }
 
-<div class="container-fluid">
-    <h2>Danh sách sách theo thể loại: @ViewBag.tenTheLoai</h2>
-    <ul class="nav nav-tabs justify-content-center">
 
-        @{
-            foreach (var item in Model)
-            {
-                <li class="border w-25" style="padding:20px;margin:20px; background-color:white">
-                    <a href="@Url.Content("/Sach/indexSach/"+item.masach)"><img src="@Url.Content("/Images/Images_SP/Pro1.jpg")" class="img-fluid h-75 w-100" /></a>
-                    <span class="font-weight-bold">Tên sách:</span>@item.tensach <br />
-                    <span class="font-weight-bold">Thể loại:</span>
-                    @foreach (var item2 in item.theloais)
-                    {
-                        <span>@item2.tentl &nbsp;</span>
-                    }
-                </li>
-            }
-        }
-    </ul>
+<div class="section-title">
+    <h2>Thể loại</h2>
+    <h3>Danh sách theo thể loại:<span> @ViewBag.tenTheLoai</span></h3>
 </div>
+@{
+    foreach (var item in Model)
+    {
+    <div class="col-md-6 col-lg-3 col-12 d-flex align-items-stretch mb-5 mb-lg-0">
+        <a href="@Url.Content("/Sach/indexSach/"+item.masach)">
+            <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+                <img src="~/Images/Images_SP/Pro1.jpg" class="img-fluid" alt="">
+                <div>&nbsp;</div>
+                <h4 class="title"><a href="@Url.Content("/Sach/indexSach/"+item.masach)">@item.tensach</a></h4>
+                <h4 class="title"><a href="@Url.Content("/Sach/indexSach/"+item.masach)">Thể loại:</a></h4>
+                @foreach (var item2 in item.theloais)
+                {
+                    <span><a href="@Url.Content("/Home/formTheLoaiFilter/"+item2.maloai)" class="text-black">@item2.tentl</a> &nbsp;&nbsp;&nbsp;</span>
+                }
+            </div>
+        </a>
+    </div>
+    }
+}

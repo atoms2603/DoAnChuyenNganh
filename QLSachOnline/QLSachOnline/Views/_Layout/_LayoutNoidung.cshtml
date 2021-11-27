@@ -37,7 +37,7 @@
     <header id="header" class="d-flex align-items-center">
         <div class="container d-flex align-items-center justify-content-between">
 
-            <h1 class="logo"><a href="index.html">AtsBooks<span>.</span></a></h1>
+            <h1 class="logo"><a href="@Url.Content("/Home/Index")">AtsBooks<span>.</span></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo"><img src="~/assets/img/logo.png" alt=""></a>-->
 
@@ -64,8 +64,23 @@
 
                         </ul>
                     </li>
-                    <li><a class="nav-link scrollto" href="@Url.Content("/User/IndexDangNhap/")">Đăng nhập</a></li>
-                    <li><a class="nav-link scrollto" href="@Url.Content("/User/IndexDangKy/")">Đăng ký</a></li>
+                    @if ((bool)Session["isLogin"] == false)
+                    {
+                        <li><a class="nav-link scrollto" href="@Url.Content("/User/IndexDangNhap/")">Đăng nhập</a></li>
+                        <li><a class="nav-link scrollto" href="@Url.Content("/User/IndexDangKy/")">Đăng ký</a></li>
+                    }
+                    else
+                    {
+                        <li class="dropdown">
+                            <a href="#"><span>@userlogin.taikhoan</span> <i class="bi bi-chevron-down"></i></a>
+                            <ul>
+
+                                <li><a href="#">Thông tin</a></li>
+                                <li><a href="@Url.Content("/User/logout")">Đăng xuất</a></li>
+
+                            </ul>
+                        </li>
+                    }
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -94,14 +109,10 @@
 
         <div class="container py-4">
             <div class="copyright">
-                &copy; Copyright <strong><span>BizLand</span></strong>. All Rights Reserved
+                &copy; Copyright <strong><span>AtsBooks</span></strong>. All Rights Reserved
             </div>
             <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/bizland-bootstrap-business-template/ -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                ABC
             </div>
         </div>
     </footer><!-- End Footer -->

@@ -11,7 +11,7 @@
         <div class="row gy-4">
 
             <div class="col-lg-6">
-                <div class="col-md-6 col-lg-6 mb-5 mb-lg-0">
+                <div class="col-md-6 col-12 col-lg-6 mb-5 mb-lg-0">
 
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
                         <img src="@Model.hinhanh" class="img-fluid" alt="">
@@ -21,7 +21,7 @@
             </div>
 
 
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-6 col-12">
                 <div class="portfolio-info">
                     <h3>Giới thiệu</h3>
                     <ul>
@@ -31,14 +31,14 @@
                             <strong>Thể loại</strong>:
                             @foreach (var item in Model.theloais)
                             {
-                                <p>@item.tentl &nbsp;&nbsp;&nbsp;</p>
+                                <span><a href="@Url.Content("/Home/formTheLoaiFilter/"+item.maloai)" class="text-black">@item.tentl</a> &nbsp;&nbsp;&nbsp;</span>
                             }
                         </li>
                         <li>
                             <strong>Tác giả</strong>:
                             @foreach (var item in Model.tacgias)
                             {
-                                <p>@item.tentg &nbsp;&nbsp;</p>
+                                <span>@item.tentg &nbsp;&nbsp;</span>
                             }
                         </li>
 
