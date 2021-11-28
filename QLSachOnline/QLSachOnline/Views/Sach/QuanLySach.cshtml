@@ -1,0 +1,69 @@
+﻿@model IEnumerable<QLSachOnline.Models.sach>
+@{
+    ViewBag.Title = "Quản lý sách";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
+    IEnumerable<QLSachOnline.Models.tacgia> dsTG = ViewBag.dsTG as IEnumerable<QLSachOnline.Models.tacgia>;
+    IEnumerable<QLSachOnline.Models.theloai> dsTL = ViewBag.dsTL as IEnumerable<QLSachOnline.Models.theloai>;
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Quản lý sách</h2>
+                    <a href="@Url.Content("/Sach/formThemSach")" class="btn btn-primary">Thêm sách</a>
+                </div>
+                
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã sách</th>
+                                <th>Tên sách</th>
+                                <th>Thể loại</th>
+                                <th>Tác giả</th>
+                                <th>Phí</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(ModelItem => item.masach)</td>
+                                    <td><a href="@Url.Content("/Sach/formThongTinChiTiet/"+item.masach)" class="text-decoration-none">@Html.DisplayFor(ModelItem => item.tensach)</a></td>
+                                    <td>
+                                        @foreach (var item2 in dsTL)
+                                        {
+                                            if (item.theloais.Contains(item2))
+                                            {
+                                                <span> @item2.tentl &nbsp;</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @foreach (var item2 in dsTG)
+                                        {
+                                            if (item.tacgias.Contains(item2))
+                                            {
+                                                <span>@item2.tentg &nbsp;</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(ModelItem => item.phi)</td>
+                                    <td><a href="@Url.Content("/Sach/formXoaSach/"+item.masach)" class="btn btn-outline-primary">Xóa</a></td>
+                                    <td><a href="@Url.Content("/Sach/formChinhSua/"+item.masach)" class="btn btn-outline-primary">Chỉnh sửa</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    

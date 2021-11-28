@@ -1,0 +1,67 @@
+﻿@model QLSachOnline.Models.userlogin
+
+@{
+    ViewBag.Title = "thongTinNguoiDung";
+    Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h2>Thông tin: @Model.taikhoan</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.taikhoan)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.matkhau, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.matkhau, new { htmlAttributes = new { @class = "form-control", disabled="disabled"} })
+                @Html.ValidationMessageFor(model => model.matkhau, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.sdt, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sdt, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.sdt, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">Lịch sử giao dịch</div>
+            <div class="col-md-10" style="overflow-y: scroll; height:400px">
+                <div class="row">
+                    <div class="col-md-6 font-weight-bold">Ngày giao dịch</div>
+                    <div class="col-md-3 font-weight-bold">Sách</div>
+                    <div class="col-md-3 font-weight-bold">Giá</div>
+                </div>
+                @foreach (var item in Model.giaodiches)
+                {
+                    <div class="row">
+                        <div class="col-md-6">@item.ngaygiaodich.ToString()</div>
+                        <div class="col-md-3">@item.sach.tensach</div>
+                        <div class="col-md-3">@item.sach.phi</div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Cập nhật" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
