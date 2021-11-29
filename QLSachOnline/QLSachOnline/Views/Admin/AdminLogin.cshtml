@@ -4,33 +4,47 @@
     Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
 }
 
-<div class="container-fluid">
-    <h2 class="text-center">Đăng nhập quyền admin</h2>
-    <form action="@Url.Content("/Admin/DangNhap")" id="formID" method="post">
-        <div class="row">
-            <div class="col-md-3">&nbsp;</div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="taikhoan">Tài khoản:</label>
-                    <input type="text" class="form-control" placeholder="Tài khoản" name="taikhoan">
-                </div>
-                <div class="form-group">
-                    <label for="password">Mật khẩu:</label>
-                    <input type="password" class="form-control" placeholder="Mật khẩu" name="matkhau">
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox"> Remember me
-                    </label>
-                </div>
-                <input type="submit" class="btn btn-primary" id="btnLogin" value="Đăng nhập">
-                @if (ViewBag.flagCheckError != null)
-                {
-                    <div class="text-danger" id="divDanger">Bạn đã nhập sai tài khoản hoặc mật khẩu</div>
-                }
-            </div>
-            <div class="col-md-3">&nbsp;</div>
-        </div>
-    </form>
-</div>
+<!-- ======= Portfolio Details Section ======= -->
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+        <div class="row gy-4">
 
+            <div class="col-lg-3 ">&nbsp;</div>
+            <div class="col-lg-6 ">
+                <div class="about section-bg text-center" style="border-radius: 30px; align-content: center;">
+                    <div>&nbsp;</div>
+                    <h2>Administrator</h2>
+                    <form action="@Url.Content("/Admin/DangNhap/")" id="formID" method="post">
+                        <div class="row">
+                            <div class="col-md-3 col-1 col-lg-3">&nbsp;</div>
+                            <div class="col-md-6 col-10 col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Tài khoản" name="taikhoan">
+                                </div>
+                                <div>&nbsp;</div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" placeholder="Mật khẩu" name="matkhau">
+                                </div>
+                                <div class="form-group form-check">
+                                    <label class="form-check-label" style="float: left;">
+                                        <input class="form-check-input" type="checkbox"> Remember me
+                                    </label>
+                                </div>
+                                <div>&nbsp;</div>
+                                <input type="submit" class="btn btn-primary" id="btnLogin" value="Đăng nhập">
+                                <div>&nbsp;</div>
+                                @if (ViewBag.flagCheckError != null)
+                                {
+                                    <div class="text-danger" id="divDanger">Bạn đã nhập sai tài khoản hoặc mật khẩu</div>
+                                }
+                            </div>
+                            <div class="col-md-3 col-1 col-lg-3">&nbsp;</div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-3 ">&nbsp;</div>
+
+        </div>
+    </div>
+</section><!-- End Portfolio Details Section -->

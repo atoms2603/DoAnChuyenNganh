@@ -9,72 +9,61 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-1">&nbsp;</div>
-        <div class="col-md-3"><h2>Quản lý sách</h2></div>
-        <div class="col-md-8">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="col-md-1">&nbsp;</div>
-        <div class="col-md-2">
-            <a href="@Url.Content("/Sach/formThemSach")" class="btn btn-primary">Thêm sách</a>
-        </div>
-        <div class="col-md-7">&nbsp;</div>
-        <div class="col-md-2">
-            <button class="btn btn-primary">Sort</button>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-md-12">
-            &nbsp;
+            <div class="card">
+                <div class="card-header">
+                    <h2>Quản lý sách</h2>
+                    <a href="@Url.Content("/Sach/formThemSach")" class="btn btn-primary">Thêm sách</a>
+                </div>
+                
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã sách</th>
+                                <th>Tên sách</th>
+                                <th>Thể loại</th>
+                                <th>Tác giả</th>
+                                <th>Phí</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(ModelItem => item.masach)</td>
+                                    <td><a href="@Url.Content("/Sach/formThongTinChiTiet/"+item.masach)" class="text-decoration-none">@Html.DisplayFor(ModelItem => item.tensach)</a></td>
+                                    <td>
+                                        @foreach (var item2 in dsTL)
+                                        {
+                                            if (item.theloais.Contains(item2))
+                                            {
+                                                <span> @item2.tentl &nbsp;</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @foreach (var item2 in dsTG)
+                                        {
+                                            if (item.tacgias.Contains(item2))
+                                            {
+                                                <span>@item2.tentg &nbsp;</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>@Html.DisplayFor(ModelItem => item.phi)</td>
+                                    <td><a href="@Url.Content("/Sach/formXoaSach/"+item.masach)" class="btn btn-outline-primary">Xóa</a></td>
+                                    <td><a href="@Url.Content("/Sach/formChinhSua/"+item.masach)" class="btn btn-outline-primary">Chỉnh sửa</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-1">&nbsp;</div>
-        <div class="col-md-1 font-weight-bold">Mã </div>
-        <div class="col-md-2 font-weight-bold">Tên sách</div>
-        <div class="col-md-2 font-weight-bold">Thể loại</div>
-        <div class="col-md-2 font-weight-bold">Tác giả</div>
-        <div class="col-md-1 font-weight-bold">Giá</div>
-
-        <div class="col-md-3">&nbsp;</div>
-
-    </div>
-    @foreach (var item in Model)
-    { 
-<div class="row">
-    <div class="col-md-1">&nbsp;</div>
-    <div class="col-md-1">
-        @item.masach
-    </div>
-    <div class="col-md-2">
-        <a href="@Url.Content("/Sach/formThongTinChiTiet/"+item.masach)">@item.tensach</a>
-    </div>
-    <div class="col-md-2">
-        @foreach (var item2 in dsTL)
-        {
-            if (item.theloais.Contains(item2))
-            {
-                <span> @item2.tentl &nbsp;</span>
-            }
-        }
-    </div>
-    <div class="col-md-2">
-        @foreach (var item2 in dsTG)
-        {
-            if (item.tacgias.Contains(item2))
-            {
-                <span>@item2.tentg &nbsp;</span>
-            }
-        }
-    </div>
-    <div class="col-md-1">
-        @item.phi
-    </div>
-    <div class="col-md-2 btn-group">
-        <a href="@Url.Content("/Sach/formXoaSach/"+item.masach)" class="btn btn-outline-primary">Xóa</a>
-        <a href="@Url.Content("/Sach/formChinhSua/"+item.masach)" class="btn btn-outline-primary">Chỉnh sửa</a>
-    </div>
-    <div class="col-md-1">&nbsp;</div>
 </div>
-    }
-</div>
+
+    

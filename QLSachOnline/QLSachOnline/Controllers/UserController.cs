@@ -95,13 +95,32 @@ namespace QLSachOnline.Controllers
 
         public ActionResult sachYeuThichUser(string id)
         {
+            if (TempData["idUser"] != null)
+                id = TempData["idUser"] as string;
             Models.userlogin userlogin = db.userlogins.Find(id);
             List<Models.sach> dsSachUser = new List<Models.sach>();
-            foreach (var item in userlogin.luusaches)
+            foreach (var item in db.luusaches)
             {
-                dsSachUser.Add(db.saches.Find(item.masach));
+                if(item.taikhoan==id)
+                    dsSachUser.Add(db.saches.Find(item.masach));
             }
             return View(dsSachUser);
+        }
+
+        public ActionResult huyYeuThich(string id)
+        {
+            Models.userlogin userlogin = Session["Login"] as Models.userlogin;
+            foreach (var item in db.luusaches)
+            {
+                if(id==item.masach&&userlogin.taikhoan==item.taikhoan)
+                {
+                    db.luusaches.Remove(item);
+                    break;
+                }    
+            }
+            db.SaveChanges();
+            TempData["idUser"] = userlogin.taikhoan;
+            return RedirectToAction("sachYeuThichUser");
         }
 
         public ActionResult lichSuGDUser(string id)

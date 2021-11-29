@@ -174,7 +174,9 @@ namespace QLSachOnline.Controllers
         //HIỂN THỊ NỘI DUNG CHƯƠNG
         public ActionResult formNoiDung(string id)
         {
-            string pathFile = @"D:\Lập trình\ĐỒ ÁN CHUYÊN NGÀNH\Dữ liệu và phân tích\QLSachOnline\QLSachOnline\Files_Truyen\";
+            string pathFile = Server.MapPath("/Files_Truyen/");
+
+
             //Lấy mã sách và mã chương
             string[] arrayMa = id.Split('-');
             string maSach = arrayMa[0];
@@ -242,6 +244,31 @@ namespace QLSachOnline.Controllers
                 string formattedText = pdf.GetText(options);
                 return formattedText;
             }
+        }
+
+
+        //Xử lý sách
+        public ActionResult yeuThich(string id)
+        {
+            if ((bool)Session["isLogin"]) {
+                Models.userlogin user = Session["Login"] as Models.userlogin;
+                foreach (var item in db.luusaches)
+                {
+                    if (item.masach == id && user.taikhoan==item.taikhoan)
+                    {
+                        return View("indexSach", db.saches.Find(id));
+                    }
+
+                }
+                Models.luusach luusach = new Models.luusach();
+                luusach.masach = id;
+                luusach.taikhoan = user.taikhoan;
+                luusach.ngayluu = System.DateTime.Now;
+                db.luusaches.Add(luusach);
+                db.SaveChanges();
+                return View("indexSach",db.saches.Find(id));
+            }
+            return RedirectToAction("IndexDangNhap", "User");
         }
     }
 }

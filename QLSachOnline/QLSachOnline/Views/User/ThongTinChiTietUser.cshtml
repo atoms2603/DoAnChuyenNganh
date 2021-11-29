@@ -5,13 +5,63 @@
     Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
 }
 
-<h2>ThongTinChiTietUser</h2>
+<!-- ======= TAI KHOAN Section ======= -->
+<section id="services" class="services">
+    <div class="container" data-aos="fade-up">
 
-<div>
-    <h4>Đăng nhập thành công</h4>
-    <div class="row">
-        
-        <h2 style="color:red">UNDER MAINTENANCE</h2>
+        <div class="section-title">
+            <h2>Tài khoản</h2>
+            <h3>ID: <span>@Model.taikhoan</span></h3>
+            <p>Bạn có thể chọn các mục sau để điều chỉnh tài khoản.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <a href="@Url.Content("/User/thongTinNguoiDung/"+Model.taikhoan)" style="height: 100%; width: 100%;">
+                    <div class="icon-box">
+                        <div class="icon"><i class="fas fa-info"></i></div>
+                        <h4>Thông tin</h4>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+                <a href="@Url.Content("/User/sachYeuThichUser/"+Model.taikhoan)" style="height: 100%; width: 100%;">
+                    <div class="icon-box">
+                        <div class="icon"><i class="fas fa-book"></i></div>
+                        <h4>Sách yêu thích</h4>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
+                <a href="#" style="height: 100%; width: 100%;">
+                    <div class="icon-box">
+                        <div class="icon"><i class="fas fa-cog"></i></div>
+                        <h4>Thiết lập tài khoản</h4>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="100">
+                <a href="@Url.Content("/User/lichSuGDUser/"+Model.taikhoan)" style="height: 100%; width: 100%;">
+                    <div class="icon-box">
+                        <div class="icon"><i class="fas fa-money-bill"></i></div>
+                        <h4>Lịch sử giao dịch</h4>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" data-aos="zoom-in" data-aos-delay="200">
+                <a href="@Url.Content("/User/logout/")" style="height: 100%; width: 100%;">
+                    <div class="icon-box" style="height: 100%; width: 100%;">
+                        <div class="icon"><i class="fas fa-sign-out-alt"></i></div>
+                        <h4>Đăng xuất</h4>
+                    </div>
+                </a>
+            </div>
+
+        </div>
 
     </div>
- </div>
+</section><!-- End TAI KHOAN Section -->

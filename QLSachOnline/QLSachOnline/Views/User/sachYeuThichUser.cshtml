@@ -4,92 +4,23 @@
     Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
 }
 
-
-<div class="row">
-    <div class="col-md-1">&nbsp;</div>
-    <div class="col-md-11"><h2>Danh sách yêu thích</h2></div>
+<div class="section-title">
+    <h2>Danh sách yêu thích</h2>
 </div>
-<div>
-    <div class="row">
-        <div class="col-md-9 form-group">
-            <div class="row">
-                <div class="col-md-1">&nbsp;</div>
-                <div class="col-md-4 font-weight-bold">Tên sách</div>
-                <div class="col-md-4 font-weight-bold">Thể loại</div>
-                <div class="col-md-2 font-weight-bold">Giá</div>
-                <div class="col-md-1">&nbsp;</div>
-            </div>
-            @foreach (var item in Model)
+@foreach (var item in Model){
+<div class="col-md-6 col-lg-3 col-12 d-flex align-items-stretch mb-5 mb-lg-0">
+    <a href="@Url.Content("/Sach/indexSach/"+item.masach)">
+        <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+            <img src="~/Images/Images_SP/Pro1.jpg" class="img-fluid" alt="">
+            <div>&nbsp;</div>
+            <h4 class="title"><a href="@Url.Content("/Sach/indexSach/"+item.masach)">@item.tensach</a></h4>
+            <h4 class="title"><a href="@Url.Content("/Sach/indexSach/"+item.masach)">Thể loại:</a></h4>
+            @foreach (var item2 in item.theloais)
             {
-                <div class="row">
-                    <div class="col-md-1">&nbsp;</div>
-                    <div class="col-md-4">
-                        <a href="@Url.Content("/Sach/formThongTinChiTiet/" + item.masach)">@item.tensach</a>
-                    </div>
-                    <div class="col-md-4">
-                        @foreach (var item2 in item.theloais)
-                        {
-                            <span> @item2.tentl &nbsp;</span>
-                        }
-                    </div>
-                    <div class="col-md-2">
-                        @item.phi
-                    </div>
-                    <div class="col-md-1">&nbsp;</div>
-                </div>
+                <span><a href="@Url.Content("/Home/formTheLoaiFilter/"+item2.maloai)" class="text-black">@item2.tentl</a> &nbsp;&nbsp;&nbsp;</span>
             }
-            <!--DATA FAKE-->
-            <div class="row">
-                <div class="col-md-1">&nbsp;</div>
-                <div class="col-md-4">
-                    Hành trình tìm lại cuộc sống
-                </div>
-                <div class="col-md-4">
-                    Phiêu lưu Hành động
-                </div>
-                <div class="col-md-2">
-                    0
-                </div>
-                <div class="col-md-1">&nbsp;</div>
-            </div>
-            <div class="row">
-                <div class="col-md-1">&nbsp;</div>
-                <div class="col-md-4">
-                   cuộc sống 22
-                </div>
-                <div class="col-md-4">
-                    Phiêu lưu
-                </div>
-                <div class="col-md-2">
-                    100000
-                </div>
-                <div class="col-md-1">&nbsp;</div>
-            </div>
-            <div class="row">
-                <div class="col-md-1">&nbsp;</div>
-                <div class="col-md-11"><h2>Danh sách chưa trả phí</h2></div>
-                <!--DATA FAKE-->
-                <div class="row">
-                    <div class="col-md-1">&nbsp;</div>
-                    <div class="col-md-4">
-                        cuộc sống 22
-                    </div>
-                    <div class="col-md-4">
-                        Phiêu lưu
-                    </div>
-                    <div class="col-md-2">
-                        100000
-                    </div>
-                    <div class="col-md-1">&nbsp;</div>
-                </div>
-            </div>
+            <a href="@Url.Content("/User/huyYeuThich/"+item.masach)" class="btn btn-outline-danger text-black">Bỏ thích</a>
         </div>
-        <div class="col-md-3 form-group">
-            <div class="row"><h4>Lọc</h4></div>
-            <div class="row"><div class="col-md-12 form-control"><input type="checkbox" name="name" value="" class="form-check" />Tất cả</div></div>
-            <div class="row"><div class="col-md-12 form-control"><input type="checkbox" name="name" value="" class="form-check" />Chưa thanh toán</div></div>
-            <div class="row"><div class="col-md-12 form-control"><input type="checkbox" name="name" value="" class="form-check" />Đã thanh toán</div></div>
-            <div class="row"><div class="col-md-12 form-control"><input type="button" name="name" value="Lọc" class="btn btn-primary" /></div></div>
-        </div>
-    </div>
+    </a>
 </div>
+}
