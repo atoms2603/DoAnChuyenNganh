@@ -15,9 +15,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="~/adminlte3/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/adminlte3/dist/css/adminlte.min.css">
-    <!--FONTAWSOME-->
-    <link href="~/fontawesome/css/all.min.css" rel="stylesheet" />
-    <script src="~/fontawesome/js/all.min.js"></script>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 
 </head>
 <body class="hold-transition sidebar-mini">
@@ -150,7 +149,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper d-flex justify-content-center">
             <!-- Main content -->
             @RenderBody()
             <!-- /.content -->
@@ -165,6 +164,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- ./wrapper -->
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/adminlte3/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="~/adminlte3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

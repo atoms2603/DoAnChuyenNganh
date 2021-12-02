@@ -88,6 +88,17 @@ namespace QLSachOnline.Controllers
             return View(db.userlogins.Find(id));
         }
 
+        [HttpPost]
+        public ActionResult capNhatThongTin(Models.userlogin usr)
+        {
+            Models.userlogin userlogin = db.userlogins.Find(usr.taikhoan);
+            if (Request["matkau"] != null) userlogin.matkhau = usr.matkhau;
+            if (Request["sdt"] != null) userlogin.sdt = usr.sdt;
+            if (Request["email"] != null) userlogin.email = usr.email;
+            db.SaveChanges();
+            return Json(1, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult baoMatThietLap(string id)
         {
             return View(db.userlogins.Find(id));

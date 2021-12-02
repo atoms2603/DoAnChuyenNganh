@@ -12,40 +12,21 @@ namespace QLSachOnline.Controllers
         // GET: NhaXuatBan
         public ActionResult QuanLyNhaXuatBan()
         {
-            if (TempData["maTrung"] != null)
-                ViewBag.flagCo = true;
-            if (TempData["maRong"] != null)
-                ViewBag.flagMaRong = true;
-            return View(db.nhaxuatbans);
+            return View();
         }
         [HttpPost]
         public ActionResult themNhaXuatBan(Models.nhaxuatban nxb)
         {
-            Models.nhaxuatban x = db.nhaxuatbans.Find(nxb.manhaxuatban);
-            if (Request["manhaxuatban"].ToString() == "")
-            {
-                TempData["maRong"] = true;
-                return RedirectToAction("QuanLyNhaXuatBan");
-            }
             if (ModelState.IsValid)
             {
-                if(x == null) {
+                if(db.nhaxuatbans.Find(nxb.manhaxuatban) == null) {
                     nxb.manhaxuatban = nxb.manhaxuatban.ToUpper();
                     db.nhaxuatbans.Add(nxb);
                     db.SaveChanges();
                 }
-                else
-                {
-                    TempData["maTrung"] = true;
-                }
+                ModelState.AddModelError("manhaxuatban", "Mã trùng, Vui lòng nhập lại !");
             }
-            return RedirectToAction("QuanLyNhaXuatBan");
-        }
-        public ActionResult xoaNhaXuatBan(string id)
-        {
-            if (db.nhaxuatbans.Find(id).saches.Count == 0)
-                ViewBag.flagXoa = true;
-            return View(db.nhaxuatbans.Find(id));
+            return View("QuanLyNhaXuatBan");
         }
 
         [HttpPost]
@@ -63,8 +44,10 @@ namespace QLSachOnline.Controllers
         public ActionResult chinhSuaNXB(string id)
         {
             Models.nhaxuatban cnNXB = db.nhaxuatbans.Find(id);
-            cnNXB.tennhaxuatban = Request["tennhaxuatban"].ToString();
-            cnNXB.diachi = Request["diachi"].ToString();
+            if(Request["tennhaxuatban"]!=null)
+                cnNXB.tennhaxuatban = Request["tennhaxuatban"].ToString();
+            if(Request["diachi"]!=null)
+                cnNXB.diachi = Request["diachi"].ToString();
             db.SaveChanges();
             return RedirectToAction("QuanLyNhaXuatBan");
         }

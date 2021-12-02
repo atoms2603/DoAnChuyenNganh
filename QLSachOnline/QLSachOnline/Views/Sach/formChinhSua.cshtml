@@ -1,126 +1,144 @@
 ﻿@model QLSachOnline.Models.sach
+
 @{
-    ViewBag.Title = "Chỉnh sửa sách";
+    ViewBag.Title = "Sửa sách";
     Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
     QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
 }
 
+<div>&nbsp;</div>
+<div class="col-md-10">
+    <div>
+        @Html.ActionLink("Trở về", "QuanLySach", "Sach", null, htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
+    <h2>Sửa sách</h2>
+    @using (Html.BeginForm("ChinhSuaSach", "Sach", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
 
-<p>
-    <a href="@Url.Content("/Sach/QuanLySach")" class="btn btn-primary">Trở về</a>
-</p>
-<h2>Chỉnh sửa</h2>
-<div class="container-fluid">
-    <form action="@Url.Content("/Sach/ChinhSuaSach/"+Model.masach)" method="post">
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Mã sách:</div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6"><input type="text" name="masach" value="@Model.masach" readonly class="form-control" /></div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Tên sách:</div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6"><input type="text" name="tensach" value="@Model.tensach" class="form-control" /></div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Năm xuất bản:</div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6"><input type="number" name="namxuatban" value="@Model.namxuatban" class="form-control" /></div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Thể loại:</div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6">
-                <select class="form-control selectpicker" name="maloai" multiple data-live-search="true">
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.masach, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.masach, new { htmlAttributes = new { @class = "form-control",@readonly="readonly" } })
+                    @Html.ValidationMessageFor(model => model.masach, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.tensach, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.tensach, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.tensach, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.namxuatban, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.namxuatban, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                    @Html.ValidationMessageFor(model => model.namxuatban, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <a href="#" data-toggle="collapse" data-target="#theloai" class="font-weight-bold"><span style="color:black;">Thể loại</span><i class="fas fa-arrow-down"></i></a>
+                <div id="theloai" class="collapse row" style="border:solid;border-radius:15px;">
                     @foreach (var item in db.theloais)
                     {
-                        if (Model.theloais.Contains(item))
+                        if (Model.theloais.Where(x => x.maloai == item.maloai).ToList().Count != 0)
                         {
-                            <option value="@item.maloai" selected>@item.tentl</option>
+                            <div class="form-check-inline" style="margin:10px">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="maloai" value="@item.maloai" checked />@item.tentl
+                                </label>
+                            </div>
                         }
-                        <option value="@item.maloai">@item.tentl</option>
-                    }
-                </select>
-            </div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Nhà xuất bản:</div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6">
-                <select class="form-control" name="manhaxuatban">
-                    @foreach (var item in db.nhaxuatbans)
-                    {
-                        if (Model.manhaxuatban.Equals(item.manhaxuatban))
+                        else
                         {
-                            <option value="@item.manhaxuatban" selected>@item.tennhaxuatban</option>
+                            <div class="form-check-inline" style="margin:10px">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="maloai" value="@item.maloai" />@item.tentl
+                                </label>
+                            </div>
                         }
-                        <option value="@item.manhaxuatban">@item.tennhaxuatban</option>
                     }
-                </select>
+                </div>
             </div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Tác giả:</div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6">
-                <select class="form-control selectpicker" name="matg" multiple data-live-search="true">
+
+            <div class="form-group">
+                <a href="#" data-toggle="collapse" data-target="#tacgiaCL" class="font-weight-bold"><span style="color:black;">Tác giả</span><i class="fas fa-arrow-down"></i></a>
+                <div id="tacgiaCL" class="collapse row" style="border:solid;border-radius:15px;">
                     @foreach (var item in db.tacgias)
                     {
-                        if (Model.tacgias.Contains(item))
+                        if (Model.tacgias.Where(x => x.matg == item.matg).ToList().Count != 0)
                         {
-                            <option value="@item.matg" selected>@item.tentg</option>
+                            <div class="form-check-inline" style="margin:10px">
+                                <label class="form-check-label">
+                                    <input type="checkbox" checked class="form-check-input" name="matg" value="@item.matg" data-toggle="popover" data-placement="top" data-html="true" title="Thông tin tác giả" data-trigger="focus" data-content="@item.toString()" />@item.tentg
+                                </label>
+                            </div>
                         }
-                        <option value="@item.matg">@item.tentg</option>
+                        else
+                        {
+                            <div class="form-check-inline" style="margin:10px">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="matg" value="@item.matg" data-toggle="popover" data-placement="top" data-html="true" title="Thông tin tác giả" data-trigger="focus" data-content="@item.toString()" />@item.tentg
+                                </label>
+                            </div>
+                        }
                     }
-                </select>
+                </div>
+
+                <!--JAVASCRIPT POPOVER-->
+                <script>
+                    $(document).ready(function () {
+                        $('[data-toggle="popover"]').popover();
+                    });
+                </script>
             </div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Giá:</div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6"><input type="number" name="phi" value="@Model.phi" class="form-control" /></div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-9">&nbsp;</div>
-            <div class="col-md-1">
-                <input type="submit" value="Thêm" class="btn btn-primary form-control" />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.nhaxuatban, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.manhaxuatban, new SelectList(db.nhaxuatbans, "manhaxuatban", "tennhaxuatban"), htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.manhaxuatban, "", new { @class = "text-danger" })
+                </div>
             </div>
-            <div class="col-md-2">&nbsp;</div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.hinhanh, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="hinhanh" class="form-control" value="@Model.hinhanh"/>
+                    @Html.ValidationMessageFor(model => model.hinhanh, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.tomtat, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.tomtat, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.tomtat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.phi, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.phi, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                    @Html.ValidationMessageFor(model => model.phi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                </div>
+            </div>
         </div>
-    </form>
+    }
 </div>
+<div>&nbsp;</div>
