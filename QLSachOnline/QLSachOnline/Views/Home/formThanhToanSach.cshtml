@@ -1,0 +1,57 @@
+﻿@model QLSachOnline.Models.sach
+@{
+    ViewBag.Title = "Thanh toán";
+    Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
+
+    QLSachOnline.Models.userlogin userlogin = Session["Login"] as QLSachOnline.Models.userlogin;
+}
+
+
+<!-- ======= Thanh toán Section ======= -->
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+
+        <div class="row gy-4 d-flex justify-content-center ">
+
+            <div class="col-lg-6">
+                <div class="portfolio-info row d-flex justify-content-center">
+
+                    <div class="col-md-4 col-lg-6 col-6 mb-5 mb-lg-0">
+                        <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+                            <img src="assets/img/Pro1.jpg" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2">&nbsp;</div>
+                    <div class="col-md-4 col-lg-4 col-6 mb-5 mb-lg-0">
+                        <h3>Giới thiệu</h3>
+                        <ul>
+                            <li><strong>Tên truyện</strong>: @Model.tensach</li>
+                            <li>
+                                <strong>Thể loại</strong>:
+                                @foreach (var item in Model.theloais)
+                                {
+                                    <span><a href="@Url.Content("/Home/formTheLoaiFilter/"+item.maloai)" class="text-black">@item.tentl</a> &nbsp;&nbsp;&nbsp;</span>
+                                }
+                            </li>
+                            <li>
+                                <strong>Tác giả</strong>:
+                                @foreach (var item in Model.tacgias)
+                                {
+                                    <span>@item.tentg &nbsp;&nbsp;</span>
+                                }
+                            </li>
+                            <li><strong>Năm xuất bản</strong>: @Model.namxuatban</li>
+                            <li><strong>Nhà xuất bản</strong>: @Model.nhaxuatban.tennhaxuatban</li>
+                            <li><strong>Giá</strong>: @String.Format("{0:n0}", System.Convert.ToInt32(Model.phi)) &nbsp; <strong>VNĐ</strong></li>
+                            <li>
+                                <a href="@Url.Content("/Home/xuLyThanhToan/"+Model.masach+"-"+userlogin.taikhoan)" class="btn btn-success"><i class="fas fa-money-bill-alt"></i>&nbsp;Thanh toán</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- End Thanh toán Section -->

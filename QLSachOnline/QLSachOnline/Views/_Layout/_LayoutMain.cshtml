@@ -90,7 +90,15 @@
 
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a class="nav-link scrollto" href="#"><i class="fas fa-bell"></i></a>
+                            <ul>
+                                <li><a href="#">Thông báo 1</a></li>
+                                <li><a href="#">Thông báo 2</a></li>
+                            </ul>
+                        </li>
                     }
+                    <li><a class="nav-link scrollto" href="@Url.Content("/Home/formGopY")">Góp ý</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->
@@ -136,7 +144,28 @@
                                                 </li>
                                                 <li><strong>Năm</strong>: @item.namxuatban</li>
                                                 <li>&nbsp;</li>
-                                                <li><a href="@Url.Content("/Sach/indexSach/"+item.masach)" class="btn btn-primary">Đọc</a></li>
+                                                <li>
+                                                    @if ((int)item.phi != 0)
+                                                    {
+                                                        <a href="@Url.Content("/Home/formThanhToanSach/"+item.masach)" class="btn btn-success">Mua</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        if (item.chuongs.ToList().Count == 0)
+                                                        {
+                                                            <a href="#" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="@Url.Content("/Sach/indexSach/"+item.masach)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                                        }
+                                                    }
+                                                    <a href="@Url.Content("/Sach/yeuThich/"+item.masach)" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
+                                                </li>
+                                                @if ((int)item.phi != 0)
+                                                {
+                                                    <li><strong>Giá</strong>: @String.Format("{0:n0}", System.Convert.ToInt32(item.phi)) &nbsp; <strong>VNĐ</strong></li>
+                                                }
                                             </ul>
                                         </div>
                                         <div class="portfolio-description">

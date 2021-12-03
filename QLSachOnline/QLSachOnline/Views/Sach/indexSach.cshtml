@@ -46,16 +46,27 @@
                         <li><strong>Nhà xuất bản</strong>:  @Model.nhaxuatban.tennhaxuatban </li>
                         <li>&nbsp;</li>
                         <li>
-                            @if (Model.chuongs.ToList().Count == 0)
+                            @if ((int)Model.phi != 0)
                             {
-                            <a href="#" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                <a href="@Url.Content("/Home/formThanhToanSach/"+Model.masach)" class="btn btn-success">Mua</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
                             }
                             else
                             {
-                                <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+Model.chuongs.First().machuong)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                if (Model.chuongs.ToList().Count == 0)
+                                {
+                                    <a href="@Url.Content("/Home/formThanhToanSach/"+Model.masach)" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+Model.chuongs.First().machuong)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                }
                             }
                             <a href="@Url.Content("/Sach/yeuThich/"+Model.masach)" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
                         </li>
+                        @if ((int)Model.phi != 0)
+                        {
+                            <li><strong>Giá</strong>: @String.Format("{0:n0}", System.Convert.ToInt32(Model.phi)) &nbsp; <strong>VNĐ</strong></li>
+                        }
                     </ul>
                 </div>
 

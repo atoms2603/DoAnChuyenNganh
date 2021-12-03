@@ -14,6 +14,8 @@ namespace QLSachOnline.Controllers
         {
             if (TempData["flagCheckError"] != null)
                 ViewBag.flagCheckError = true;
+            if (TempData["flagMuaSach"] != null)
+                ViewBag.flagMuaSach = TempData["flagMuaSach"] as string;
             return View();
         }
         public ActionResult IndexDangKy()
@@ -64,6 +66,12 @@ namespace QLSachOnline.Controllers
                     {
                         Session["Login"] = x;
                         Session["isLogin"] = true;
+
+                        if (Request["masach"] != null) // lấy mã sách để truyền qua Action formThanhToanSach của Controller Home
+                        {
+                            TempData["flagMaSach"] = Request["masach"].ToString();
+                            return RedirectToAction("formThanhToanSach", "Home");
+                        }
                         return View("~/Views/Home/Index.cshtml", db.saches);
                     }
                 }
@@ -74,6 +82,7 @@ namespace QLSachOnline.Controllers
 
         public ActionResult logout()
         {
+            Session["Login"] = null;
             Session["isLogin"] = false;
             Session["AdminCheckLogin"] = false;
             return RedirectToAction("Index","Home", db.saches);
