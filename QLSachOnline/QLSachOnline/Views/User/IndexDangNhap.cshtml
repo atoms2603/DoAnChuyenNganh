@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "IndexDangNhap";
     Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
+
 }
 
 <!-- ======= Portfolio Details Section ======= -->
@@ -31,10 +32,18 @@
                                     </label>
                                 </div>
                                 <div>&nbsp;</div>
+                                @if (ViewBag.flagMuaSach != null)
+                                {
+                                    <input type="text" name="masach" value="@ViewBag.flagMuaSach" hidden />
+                                }
                                 <input type="submit" class="btn btn-primary" id="btnLogin" value="Đăng nhập">
-                                @if (ViewBag.flagCheckError != null)
+                                @if ((bool)ViewBag.flagCheckError == true)
                                 {
                                     <div class="text-danger" id="divDanger">Bạn đã nhập sai tài khoản hoặc mật khẩu</div>
+                                }
+                                @if ((bool)ViewBag.flagCheckStatus == true)
+                                {
+                                    <div class="text-danger" id="divDanger">Tài khoản bị vô hiệu hóa</div>
                                 }
                                 <div>&nbsp;</div>
                                 <label class="text-right float-right"><a href="@Url.Content("/Admin/AdminLogin")" class="text-decoration-none">Đăng nhập với quyền quản trị</a></label>

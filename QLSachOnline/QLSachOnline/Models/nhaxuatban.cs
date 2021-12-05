@@ -1,4 +1,4 @@
-namespace QLSachOnline.Models
+﻿namespace QLSachOnline.Models
 {
     using System;
     using System.Collections.Generic;
@@ -16,13 +16,15 @@ namespace QLSachOnline.Models
         }
 
         [Key]
-        [StringLength(10)]
+        [StringLength(10),Display(Name ="Mã nhà xuất bản")]
+        [Required(ErrorMessage ="Vui lòng nhập mã !")]
         public string manhaxuatban { get; set; }
 
-        [StringLength(50)]
+        [StringLength(50), Display(Name = "Tên nhà xuất bản")]
+        [Required(ErrorMessage = "Vui lòng nhập tên !")]
         public string tennhaxuatban { get; set; }
 
-        [StringLength(50)]
+        [StringLength(50), Display(Name = "Địa chỉ")]
         public string diachi { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

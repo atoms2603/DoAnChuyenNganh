@@ -8,20 +8,16 @@ namespace QLSachOnline.Controllers
         // GET: TheLoai
         public ActionResult QuanLyTheLoai()
         {
-            if (TempData["maRong"] != null)
-                ViewBag.flagMaRong = true;
-            if (TempData["matrung"] != null)
-                ViewBag.flagCo = true;
-
             return View(db.theloais);
         }
-
         [HttpPost]
         public ActionResult suaTheLoai(string id)
         {
             QLSachOnline.Models.theloai tl = db.theloais.Find(id);
-            tl.tentl = Request["tentl"].ToString();
-            tl.ghichu = Request["ghichu"].ToString();
+            if(Request["tentl"]!=null)
+                tl.tentl = Request["tentl"].ToString();
+            if(Request["ghichu"]!=null)
+                tl.ghichu = Request["ghichu"].ToString();
             db.SaveChanges();
             return RedirectToAction("QuanLyTheLoai");
         }
@@ -35,23 +31,18 @@ namespace QLSachOnline.Controllers
         [HttpPost]
         public ActionResult themTheLoai(QLSachOnline.Models.theloai tl)
         {
-            if(Request["maloai"].ToString()=="")
-            {
-                TempData["maRong"] = true;
-                return RedirectToAction("QuanLyTheLoai");
-            }
             if (ModelState.IsValid)
             {
-                Models.theloai x = db.theloais.Find(tl.maloai);
-                if (x == null)
+                if (db.theloais.Find(tl.maloai) == null)
                 {
                     tl.maloai = tl.maloai.ToUpper();
                     db.theloais.Add(tl);
                     db.SaveChanges();
+                    return RedirectToAction("QuanLyTheLoaiTest");
                 }
-                else TempData["maTrung"] = true;
+                ModelState.AddModelError("maloai", "Mã trùng, vui lòng nhập lại !");
             }
-            return RedirectToAction("QuanLyTheLoai");
+            return View("QuanLyTheLoai");
         }
         
     }

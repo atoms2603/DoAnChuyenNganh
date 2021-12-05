@@ -1,7 +1,8 @@
-﻿@model IEnumerable<QLSachOnline.Models.nhaxuatban>
+﻿@model QLSachOnline.Models.nhaxuatban
 @{
     ViewBag.Title = "Quản lý nhà xuất bản";
     Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
+    QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
 }
 
 <div class="container-fluid">
@@ -10,28 +11,15 @@
             <div class="card">
                 <div class="card-header">
                     <div class="col-md-11">
-                        <h2>Quản lý NXB</h2>
-                        @if (ViewBag.flagCo != null)
-                        {
-                            <div class="alert alert-danger" id="pointCheck"><strong>Mã trùng!</strong></div>
-                        }
-                        @if (ViewBag.flagMaRong != null)
-                        {
-                            <div class="alert alert-danger" id="pointCheck"><strong>Mã rỗng, vui lòng nhập mã!</strong></div>
-                        }
-                        <script type="text/javascript">
-                            function checkcheck() {
-                                if (!$('#pointCheck').is("hidden")) {
-                                    document.getElementById("pointCheck").setAttribute("hidden", true);
-                                }
-                            }
-                        </script>
+                        <h2>Quản lý Nhà xuất bản</h2>
                     </div>
                     <!-- Model thêm nhà xuất bản -->
-                    <button type="button" class="btn btn-primary" onclick="checkcheck()" data-toggle="modal" data-target="#modelThem">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modelThem">
                         Thêm nhà xuất bản
                     </button>
-                    <form action="@Url.Content("/NhaXuatBan/themNhaXuatBan")" method="post">
+                    @using (Html.BeginForm("themNhaXuatBan","NhaXuatBan",FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
 
                         <div class="modal" id="modelThem">
                             <div class="modal-dialog">
@@ -43,49 +31,46 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <div class="container-fluid">
-                                            <div class="row form-group">
-                                                <div class="col-md-4">Mã nhà xuất bản:</div>
-                                                <div class="col-md-6"><input type="text" name="manhaxuatban" value="" class="form-control" /></div>
-                                                <div class="col-md-2">&nbsp;</div>
+                                        <div class="form-horizontal">
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.manhaxuatban, htmlAttributes: new { @class = "control-label col-md-12" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.manhaxuatban, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.manhaxuatban, "", new { @class = "text-danger" })
+                                                </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-12">&nbsp;</div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.tennhaxuatban, htmlAttributes: new { @class = "control-label col-md-12" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.tennhaxuatban, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.tennhaxuatban, "", new { @class = "text-danger" })
+                                                </div>
                                             </div>
-                                            <div class="row form-group">
-                                                <div class="col-md-4">Tên nhà xuất bản:</div>
-                                                <div class="col-md-6"><input type="text" name="tennhaxuatban" value="" class="form-control" /></div>
-                                                <div class="col-md-2">&nbsp;</div>
+
+                                            <div class="form-group">
+                                                @Html.LabelFor(model => model.diachi, htmlAttributes: new { @class = "control-label col-md-12" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.diachi, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.ValidationMessageFor(model => model.diachi, "", new { @class = "text-danger" })
+                                                </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-12">&nbsp;</div>
-                                            </div>
-                                            <div class="row form-group">
-                                                <div class="col-md-4">Địa chỉ:</div>
-                                                <div class="col-md-6"><input type="text" name="diachi" value="" class="form-control" /></div>
-                                                <div class="col-md-2">&nbsp;</div>
+
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2 col-md-10">
+                                                    <input type="submit" value="Thêm" class="btn btn-primary" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="col-md-1">&nbsp;</div>
-                                                <div class="col-md-2"><button type="submit" class="btn btn-primary">Thêm</button></div>
-                                                <div class="col-md-6">&nbsp;</div>
-                                                <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
-                                                <div class="col-md-1">&nbsp;</div>
-                                            </div>
-                                        </div>
-
                                     </div>
 
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    }
+                    </div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead>
@@ -100,7 +85,7 @@
                         <tbody>
                             @{
                                 int dem = 0;
-                                foreach (var item in Model)
+                                foreach (var item in db.nhaxuatbans)
                                 {
                                     <tr>
                                         <td>@item.manhaxuatban</td>

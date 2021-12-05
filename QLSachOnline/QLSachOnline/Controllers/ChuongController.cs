@@ -15,12 +15,12 @@ namespace QLSachOnline.Controllers
         [HttpPost]
         public ActionResult themChuong(Models.chuong ch)
         {
-            Models.sach s = db.saches.Find(Request["masach"].ToString());
+            Models.sach s = db.saches.Find(ch.masach);
+            TempData["chuongSach"] = s;
 
             if (Request["machuong"].ToString() == "")
             {
                 TempData["maRong"] = true;
-                TempData["chuongSach"] = s;
                 return RedirectToAction("formThongTinChiTiet", "Sach");
             }
             foreach (var item in db.chuongs)
@@ -28,14 +28,13 @@ namespace QLSachOnline.Controllers
                 if (item.machuong == ch.machuong && item.masach == s.masach)
                 {
                     TempData["trungMa"] = true;
-                    TempData["chuongSach"] = s;
                     return RedirectToAction("formThongTinChiTiet", "Sach");
                 }
             }
             ch.machuong = ch.machuong.ToUpper();
+            db.chuongs.Add(ch);
             s.chuongs.Add(ch);
             db.SaveChanges();
-            TempData["chuongSach"] = s;
             return RedirectToAction("formThongTinChiTiet", "Sach");
         }
 

@@ -4,7 +4,7 @@
     Layout = "~/Views/_Layout/_LayoutNoidung.cshtml";
 }
 
-<!-- ======= Portfolio Details Section ======= -->
+<!-- ======= Details Section ======= -->
 <section id="portfolio-details" class="portfolio-details">
     <div class="container">
 
@@ -14,7 +14,7 @@
                 <div class="col-md-6 col-12 col-lg-6 mb-5 mb-lg-0">
 
                     <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
-                        <img src="@Model.hinhanh" class="img-fluid" alt="">
+                        <img src="~/Images/Images_SP/@Model.hinhanh" class="img-fluid" alt="">
                     </div>
 
                 </div>
@@ -43,12 +43,30 @@
                         </li>
 
                         <li><strong>Năm xuất bản</strong>: @Model.namxuatban</li>
-                        <li><strong>Nhà xuất bản</strong>: @Model.nhaxuatban.tennhaxuatban</li>
+                        <li><strong>Nhà xuất bản</strong>:  @Model.nhaxuatban.tennhaxuatban </li>
                         <li>&nbsp;</li>
                         <li>
-                            <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+Model.chuongs.First().machuong)" class="btn btn-primary">Đọc</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <a href="#" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
+                            @if ((int)Model.phi != 0)
+                            {
+                                <a href="@Url.Content("/Home/formThanhToanSach/"+Model.masach)" class="btn btn-success">Mua</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                            }
+                            else
+                            {
+                                if (Model.chuongs.ToList().Count == 0)
+                                {
+                                    <a href="@Url.Content("/Home/formThanhToanSach/"+Model.masach)" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+Model.chuongs.First().machuong)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                }
+                            }
+                            <a href="@Url.Content("/Sach/yeuThich/"+Model.masach)" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
                         </li>
+                        @if ((int)Model.phi != 0)
+                        {
+                            <li><strong>Giá</strong>: @String.Format("{0:n0}", System.Convert.ToInt32(Model.phi)) &nbsp; <strong>VNĐ</strong></li>
+                        }
                     </ul>
                 </div>
 
@@ -75,13 +93,14 @@
                 <div class="row justify-content-center">
                     <div class="col-xl-10">
                         <ul class="faq-list">
-                            @foreach (var item in Model.chuongs)
-                            {
-                                <li>
-                                    <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+item.machuong)" class="collapsed question">@item.tenchuong</a>
-                                </li>
+                            @if (Model.chuongs.ToList().Count != 0) { 
+                                foreach (var item in Model.chuongs)
+                                {
+                                    <li>
+                                        <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+item.machuong)" class="collapsed question">@item.tenchuong</a>
+                                    </li>
+                                }
                             }
-
                         </ul>
                     </div>
                 </div>
@@ -92,4 +111,4 @@
 
 
     </div>
-</section><!-- End Portfolio Details Section -->
+</section><!-- End  Details Section -->

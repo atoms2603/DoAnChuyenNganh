@@ -25,6 +25,10 @@
     <!-- Template Main CSS File -->
     <link href="~/assets/css/style.css" rel="stylesheet">
 
+    <!--FONTAWSOME-->
+    <link href="~/fontawesome/css/all.min.css" rel="stylesheet" />
+    <script src="~/fontawesome/js/all.min.js"></script>
+
     <title>@ViewBag.Title</title>
 </head>
 <body>
@@ -72,15 +76,26 @@
                     else
                     {
                         <li class="dropdown">
-                            <a href="#"><span>@userlogin.taikhoan</span> <i class="bi bi-chevron-down"></i></a>
+                            <a href="@Url.Content("/User/ThongTinChiTietUser/"+userlogin.taikhoan)"><span>@userlogin.taikhoan</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
 
-                                <li><a href="#">Thông tin</a></li>
+                                <li><a href="@Url.Content("/User/thongTinNguoiDung/"+userlogin.taikhoan)">Thông tin</a></li>
+                                <li><a href="@Url.Content("/User/sachYeuThichUser/"+userlogin.taikhoan)">Yêu thích</a></li>
+                                <li><a href="#">Thiết lập tài khoản</a></li>
+                                <li><a href="@Url.Content("/User/lichSuGDUser/"+userlogin.taikhoan)">Lịch sử giao dịch</a></li>
                                 <li><a href="@Url.Content("/User/logout")">Đăng xuất</a></li>
 
                             </ul>
                         </li>
+                        <li class="dropdown">
+                            <a class="nav-link scrollto" href="#"><i class="fas fa-bell"></i></a>
+                            <ul>
+                                <li><a href="#">Thông báo 1</a></li>
+                                <li><a href="#">Thông báo 2</a></li>
+                            </ul>
+                        </li>
                     }
+                    <li><a class="nav-link scrollto" href="@Url.Content("/Home/formGopY")">Góp ý</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav><!-- .navbar -->

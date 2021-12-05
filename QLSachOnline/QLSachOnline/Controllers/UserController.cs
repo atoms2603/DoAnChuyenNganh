@@ -12,8 +12,14 @@ namespace QLSachOnline.Controllers
         // GET: User
         public ActionResult IndexDangNhap()
         {
+            ViewBag.flagCheckError = false;
+            ViewBag.flagCheckStatus = false;
             if (TempData["flagCheckError"] != null)
                 ViewBag.flagCheckError = true;
+            if (TempData["flagMuaSach"] != null)
+                ViewBag.flagMuaSach = TempData["flagMuaSach"] as string;
+            if(TempData["flagCheckStatus"] != null)
+                ViewBag.flagCheckStatus = true;
             return View();
         }
         public ActionResult IndexDangKy()
@@ -39,6 +45,7 @@ namespace QLSachOnline.Controllers
                 user.matkhau = matkhau;
                 user.sdt = sdt;
                 user.email = email;
+                user.status = true;
 
                 db.userlogins.Add(user);
                 db.SaveChanges();
@@ -62,18 +69,32 @@ namespace QLSachOnline.Controllers
                 {
                     if (x.matkhau == mk)
                     {
-                        Session["Login"] = x;
-                        Session["isLogin"] = true;
-                        return View("~/Views/Home/Index.cshtml", db.saches);
+                        if (x.status.Equals(true)) { 
+                            Session["Login"] = x;
+                            Session["isLogin"] = true;
+
+                            if (Request["masach"] != null) // lấy mã sách để truyền qua Action formThanhToanSach của Controller Home
+                            {
+                                TempData["flagMaSach"] = Request["masach"].ToString();
+                                return RedirectToAction("formThanhToanSach", "Home");
+                            }
+                            return View("~/Views/Home/Index.cshtml", db.saches);
+                        }
+                        else
+                        {
+                            TempData["flagCheckStatus"] = true;
+                        }
                     }
+                    else TempData["flagCheckError"] = true;
                 }
-                TempData["flagCheckError"] = true;
+                else TempData["flagCheckError"] = true;
                 return RedirectToAction("IndexDangNhap");
             }
         }
 
         public ActionResult logout()
         {
+            Session["Login"] = null;
             Session["isLogin"] = false;
             Session["AdminCheckLogin"] = false;
             return RedirectToAction("Index","Home", db.saches);
@@ -88,6 +109,17 @@ namespace QLSachOnline.Controllers
             return View(db.userlogins.Find(id));
         }
 
+        [HttpPost]
+        public ActionResult capNhatThongTin(Models.userlogin usr)
+        {
+            Models.userlogin userlogin = db.userlogins.Find(usr.taikhoan);
+            if (Request["matkau"] != null) userlogin.matkhau = usr.matkhau;
+            if (Request["sdt"] != null) userlogin.sdt = usr.sdt;
+            if (Request["email"] != null) userlogin.email = usr.email;
+            db.SaveChanges();
+            return Json(1, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult baoMatThietLap(string id)
         {
             return View(db.userlogins.Find(id));
@@ -95,18 +127,71 @@ namespace QLSachOnline.Controllers
 
         public ActionResult sachYeuThichUser(string id)
         {
+            if (TempData["idUser"] != null)
+                id = TempData["idUser"] as string;
             Models.userlogin userlogin = db.userlogins.Find(id);
             List<Models.sach> dsSachUser = new List<Models.sach>();
-            foreach (var item in userlogin.luusaches)
+            foreach (var item in db.luusaches)
             {
-                dsSachUser.Add(db.saches.Find(item.masach));
+                if(item.taikhoan==id)
+                    dsSachUser.Add(db.saches.Find(item.masach));
             }
             return View(dsSachUser);
+        }
+
+        public ActionResult huyYeuThich(string id)
+        {
+            Models.userlogin userlogin = Session["Login"] as Models.userlogin;
+            foreach (var item in db.luusaches)
+            {
+                if(id==item.masach&&userlogin.taikhoan==item.taikhoan)
+                {
+                    db.luusaches.Remove(item);
+                    break;
+                }    
+            }
+            db.SaveChanges();
+            TempData["idUser"] = userlogin.taikhoan;
+            return RedirectToAction("sachYeuThichUser");
         }
 
         public ActionResult lichSuGDUser(string id)
         {
             return View(db.userlogins.Find(id));
+        }
+        public ActionResult quanLyUser()
+        {
+            return View(db.userlogins);
+        }
+        public ActionResult voHieuUser(string id)
+        {
+            int result = 1;
+            Models.userlogin x = db.userlogins.Find(id);
+            if (x != null)
+            {
+                x.status = false;
+                db.SaveChanges();
+            }
+                
+            else
+                result = 0;
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult kichHoatUser(string id)
+        {
+            int result = 1;
+            Models.userlogin x = db.userlogins.Find(id);
+            if (x != null)
+            {
+                x.status = true;
+                db.SaveChanges();
+            }
+
+            else
+                result = 0;
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

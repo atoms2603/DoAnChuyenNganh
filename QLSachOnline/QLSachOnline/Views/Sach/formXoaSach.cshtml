@@ -4,11 +4,23 @@
     Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
 }
 
-<p>
-    <a href="@Url.Content("/Sach/QuanLySach")" class="btn btn-primary">Trở về</a>
-</p>
-<h2>Xóa sách</h2>
 <div class="container-fluid">
+
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-2">
+            <a href="@Url.Content("/Sach/QuanLySach")" class="btn btn-primary">Trở về</a>
+        </div>
+        <div class="col-md-9">&nbsp;</div>
+    </div>
+    <div class="row">&nbsp;</div>
+    <div class="row">
+        <div class="col-md-1">&nbsp;</div>
+        <div class="col-md-11"><h2>Xóa sách</h2></div>
+    </div>
+    <div class="row">&nbsp;</div>
+
     <div class="row">
         <div class="col-md-2 font-weight-bold">Mã sách:</div>
         <div class="col-md-4">@Model.masach</div>
@@ -59,7 +71,7 @@
         }
         else
         {
-            <h4 class="text-danger">Bạn không thể xóa học viên này!!!</h4>
+            <h4 class="text-danger">Bạn không thể xóa sách này!!!</h4>
         }
 
     </div>

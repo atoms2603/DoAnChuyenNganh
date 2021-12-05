@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Linq;
 using BitMiracle.Docotic.Pdf;
+using System.Collections.Generic;
 
 namespace QLSachOnline.Controllers
 {
@@ -10,6 +11,8 @@ namespace QLSachOnline.Controllers
         // GET: Sach
         public ActionResult QuanLySach()
         {
+            ViewBag.testTL = false;
+            if (TempData["testTL"] != null) ViewBag.testTL = true;
             ViewBag.dsTG = db.tacgias;
             ViewBag.dsTL = db.theloais;
             return View(db.saches);
@@ -33,49 +36,34 @@ namespace QLSachOnline.Controllers
 
         public ActionResult formThemSach()
         {
-            if (System.Convert.ToBoolean(TempData["flagCo"]))
-                ViewBag.flagCo = true;
-            if (TempData["flagRong"]!=null)
-                ViewBag.flagMaRong = true;
             return View();
         }
+        
         [HttpPost]
-        public ActionResult themSach()
+        [ValidateAntiForgeryToken]
+        public ActionResult themSach(Models.sach sachN)
         {
-            if (ModelState.IsValid)
-            {
-                string[] dsID_TL = Request.Form.GetValues("maloai");
-                string[] dsID_TG = Request.Form.GetValues("matg");
+            string[] dsID_TL = Request.Form.GetValues("maloai");
+            string[] dsID_TG = Request.Form.GetValues("matg");
+            string maSach = sachN.masach.ToUpper();
+            string tenSach = sachN.tensach;
 
-                if (Request["masach"].ToString() == "") {
-                    TempData["flagRong"] = "marong";
-                    return RedirectToAction("formThemSach");
-                }
-                string maSach = Request["masach"].ToString().ToUpper();
-                string tenSach = Request["tensach"].ToString();
-
-                
-
-                if (db.saches.Find(maSach)==null)
+            if (ModelState.IsValid) { 
+                if (db.saches.Find(maSach) == null)
                 {
                     QLSachOnline.Models.sach sach = new Models.sach();
-                    string maNXB = Request["manhaxuatban"].ToString();
-                    if (Request["namxuatban"].ToString() != "")
-                    {
-                        int namxb = System.Convert.ToInt32(Request["namxuatban"].ToString());
-                        sach.namxuatban = namxb;
-                    }
-                    if (Request["phi"].ToString() != "")
-                    {
-                        decimal gia = System.Convert.ToDecimal(Request["phi"].ToString());
-                        sach.phi = gia;
-                    }
+
+                    sach.namxuatban = sachN.namxuatban;
                     sach.masach = maSach.ToUpper();
                     sach.tensach = tenSach;
-                    sach.manhaxuatban = maNXB;
+                    sach.manhaxuatban = sachN.manhaxuatban;
+                    sach.nhaxuatban = db.nhaxuatbans.Find(sach.manhaxuatban);
+                    sach.hinhanh = sachN.hinhanh;
+                    if (sachN.phi == null) sach.phi = 0; else sach.phi = sachN.phi;
+                    sach.tomtat = sachN.tomtat;
 
-                
-                    if(dsID_TL!=null)
+                    if (dsID_TL != null)
+                    {
                         foreach (var item in dsID_TL)
                         {
                             foreach (var item2 in db.theloais)
@@ -84,8 +72,10 @@ namespace QLSachOnline.Controllers
                                     sach.theloais.Add(item2);
                             }
                         }
-               
-                    if(dsID_TG!=null)
+                    }
+
+                    if (dsID_TG != null)
+                    {
                         foreach (var item in dsID_TG)
                         {
                             foreach (var item2 in db.tacgias)
@@ -94,64 +84,68 @@ namespace QLSachOnline.Controllers
                                     sach.tacgias.Add(item2);
                             }
                         }
+                    }
 
                     db.saches.Add(sach);
-
-
                     db.SaveChanges();
+                    return RedirectToAction("QuanLySach");
                 }
-                else
-                {
-                    TempData["flagCo"] = true;
-                    return RedirectToAction("formThemSach");
-                }
+                ModelState.AddModelError("masach", "Mã trùng !! Vui lòng nhập mã khác.");
             }
-            return RedirectToAction("QuanLySach");
+            return View("formThemSach");
         }
         public ActionResult formChinhSua(string id)
         {
             return View(db.saches.Find(id));
         }
         [HttpPost]
-        public ActionResult ChinhSuaSach(string id)
+        public ActionResult ChinhSuaSach(Models.sach sachN)
         {
             if (ModelState.IsValid)
             {
                 string[] dsID_TL = Request.Form.GetValues("maloai");
                 string[] dsID_TG = Request.Form.GetValues("matg");
-                Models.sach sachsua = db.saches.Find(id);
+                Models.sach sachsua = db.saches.Find(sachN.masach);
 
-                if (dsID_TL != null) {
-                    sachsua.theloais.Clear();
-                    foreach (var item in dsID_TL)
-                    {
-                        foreach (var item2 in db.theloais)
+                if (sachsua != null) { 
+
+                    if (dsID_TL != null) {
+                        sachsua.theloais.Clear();
+                        foreach (var item in dsID_TL)
                         {
-                            if (item.Equals(item2.maloai))
-                                sachsua.theloais.Add(item2);
+                            foreach (var item2 in db.theloais)
+                            {
+                                if (item.Equals(item2.maloai))
+                                    sachsua.theloais.Add(item2);
+                            }
                         }
                     }
-                }
 
-                if (dsID_TG != null) {
-                    sachsua.tacgias.Clear();
-                    foreach (var item in dsID_TG)
-                    {
-                        foreach (var item2 in db.tacgias)
+                    if (dsID_TG != null) {
+                        sachsua.tacgias.Clear();
+                        foreach (var item in dsID_TG)
                         {
-                            if (item.Equals(item2.matg))
-                                sachsua.tacgias.Add(item2);
+                            foreach (var item2 in db.tacgias)
+                            {
+                                if (item.Equals(item2.matg))
+                                    sachsua.tacgias.Add(item2);
+                            }
                         }
                     }
-                }
-                sachsua.tensach = Request["tensach"].ToString();
-                sachsua.namxuatban = System.Convert.ToInt32(Request["namxuatban"].ToString());
-                sachsua.manhaxuatban = Request["manhaxuatban"].ToString();
-                sachsua.phi = System.Convert.ToDecimal(Request["phi"].ToString());
+                    sachsua.tensach = sachN.tensach;
+                    sachsua.namxuatban = sachN.namxuatban;
+                    sachsua.manhaxuatban = sachN.manhaxuatban;
+                    sachsua.nhaxuatban = db.nhaxuatbans.Find(sachsua.manhaxuatban);
+                    sachsua.phi = sachN.phi;
+                    sachsua.hinhanh = sachN.hinhanh;
+                    if (sachN.phi == null) sachsua.phi = 0; else sachsua.phi = sachN.phi;
+                    sachsua.tomtat = sachN.tomtat;
 
-                db.SaveChanges();
+                    db.SaveChanges();
+                    return RedirectToAction("QuanLySach");
+                }
             }
-            return RedirectToAction("QuanLySach");
+            return RedirectToAction("formChinhSua","Sach",sachN.masach);
         }
         public ActionResult formXoaSach(string id)
         {
@@ -164,17 +158,25 @@ namespace QLSachOnline.Controllers
         public ActionResult xoaSach(string id)
         {
             Models.sach sach = db.saches.Find(id);
-            sach.tacgias.Clear();
-            sach.theloais.Clear();
-            db.saches.Remove(sach);
-            db.SaveChanges();
+            if (sach != null) {
+                db.nhaxuatbans.Find(sach.manhaxuatban).saches.Remove(sach);
+                
+                sach.tacgias.Clear();
+                sach.theloais.Clear();
+                sach.chuongs.Clear();
+
+                db.saches.Remove(sach);
+                db.SaveChanges();
+            }
             return RedirectToAction("QuanLySach");
         }
 
         //HIỂN THỊ NỘI DUNG CHƯƠNG
         public ActionResult formNoiDung(string id)
         {
-            string pathFile = @"D:\Lập trình\ĐỒ ÁN CHUYÊN NGÀNH\Dữ liệu và phân tích\QLSachOnline\QLSachOnline\Files_Truyen\";
+            string pathFile = Server.MapPath("/Files_Truyen/");
+
+
             //Lấy mã sách và mã chương
             string[] arrayMa = id.Split('-');
             string maSach = arrayMa[0];
@@ -242,6 +244,31 @@ namespace QLSachOnline.Controllers
                 string formattedText = pdf.GetText(options);
                 return formattedText;
             }
+        }
+
+
+        //Xử lý sách
+        public ActionResult yeuThich(string id)
+        {
+            if ((bool)Session["isLogin"]) {
+                Models.userlogin user = Session["Login"] as Models.userlogin;
+                foreach (var item in db.luusaches)
+                {
+                    if (item.masach == id && user.taikhoan==item.taikhoan)
+                    {
+                        return View("indexSach", db.saches.Find(id));
+                    }
+
+                }
+                Models.luusach luusach = new Models.luusach();
+                luusach.masach = id;
+                luusach.taikhoan = user.taikhoan;
+                luusach.ngayluu = System.DateTime.Now;
+                db.luusaches.Add(luusach);
+                db.SaveChanges();
+                return View("indexSach",db.saches.Find(id));
+            }
+            return RedirectToAction("IndexDangNhap", "User");
         }
     }
 }

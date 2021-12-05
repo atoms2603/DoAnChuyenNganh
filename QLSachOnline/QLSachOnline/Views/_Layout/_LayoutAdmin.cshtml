@@ -15,6 +15,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="~/adminlte3/plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/adminlte3/dist/css/adminlte.min.css">
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -100,6 +111,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         <p>Quản lý sách</p>
                                     </a>
                                 </li>
+
                                 <li class="nav-item">
                                     <a href="@Url.Content("/TheLoai/QuanLyTheLoai")" class="nav-link">
                                         <p>Quản lý thể loại</p>
@@ -124,7 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                     <ul class="nav nav-treeview">
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link">
+                                            <a href="@Url.Content("/User/quanLyUser")" class="nav-link">
                                                 <p>Tài khoản</p>
                                             </a>
                                         </li>
@@ -145,7 +157,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </aside>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper d-flex justify-content-center">
             <!-- Main content -->
             @RenderBody()
             <!-- /.content -->
@@ -153,18 +165,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.content-wrapper -->
         <!-- Main Footer -->
         <footer class="main-footer">
-            <!-- To the right -->
-            <div class="float-right d-none d-sm-inline">
-                Anything you want
-            </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+            &copy; <strong><span>AtsBooks</span></strong>. All Rights Reserved
         </footer>
     </div>
     <!-- ./wrapper -->
     <!-- REQUIRED SCRIPTS -->
-    <!-- jQuery -->
-    <script src="~/adminlte3/plugins/jquery/jquery.min.js"></script>
+    
     <!-- Bootstrap 4 -->
     <script src="~/adminlte3/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->

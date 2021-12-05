@@ -1,0 +1,108 @@
+﻿@model IEnumerable<QLSachOnline.Models.userlogin>
+
+@{
+    ViewBag.Title = "quanLyUser";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Quản lý tài khoản</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.taikhoan)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.sdt)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.status)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.taikhoan)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.sdt)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.email)
+                                </td>
+                                @if (item.status.Equals(true))
+                                {
+                                    <td style="color:green">
+                                        Hoạt động
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="color:red">
+                                        Vô hiệu
+                                    </td>
+                                }
+                                @if (item.status.Equals(true))
+                                {
+                                    <td>
+                                        <input type="hidden" value="@item.taikhoan" id="taikhoan" />
+                                        <div class="form-actions no-color">
+                                            <input type="button" id="disableUser" value="Vô hiệu user" class="btn btn-outline-primary" />
+                                        </div>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <input type="hidden" value="@item.taikhoan" id="taikhoan" />
+                                        <div class="form-actions no-color">
+                                            <input type="button" id="enableUser" value="Kích hoạt user" class="btn btn-outline-primary" />
+                                        </div>
+                                    </td>
+                                }
+                                
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $().ready(function () {
+        $('#disableUser').click(function () {
+            const id = $('#taikhoan').val();
+            const url = '/User/voHieuUser/' + id;
+            $.get(url, function (data) {
+                if (parseInt(data) == 1)
+                    $('body').load('/User/quanLyUser');
+            });
+        })
+    })
+
+    $().ready(function () {
+        $('#enableUser').click(function () {
+            const id = $('#taikhoan').val();
+            const url = '/User/kichHoatUser/' + id;
+            $.get(url, function (data) {
+                if (parseInt(data) == 1)
+                    $('body').load('/User/quanLyUser');
+            });
+        })
+    })
+</script>

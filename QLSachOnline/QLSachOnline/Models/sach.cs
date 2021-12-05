@@ -1,4 +1,4 @@
-namespace QLSachOnline.Models
+﻿namespace QLSachOnline.Models
 {
     using System;
     using System.Collections.Generic;
@@ -20,25 +20,28 @@ namespace QLSachOnline.Models
         }
 
         [Key]
-        [StringLength(10)]
+        [StringLength(10),Display(Name ="Mã sách")]
+        [Required(ErrorMessage ="Vui lòng nhập mã sách !")]
         public string masach { get; set; }
 
-        [Required]
-        [StringLength(10)]
+        [Required(ErrorMessage ="Vui lòng nhập mã nhà xuất bản !")]
+        [StringLength(10), Display(Name = "Mã nhà xuất bản")]
         public string manhaxuatban { get; set; }
 
-        [StringLength(50)]
+        [StringLength(50), Display(Name = "Tên sách")]
+        [Required(ErrorMessage = "Vui lòng nhập tên sách !")]
         public string tensach { get; set; }
-
+        [Display(Name = "Năm xuất bản")]
+        [Required(ErrorMessage = "Vui lòng nhập năm xuất bản !")]
         public int? namxuatban { get; set; }
 
-        [StringLength(200)]
+        [StringLength(200), Display(Name = "Hình ảnh")]
         public string hinhanh { get; set; }
 
-        [StringLength(1)]
+        [StringLength(1), Display(Name = "Tóm tắt")]
         public string tomtat { get; set; }
 
-        [Column(TypeName = "money")]
+        [Column(TypeName = "money"), Display(Name = "Giá")]
         public decimal? phi { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -49,7 +52,7 @@ namespace QLSachOnline.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<luusach> luusaches { get; set; }
-
+        [Display(Name ="Nhà xuất bản")]
         public virtual nhaxuatban nhaxuatban { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

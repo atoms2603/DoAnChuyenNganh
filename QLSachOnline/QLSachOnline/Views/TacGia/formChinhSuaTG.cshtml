@@ -1,120 +1,76 @@
 ﻿@model QLSachOnline.Models.tacgia
+
 @{
-    ViewBag.Title = "Chỉnh sửa tác gỉả";
+    ViewBag.Title = "Chỉnh sửa tác giả";
     Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
 }
 
+<div class="col-md-10">
+    <div>
+        @Html.ActionLink("Trở về", "QuanLyTacGia", "TacGia", null, htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
+    <h2>Thêm tác giả</h2>
+    @using (Html.BeginForm("chinhSuaTG", "TacGia", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
 
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-<div class="container-fluid">
-    <form action="@Url.Content("/TacGia/chinhSuaTG")" method="post">
-        <div>&nbsp;</div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-1">
-                <p><a href="@Url.Content("/TacGia/QuanLyTacGia")" class="btn btn-primary">Trở về</a></p>
+            <div class="form-group">
+                @Html.LabelFor(model => model.matg, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.matg, new { htmlAttributes = new { @class = "form-control" ,@readonly="readonly"} })
+                    @Html.ValidationMessageFor(model => model.matg, "", new { @class = "text-danger" })
+                </div>
             </div>
-            <div class="col-md-10">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6"><h2>Chỉnh sửa tác giả</h2></div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div>&nbsp;</div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Mã tác giả</div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6"><input type="text" name="matg" value="@Model.matg" class="form-control" readonly /></div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div>&nbsp;</div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Tên tác giả</div>
-            <div class="col-md-1">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6"><input type="text" name="tentg" value="@Model.tentg" class="form-control" /></div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div>&nbsp;</div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Ngày sinh</div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            @if (Model.ngaysinh != null)
-            {
-                <div class="col-md-6">
-                    <input type="date" name="ngaysinh" value="@Model.ngaysinh.Value.ToString("yyyy-MM-dd")" class="form-control" />
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.tentg, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.tentg, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.tentg, "", new { @class = "text-danger" })
                 </div>
-            }
-            else
-            {
-                <div class="col-md-6">
-                    <input type="date" name="ngaysinh" value="" class="form-control" />
-                </div>
-            }
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div>&nbsp;</div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-1">Giới tính</div>
-            @if (Model.gioitinh.Value ==  true)
-            {
-                <div class="col-md-3">
-                    <input type="radio" name="gioitinh" value="true" checked />Nam
-                    <input type="radio" name="gioitinh" value="false" />Nữ
-                </div>
-            }
-            else
-            {
-                <div class="col-md-3">
-                    <input type="radio" name="gioitinh" value="true" />Nam
-                    <input type="radio" name="gioitinh" value="false" checked />Nữ
-                </div>
-            }
-            <div class="col-md-7">&nbsp;</div>
-        </div>
-        <div>&nbsp;</div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Quê quán</div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6"><input type="text" name="quequan" value="@Model.quequan" class="form-control" /></div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div>&nbsp;</div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6 font-weight-bold">Nghệ danh</div>
-            <div class="col-md-1">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6"><input type="text" name="nghedanh" value="@Model.nghedanh" class="form-control" /></div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div>&nbsp;</div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-2">
-                <input type="submit" value="Chỉnh sửa" class="btn btn-primary" />
             </div>
-            <div class="col-md-9">&nbsp;</div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ngaysinh, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ngaysinh, "{0:yyyy-MM-dd}", htmlAttributes: new { @class = "form-control", @type = "date"})
+                    @Html.ValidationMessageFor(model => model.ngaysinh, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.gioitinh, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.gioitinh, new List<SelectListItem> { new SelectListItem { Text = "Nam", Value = "true" }, new SelectListItem { Text = "Nữ", Value = "false" } }, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.gioitinh, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.quequan, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.quequan, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.quequan, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.nghedanh, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.nghedanh, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.nghedanh, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                </div>
+            </div>
         </div>
-        <div>&nbsp;</div>
-    </form>
+    }
 </div>

@@ -16,35 +16,24 @@ namespace QLSachOnline.Controllers
         }
         public ActionResult formThemTacGia()
         {
-            if (TempData["flagRong"] != null)
-                ViewBag.flagMaRong = true;
-            if(TempData["flagCo"]!=null)
-                ViewBag.flagCo = true;
             return View();
         }
         
         [HttpPost]
         public ActionResult themTacGia(Models.tacgia tg)
         {
-            string maTG = Request["matg"].ToString().ToUpper();
-            if ( maTG == "")
+            if (ModelState.IsValid)
             {
-                TempData["flagRong"] = true;
-                return RedirectToAction("formThemTacGia");
-            }
-            else
-            {
-                if(db.tacgias.Find(maTG)!=null)
+                if (db.tacgias.Find(tg.matg) == null)
                 {
-                    TempData["flagCo"] = true;
-                    return RedirectToAction("formThemTacGia");
+                    tg.matg = tg.matg.ToUpper();
+                    db.tacgias.Add(tg);
+                    db.SaveChanges();
+                    return RedirectToAction("QuanLyTacGia");
                 }
-                tg.matg = tg.matg.ToUpper();
-                db.tacgias.Add(tg);
-                db.SaveChanges();
-                return RedirectToAction("QuanLyTacGia");
+                ModelState.AddModelError("matg", "Mã trùng vui lòng nhập lại !");
             }
-                
+            return View("formThemTacGia");
         }
         public ActionResult formXoaTacGia(string id)
         {
@@ -72,12 +61,16 @@ namespace QLSachOnline.Controllers
         [HttpPost]
         public ActionResult chinhSuaTG(Models.tacgia x)
         {
-            Models.tacgia tg = db.tacgias.Find(x.matg);
-            tg.tentg = x.tentg;
-            tg.ngaysinh = x.ngaysinh;
-            tg.gioitinh = x.gioitinh;
-            tg.quequan = x.quequan;
-            tg.nghedanh = x.nghedanh;
+            if (ModelState.IsValid)
+            {
+                Models.tacgia tg = db.tacgias.Find(x.matg);
+                tg.tentg = x.tentg;
+                tg.ngaysinh = x.ngaysinh;
+                tg.gioitinh = x.gioitinh;
+                tg.quequan = x.quequan;
+                tg.nghedanh = x.nghedanh;
+            }
+            
             db.SaveChanges();
             return RedirectToAction("QuanLyTacGia");
         }

@@ -14,7 +14,7 @@
                     <img src="~/Images/Images_SP/Pro1.jpg" class="img-fluid" alt="">
                     <div>&nbsp;</div>
                     <h4 class="title"><a href="@Url.Content("/Sach/indexSach/"+item.masach)">@item.tensach</a></h4>
-                    <h4 class="title"><a href="@Url.Content("/Sach/indexSach/"+item.masach)">Thể loại:</a></h4>
+                    <h4 class="title"><a href="@Url.Content("/Sach/indexSach/"+item.masach)">Thể loại</a></h4>
                     @foreach (var item2 in item.theloais)
                     {
                         <span><a href="@Url.Content("/Home/formTheLoaiFilter/"+item2.maloai)" class="text-black">@item2.tentl</a> &nbsp;&nbsp;&nbsp;</span>
