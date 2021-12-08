@@ -13,18 +13,17 @@
         public sach()
         {
             chuongs = new HashSet<chuong>();
-            giaodiches = new HashSet<giaodich>();
             luusaches = new HashSet<luusach>();
             tacgias = new HashSet<tacgia>();
             theloais = new HashSet<theloai>();
         }
 
         [Key]
-        [StringLength(10),Display(Name ="Mã sách")]
-        [Required(ErrorMessage ="Vui lòng nhập mã sách !")]
+        [StringLength(10), Display(Name = "Mã sách")]
+        [Required(ErrorMessage = "Vui lòng nhập mã sách !")]
         public string masach { get; set; }
 
-        [Required(ErrorMessage ="Vui lòng nhập mã nhà xuất bản !")]
+        [Required(ErrorMessage = "Vui lòng nhập mã nhà xuất bản !")]
         [StringLength(10), Display(Name = "Mã nhà xuất bản")]
         public string manhaxuatban { get; set; }
 
@@ -38,21 +37,18 @@
         [StringLength(200), Display(Name = "Hình ảnh")]
         public string hinhanh { get; set; }
 
-        [StringLength(1), Display(Name = "Tóm tắt")]
+        [Display(Name = "Tóm tắt")]
         public string tomtat { get; set; }
 
-        [Column(TypeName = "money"), Display(Name = "Giá")]
-        public decimal? phi { get; set; }
+        [Display(Name = "Premium")]
+        public bool premium { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<chuong> chuongs { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<giaodich> giaodiches { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<luusach> luusaches { get; set; }
-        [Display(Name ="Nhà xuất bản")]
+
         public virtual nhaxuatban nhaxuatban { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

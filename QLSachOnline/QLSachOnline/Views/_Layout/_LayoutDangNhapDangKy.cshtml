@@ -27,6 +27,8 @@
     <link href="~/assets/css/style.css" rel="stylesheet">
 
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
     <!--FONTAWSOME-->
     <link href="~/fontawesome/css/all.min.css" rel="stylesheet" />
@@ -52,6 +54,7 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="nav-link scrollto" href="@Url.Content("/Home/Index")">Trang chủ</a></li>
+                    <li><a class="nav-link scrollto" href="@Url.Content("/Goi/IndexGoi")">Gói Premium</a></li>
                     <li class="dropdown">
                         <a href="#"><span>Thể loại</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
@@ -80,13 +83,13 @@
                     else
                     {
                         <li class="dropdown">
-                            <a href="@Url.Content("/User/ThongTinChiTietUser/"+userlogin.taikhoan)"><span>@userlogin.taikhoan</span> <i class="bi bi-chevron-down"></i></a>
+                            <a href="@Url.Content("/User/ThongTinChiTietUser/")"><span>@userlogin.taikhoan</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
 
-                                <li><a href="@Url.Content("/User/thongTinNguoiDung/"+userlogin.taikhoan)">Thông tin</a></li>
-                                <li><a href="@Url.Content("/User/sachYeuThichUser/"+userlogin.taikhoan)">Yêu thích</a></li>
+                                <li><a href="@Url.Content("/User/thongTinNguoiDung/")">Thông tin</a></li>
+                                <li><a href="@Url.Content("/User/sachYeuThichUser/")">Yêu thích</a></li>
                                 <li><a href="#">Thiết lập tài khoản</a></li>
-                                <li><a href="@Url.Content("/User/lichSuGDUser/"+userlogin.taikhoan)">Lịch sử giao dịch</a></li>
+                                <li><a href="@Url.Content("/User/lichSuGDUser/")">Lịch sử giao dịch</a></li>
                                 <li><a href="@Url.Content("/User/logout")">Đăng xuất</a></li>
 
                             </ul>

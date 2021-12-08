@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<QLSachOnline.Models.sach>
+
 @{
     ViewBag.Title = "Quản lý sách";
     Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
@@ -23,7 +24,7 @@
                                 <th>Tên sách</th>
                                 <th>Thể loại</th>
                                 <th>Tác giả</th>
-                                <th>Phí</th>
+                                <th>Premium</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -52,7 +53,7 @@
                                             }
                                         }
                                     </td>
-                                    <td>@Html.DisplayFor(ModelItem => item.phi)</td>
+                                    <td>@(item.premium?"Có":"Không có")</td>
                                     <td><a href="@Url.Content("/Sach/formXoaSach/"+item.masach)" class="btn btn-outline-primary">Xóa</a></td>
                                     <td><a href="@Url.Content("/Sach/formChinhSua/"+item.masach)" class="btn btn-outline-primary">Chỉnh sửa</a></td>
                                 </tr>

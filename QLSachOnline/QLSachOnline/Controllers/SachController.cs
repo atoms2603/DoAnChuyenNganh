@@ -59,7 +59,7 @@ namespace QLSachOnline.Controllers
                     sach.manhaxuatban = sachN.manhaxuatban;
                     sach.nhaxuatban = db.nhaxuatbans.Find(sach.manhaxuatban);
                     sach.hinhanh = sachN.hinhanh;
-                    if (sachN.phi == null) sach.phi = 0; else sach.phi = sachN.phi;
+                    sach.premium = sachN.premium;
                     sach.tomtat = sachN.tomtat;
 
                     if (dsID_TL != null)
@@ -136,9 +136,8 @@ namespace QLSachOnline.Controllers
                     sachsua.namxuatban = sachN.namxuatban;
                     sachsua.manhaxuatban = sachN.manhaxuatban;
                     sachsua.nhaxuatban = db.nhaxuatbans.Find(sachsua.manhaxuatban);
-                    sachsua.phi = sachN.phi;
+                    sachsua.premium = sachN.premium;
                     sachsua.hinhanh = sachN.hinhanh;
-                    if (sachN.phi == null) sachsua.phi = 0; else sachsua.phi = sachN.phi;
                     sachsua.tomtat = sachN.tomtat;
 
                     db.SaveChanges();
@@ -250,23 +249,24 @@ namespace QLSachOnline.Controllers
         //Xử lý sách
         public ActionResult yeuThich(string id)
         {
-            if ((bool)Session["isLogin"]) {
+            if ((bool)Session["isLogin"]) 
+            {
                 Models.userlogin user = Session["Login"] as Models.userlogin;
-                foreach (var item in db.luusaches)
+                if (db.luusaches.Where(x=>x.masach==id).Where(x=>x.taikhoan==user.taikhoan).ToList().Count!=0)
                 {
-                    if (item.masach == id && user.taikhoan==item.taikhoan)
-                    {
-                        return View("indexSach", db.saches.Find(id));
-                    }
-
+                    db.luusaches.Remove(db.luusaches.Where(x => x.masach == id).Where(x=>x.taikhoan==user.taikhoan).First());
                 }
-                Models.luusach luusach = new Models.luusach();
-                luusach.masach = id;
-                luusach.taikhoan = user.taikhoan;
-                luusach.ngayluu = System.DateTime.Now;
-                db.luusaches.Add(luusach);
+                else 
+                {
+                    Models.luusach luusach = new Models.luusach();
+                    luusach.masach = id;
+                    luusach.taikhoan = user.taikhoan;
+                    luusach.ngayluu = System.DateTime.Now;
+                    db.luusaches.Add(luusach);
+                }
                 db.SaveChanges();
-                return View("indexSach",db.saches.Find(id));
+                Session["Login"] = db.userlogins.Find(user.taikhoan);
+                return View("indexSach", db.saches.Find(id));
             }
             return RedirectToAction("IndexDangNhap", "User");
         }

@@ -49,6 +49,7 @@
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="nav-link scrollto" href="@Url.Content("/Home/Index")">Trang chủ</a></li>
+                    <li><a class="nav-link scrollto" href="@Url.Content("/Goi/IndexGoi")">Gói Premium</a></li>
                     <li class="dropdown">
                         <a href="#"><span>Thể loại</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
@@ -82,10 +83,10 @@
                             <a href="@Url.Content("/User/ThongTinChiTietUser/"+userlogin.taikhoan)"><span>@userlogin.taikhoan</span> <i class="bi bi-chevron-down"></i></a>
                             <ul>
 
-                                <li><a href="@Url.Content("/User/thongTinNguoiDung/"+userlogin.taikhoan)">Thông tin</a></li>
-                                <li><a href="@Url.Content("/User/sachYeuThichUser/"+userlogin.taikhoan)">Yêu thích</a></li>
+                                <li><a href="@Url.Content("/User/thongTinNguoiDung/")">Thông tin</a></li>
+                                <li><a href="@Url.Content("/User/sachYeuThichUser/")">Yêu thích</a></li>
                                 <li><a href="#">Thiết lập tài khoản</a></li>
-                                <li><a href="@Url.Content("/User/lichSuGDUser/"+userlogin.taikhoan)">Lịch sử giao dịch</a></li>
+                                <li><a href="@Url.Content("/User/lichSuGDUser/")">Lịch sử giao dịch</a></li>
                                 <li><a href="@Url.Content("/User/logout")">Đăng xuất</a></li>
 
                             </ul>
@@ -126,7 +127,7 @@
                                     <div class="col-lg-6 d-flex justify-content-center align-items-center">
                                         <div class="col-md-6 col-lg-8 mb-5 mb-lg-0">
                                             <div class="icon-box" data-aos="fade-up" data-aos-delay="400" style="padding: 40px;">
-                                                <img src="~/Images/Images_SP/Pro1.jpg" class="img-fluid rounded mx-auto d-block" alt="">
+                                                <img src="~/Images/Images_SP/@item.hinhanh" class="img-fluid rounded mx-auto d-block" alt="">
                                             </div>
                                         </div>
                                     </div>
@@ -145,9 +146,9 @@
                                                 <li><strong>Năm</strong>: @item.namxuatban</li>
                                                 <li>&nbsp;</li>
                                                 <li>
-                                                    @if ((int)item.phi != 0)
+                                                    @if ((bool)item.premium)
                                                     {
-                                                        <a href="@Url.Content("/Home/formThanhToanSach/"+item.masach)" class="btn btn-success">Mua</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                                        <a href="@Url.Content("/Goi/IndexGoi")" class="btn btn-success">Mua <strong>Premium</strong></a>
                                                     }
                                                     else
                                                     {
@@ -162,10 +163,7 @@
                                                     }
                                                     <a href="@Url.Content("/Sach/yeuThich/"+item.masach)" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
                                                 </li>
-                                                @if ((int)item.phi != 0)
-                                                {
-                                                    <li><strong>Giá</strong>: @String.Format("{0:n0}", System.Convert.ToInt32(item.phi)) &nbsp; <strong>VNĐ</strong></li>
-                                                }
+               
                                             </ul>
                                         </div>
                                         <div class="portfolio-description">

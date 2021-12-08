@@ -95,7 +95,7 @@
             <div>&nbsp;</div>
             <div class="row">
                 <div class="col-4"><h5><span>Ngày giao dịch</span></h5></div>
-                <div class="col-4"><h5><span>Tên sách</span></h5></div>
+                <div class="col-4"><h5><span>Tên gói Premium</span></h5></div>
                 <div class="col-4"><h5><span>Giá</span></h5></div>
             </div>
         </div>
@@ -103,12 +103,12 @@
 
             <div class="col-lg-12 text-center">
 
-                @foreach (var item in Model.giaodiches)
+                @foreach (var item in Model.usergois)
                 {
                     <div class="row">
-                        <div class="col-4">@item.ngaygiaodich.Value.ToShortDateString()</div>
-                        <div class="col-4">@item.sach.tensach</div>
-                        <div class="col-4">@item.sach.phi</div>
+                        <div class="col-4">@item.ngaymua.ToShortDateString()</div>
+                        <div class="col-4">@item.goi.tengoi</div>
+                        <div class="col-4">&nbsp;</div>
                     </div>
                     <hr>
                 }

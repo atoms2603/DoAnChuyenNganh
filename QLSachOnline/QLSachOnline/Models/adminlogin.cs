@@ -1,4 +1,4 @@
-namespace QLSachOnline.Models
+﻿namespace QLSachOnline.Models
 {
     using System;
     using System.Collections.Generic;
@@ -10,11 +10,12 @@ namespace QLSachOnline.Models
     public partial class adminlogin
     {
         [Key]
-        [StringLength(50)]
+        [StringLength(50),Display(Name ="Tài khoản")]
+        [Required(ErrorMessage ="Tài khoản trống ! Vui lòng nhập tài khoản")]
         public string taikhoan { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        [StringLength(50),Display(Name ="Mật khẩu")]
+        [Required(ErrorMessage = "Mật khẩu trống ! Vui lòng nhập mật khẩu")]
         public string matkhau { get; set; }
     }
 }

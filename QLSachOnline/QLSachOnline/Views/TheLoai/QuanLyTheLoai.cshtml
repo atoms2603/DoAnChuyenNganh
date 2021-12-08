@@ -67,172 +67,171 @@
                         </div>
                     }
 
-
                 </div>
-                </div>
+            </div>
 
 
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Mã thể loại</th>
+                            <th>Tên thể loại</th>
+                            <th>Ghi chú</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ 
+                            int dem = 0;
+                            foreach (var item in db.theloais)
+                            {
                             <tr>
-                                <th>Mã thể loại</th>
-                                <th>Tên thể loại</th>
-                                <th>Ghi chú</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{ 
-                                int dem = 0;
-                                foreach (var item in db.theloais)
-                                {
-                                <tr>
-                                    <td>@item.maloai</td>
-                                    <td>@item.tentl</td>
-                                    <td>@item.ghichu</td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalXoa_@dem">Xóa</button>
-                                        <form action="@Url.Content("/TheLoai/xoaTheLoai/" + item.maloai)" method="post">
+                                <td>@item.maloai</td>
+                                <td>@item.tentl</td>
+                                <td>@item.ghichu</td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalXoa_@dem">Xóa</button>
+                                    <form action="@Url.Content("/TheLoai/xoaTheLoai/" + item.maloai)" method="post">
 
-                                            <div class="modal" id="modalXoa_@dem">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
+                                        <div class="modal" id="modalXoa_@dem">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
 
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Xóa thể loại</h4>
-                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        </div>
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Xóa thể loại</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
 
 
-                                                        <div class="modal-body">
-                                                            <div class="container-fluid">
-                                                                <div class="row form-group">
-                                                                    <div class="col-md-3">Mã thể loại:</div>
-                                                                    <div class="col-md-6">@item.maloai</div>
-                                                                    <div class="col-md-3">&nbsp;</div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">&nbsp;</div>
-                                                                </div>
-                                                                <div class="row form-group">
-                                                                    <div class="col-md-3">Tên thể loại:</div>
-                                                                    <div class="col-md-6">@item.tentl</div>
-                                                                    <div class="col-md-3">&nbsp;</div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">&nbsp;</div>
-                                                                </div>
-                                                                <div class="row form-group">
-                                                                    <div class="col-md-3">Ghi chú:</div>
-                                                                    <div class="col-md-6">@item.ghichu</div>
-                                                                    <div class="col-md-3">&nbsp;</div>
-                                                                </div>
+                                                    <div class="modal-body">
+                                                        <div class="container-fluid">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-3">Mã thể loại:</div>
+                                                                <div class="col-md-6">@item.maloai</div>
+                                                                <div class="col-md-3">&nbsp;</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">&nbsp;</div>
+                                                            </div>
+                                                            <div class="row form-group">
+                                                                <div class="col-md-3">Tên thể loại:</div>
+                                                                <div class="col-md-6">@item.tentl</div>
+                                                                <div class="col-md-3">&nbsp;</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">&nbsp;</div>
+                                                            </div>
+                                                            <div class="row form-group">
+                                                                <div class="col-md-3">Ghi chú:</div>
+                                                                <div class="col-md-6">@item.ghichu</div>
+                                                                <div class="col-md-3">&nbsp;</div>
                                                             </div>
                                                         </div>
+                                                    </div>
 
 
-                                                        <div class="modal-footer">
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-                                                                    <div class="col-md-1">&nbsp;</div>
-                                                                    @{
-                                                                        bool flagXoa = false;
-                                                                        foreach (var item2 in item.saches)
+                                                    <div class="modal-footer">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-md-1">&nbsp;</div>
+                                                                @{
+                                                                    bool flagXoa = false;
+                                                                    foreach (var item2 in item.saches)
+                                                                    {
+                                                                        if (item2.theloais.Contains(item))
                                                                         {
-                                                                            if (item2.theloais.Contains(item))
-                                                                            {
-                                                                                flagXoa = true;
-                                                                                break;
-                                                                            }
+                                                                            flagXoa = true;
+                                                                            break;
+                                                                        }
 
-                                                                        }
-                                                                        if (flagXoa)
-                                                                        {
-                                                                            <div class="col-md-7"><h3 class="text-danger">Không thể xóa</h3></div>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <div class="col-md-7"><button type="submit" class="btn btn-primary">Xóa</button></div>
-                                                                        }
                                                                     }
-                                                                    <div class="col-md-1">&nbsp;</div>
-                                                                    <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
-                                                                    <div class="col-md-1">&nbsp;</div>
-                                                                </div>
+                                                                    if (flagXoa)
+                                                                    {
+                                                                        <div class="col-md-7"><h3 class="text-danger">Không thể xóa</h3></div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="col-md-7"><button type="submit" class="btn btn-primary">Xóa</button></div>
+                                                                    }
+                                                                }
+                                                                <div class="col-md-1">&nbsp;</div>
+                                                                <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                                                <div class="col-md-1">&nbsp;</div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalChinhsua_@dem">Chỉnh sửa</button>
-                                        <form action="@Url.Content("/TheLoai/suaTheLoai/"+item.maloai)" method="post">
+                                        </div>
+                                    </form>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalChinhsua_@dem">Chỉnh sửa</button>
+                                    <form action="@Url.Content("/TheLoai/suaTheLoai/"+item.maloai)" method="post">
 
-                                            <div class="modal" id="modalChinhsua_@dem">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
+                                        <div class="modal" id="modalChinhsua_@dem">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
 
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Chỉnh sửa thể loại</h4>
-                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        </div>
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Chỉnh sửa thể loại</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
 
 
-                                                        <div class="modal-body">
-                                                            <div class="container-fluid">
-                                                                <div class="row form-group">
-                                                                    <div class="col-md-3">Mã thể loại:</div>
-                                                                    <div class="col-md-6"><input type="text" name="maloai" value="@item.maloai" class="form-control" readonly /></div>
-                                                                    <div class="col-md-3">&nbsp;</div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">&nbsp;</div>
-                                                                </div>
-                                                                <div class="row form-group">
-                                                                    <div class="col-md-3">Tên thể loại:</div>
-                                                                    <div class="col-md-6"><input type="text" name="tentl" value="@item.tentl" class="form-control" /></div>
-                                                                    <div class="col-md-3">&nbsp;</div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">&nbsp;</div>
-                                                                </div>
-                                                                <div class="row form-group">
-                                                                    <div class="col-md-3">Ghi chú:</div>
-                                                                    <div class="col-md-6"><textarea name="ghichu" class="form-control">@item.ghichu</textarea></div>
-                                                                    <div class="col-md-3">&nbsp;</div>
-                                                                </div>
+                                                    <div class="modal-body">
+                                                        <div class="container-fluid">
+                                                            <div class="row form-group">
+                                                                <div class="col-md-3">Mã thể loại:</div>
+                                                                <div class="col-md-6"><input type="text" name="maloai" value="@item.maloai" class="form-control" readonly /></div>
+                                                                <div class="col-md-3">&nbsp;</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">&nbsp;</div>
+                                                            </div>
+                                                            <div class="row form-group">
+                                                                <div class="col-md-3">Tên thể loại:</div>
+                                                                <div class="col-md-6"><input type="text" name="tentl" value="@item.tentl" class="form-control" /></div>
+                                                                <div class="col-md-3">&nbsp;</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">&nbsp;</div>
+                                                            </div>
+                                                            <div class="row form-group">
+                                                                <div class="col-md-3">Ghi chú:</div>
+                                                                <div class="col-md-6"><textarea name="ghichu" class="form-control">@item.ghichu</textarea></div>
+                                                                <div class="col-md-3">&nbsp;</div>
                                                             </div>
                                                         </div>
+                                                    </div>
 
 
-                                                        <div class="modal-footer">
-                                                            <div class="container-fluid">
-                                                                <div class="row">
-                                                                    <div class="col-md-1">&nbsp;</div>
-                                                                    <div class="col-md-3"><button type="submit" class="btn btn-primary">Chỉnh sửa</button></div>
-                                                                    <div class="col-md-5">&nbsp;</div>
-                                                                    <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
-                                                                    <div class="col-md-1">&nbsp;</div>
-                                                                </div>
+                                                    <div class="modal-footer">
+                                                        <div class="container-fluid">
+                                                            <div class="row">
+                                                                <div class="col-md-1">&nbsp;</div>
+                                                                <div class="col-md-3"><button type="submit" class="btn btn-primary">Chỉnh sửa</button></div>
+                                                                <div class="col-md-5">&nbsp;</div>
+                                                                <div class="col-md-2"><button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button></div>
+                                                                <div class="col-md-1">&nbsp;</div>
                                                             </div>
                                                         </div>
+                                                    </div>
 
-                                                        </div>
-                                                </div>
+                                                    </div>
                                             </div>
-                                        </form>
-                                    </td>
-                                </tr>
-                                    dem++;
-                                }
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                                dem++;
                             }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
+    </div>
 </div>

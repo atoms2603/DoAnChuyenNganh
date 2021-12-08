@@ -8,76 +8,77 @@ namespace QLSachOnline.Controllers
 {
     public class UserController : Controller
     {
-        private QLSachOnline.Models.QLySachOnline db = new Models.QLySachOnline();
+        QLSachOnline.Models.QLySachOnline db = new Models.QLySachOnline();
         // GET: User
         public ActionResult IndexDangNhap()
         {
-            if (TempData["flagCheckError"] != null)
-                ViewBag.flagCheckError = true;
-            if (TempData["flagMuaSach"] != null)
-                ViewBag.flagMuaSach = TempData["flagMuaSach"] as string;
+            if (TempData["flagErrorMK"] != null) ViewBag.flagErrorMK = true;
+            if (TempData["flagUnknownTK"] != null) ViewBag.flagUnknownTK = true;
+            if (TempData["flagMuaSach"] != null) ViewBag.flagMuaSach = TempData["flagMuaSach"] as string;
+            if(TempData["flagCheckStatus"] != null) ViewBag.flagCheckStatus = true;
+            if (TempData["dangKySuccess"] != null) ViewBag.dangKySuccess = true;
+
             return View();
         }
         public ActionResult IndexDangKy()
         {
             return View();
         }
-        public ActionResult ThongTinChiTietUser(string id)
+        public ActionResult ThongTinChiTietUser()
         {
-            return View(db.userlogins.Find(id));
+            return View(Session["Login"] as Models.userlogin);
         }
         [HttpPost]
-        public ActionResult DangKy()
+        [ValidateAntiForgeryToken]
+        public ActionResult DangKy(Models.userlogin userlogin)
         {
             if (ModelState.IsValid)
             {
-                Models.userlogin user = new Models.userlogin();
-                string taikhoan = Request["taikhoan"].ToString();
-                string matkhau = Request["matkhau"].ToString();
-                string sdt = Request["sdt"].ToString();
-                string email = Request["email"].ToString();
-
-                user.taikhoan = taikhoan;
-                user.matkhau = matkhau;
-                user.sdt = sdt;
-                user.email = email;
-
-                db.userlogins.Add(user);
-                db.SaveChanges();
+                if (db.userlogins.Find(userlogin.taikhoan) == null)
+                {
+                    userlogin.status = true;
+                    db.userlogins.Add(userlogin);
+                    db.SaveChanges();
+                    TempData["dangKySuccess"] = true;
+                    return RedirectToAction("IndexDangNhap");
+                }
+                ModelState.AddModelError("taikhoan", "Tài khoản đã tồn tại !");
             }
-            return View("~/Views/Home/Index.cshtml",db.saches);
+            return View("IndexDangKy");
         }
-        public ActionResult DangNhap()
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DangNhap(Models.userlogin userlogin)
         {
-            
-            if (Request["taikhoan"] == null || Request["matkhau"] == null)
+            if (ModelState.IsValid)
             {
-                TempData["flagCheckError"] = true;
-                return RedirectToAction("IndexDangNhap");
-            }
-            else
-            {
-                string tk = Request["taikhoan"].ToString();
-                Models.userlogin x = db.userlogins.Find(tk);
-                string mk = Request["matkhau"].ToString();
+                Models.userlogin x = db.userlogins.Find(userlogin.taikhoan);
                 if (x != null)
                 {
-                    if (x.matkhau == mk)
+                    if (x.matkhau == userlogin.matkhau)
                     {
-                        Session["Login"] = x;
-                        Session["isLogin"] = true;
+                        if (x.status.Equals(true)) 
+                        { 
+                            Session["Login"] = x;
+                            Session["isLogin"] = true;
 
-                        if (Request["masach"] != null) // lấy mã sách để truyền qua Action formThanhToanSach của Controller Home
-                        {
-                            TempData["flagMaSach"] = Request["masach"].ToString();
-                            return RedirectToAction("formThanhToanSach", "Home");
+                            if (Request["masach"] != null) // lấy mã sách để truyền qua Action formThanhToanSach của Controller Home
+                            {
+                                TempData["flagMaSach"] = Request["masach"].ToString();
+                                return RedirectToAction("formThanhToanSach", "Home");
+                            }
+                            return RedirectToAction("Index", "Home");
                         }
-                        return View("~/Views/Home/Index.cshtml", db.saches);
+                        else TempData["flagCheckStatus"] = true;
                     }
+                    else TempData["flagErrorMK"] = true;
                 }
-                TempData["flagCheckError"] = true;
+                else TempData["flagUnknownTK"] = true;
+
                 return RedirectToAction("IndexDangNhap");
             }
+            return View("IndexDangNhap");
         }
 
         public ActionResult logout()
@@ -85,16 +86,16 @@ namespace QLSachOnline.Controllers
             Session["Login"] = null;
             Session["isLogin"] = false;
             Session["AdminCheckLogin"] = false;
-            return RedirectToAction("Index","Home", db.saches);
+            return RedirectToAction("Index","Home");
         }
 
 
 
         //=================================================================================
         //Xử lý thông tin người dùng
-        public ActionResult thongTinNguoiDung(string id)
+        public ActionResult thongTinNguoiDung()
         {
-            return View(db.userlogins.Find(id));
+            return View(Session["Login"] as Models.userlogin);
         }
 
         [HttpPost]
@@ -108,20 +109,18 @@ namespace QLSachOnline.Controllers
             return Json(1, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult baoMatThietLap(string id)
+        public ActionResult baoMatThietLap()
         {
-            return View(db.userlogins.Find(id));
+            return View(Session["Login"] as Models.userlogin);
         }
 
-        public ActionResult sachYeuThichUser(string id)
+        public ActionResult sachYeuThichUser()
         {
-            if (TempData["idUser"] != null)
-                id = TempData["idUser"] as string;
-            Models.userlogin userlogin = db.userlogins.Find(id);
+            Models.userlogin userlogin = Session["Login"] as Models.userlogin;
             List<Models.sach> dsSachUser = new List<Models.sach>();
             foreach (var item in db.luusaches)
             {
-                if(item.taikhoan==id)
+                if(item.taikhoan==userlogin.taikhoan)
                     dsSachUser.Add(db.saches.Find(item.masach));
             }
             return View(dsSachUser);
@@ -130,22 +129,35 @@ namespace QLSachOnline.Controllers
         public ActionResult huyYeuThich(string id)
         {
             Models.userlogin userlogin = Session["Login"] as Models.userlogin;
-            foreach (var item in db.luusaches)
-            {
-                if(id==item.masach&&userlogin.taikhoan==item.taikhoan)
-                {
-                    db.luusaches.Remove(item);
-                    break;
-                }    
-            }
+            db.luusaches.Remove(db.luusaches.Where(x => x.masach == id).Where(x=>x.taikhoan==userlogin.taikhoan).First());
             db.SaveChanges();
-            TempData["idUser"] = userlogin.taikhoan;
+            Session["Login"] = db.userlogins.Find(userlogin.taikhoan);
             return RedirectToAction("sachYeuThichUser");
         }
 
-        public ActionResult lichSuGDUser(string id)
+        public ActionResult lichSuGDUser()
         {
-            return View(db.userlogins.Find(id));
+            return View(Session["Login"] as Models.userlogin);
         }
+        public ActionResult quanLyUser()
+        {
+            return View(db.userlogins);
+        }
+        public ActionResult xulyStatus(string id)
+        {
+            int result = 1;
+            Models.userlogin x = db.userlogins.Find(id);
+            if (x.status.Value)
+            {
+                result = 0;
+                x.status = false;
+            }
+            else x.status = true;
+            db.SaveChanges();
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+
+   
     }
 }

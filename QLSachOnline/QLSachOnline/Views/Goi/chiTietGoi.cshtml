@@ -1,0 +1,85 @@
+﻿@model QLSachOnline.Models.goi
+
+@{
+    ViewBag.Title = "chiTietGoi";
+    Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
+}
+
+<!-- ======= Chi tiết gói/ thanh toán Section ======= -->
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+
+        <div class="row gy-4 d-flex justify-content-center section-bg rounded-2">
+
+            <div class="col-lg-6">
+                <div class="portfolio-info row" style="background-color: white;">
+                    <div class="col-md-12 col-lg-12 col-12 mb-5 mb-lg-0">
+                        <div class="section-title">
+                            <h2>Gói Premium &nbsp;<i class="fas fa-gem text-danger"></i></h2>
+                            <h3>Premium <span>@Model.tengoi</span></h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-7">
+                                <ul>
+                                    <li><strong>Tên gói</strong>: @Model.tengoi</li>
+                                    <li><strong>Thời hạn</strong>: @Model.thoihan &nbsp; <strong>Ngày</strong></li>
+                                    <li><strong>Giá</strong>: 100,000 &nbsp; <strong>VNĐ</strong></li>
+                                </ul>
+                            </div>
+                            <div class="col-5">
+                                <strong>Mô tả gói:</strong>
+                                @Model.motagoi
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-center"><a href="@Url.Content("/Goi/thanhToanGoi/"+Model.magoi)" class="btn btn-success"><i class="fas fa-money-bill-alt"></i>&nbsp;Thanh toán</a></div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-1">&nbsp;</div>
+
+
+            <div class="col-lg-3">
+                <div class="portfolio-info row" style="background-color: white;">
+                    <div class="col-md-12 col-lg-12 col-12 mb-5 mb-lg-0">
+                        <div class="section-title">
+                            <h2>Các gói được mua nhiều nhất trong tháng &nbsp;<i class="fas fa-gem text-danger"></i></h2>
+                        </div>
+
+                        <section id="featured-services" class="featured-services">
+                            <div class="container" data-aos="fade-up">
+
+                                <div class="col-md-12 col-lg-12 d-flex align-items-stretch mb-5 mb-lg-0">
+                                    <a href="#" class="text-black">
+                                        <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                                            <div class="icon text-center"><i class="fas fa-gem text-danger"></i></div>
+                                            <h4 class="title">Gói Premium 1 ngày</h4>
+                                            <p class="description"><strong>Giá:</strong>: 5,9000&nbsp; <strong>VNĐ</strong></p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div>&nbsp;</div>
+                                <div class="col-md-12 col-lg-12 d-flex align-items-stretch mb-5 mb-lg-0">
+                                    <a href="#" class="text-black">
+                                        <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                                            <div class="icon text-center"><i class="fas fa-gem text-danger"></i></div>
+                                            <h4 class="title">Gói Premium 30 ngày</h4>
+                                            <p class="description"><strong>Giá:</strong>: 5,9000&nbsp; <strong>VNĐ</strong></p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- End Chi tiết gói/ thanh toán Section -->

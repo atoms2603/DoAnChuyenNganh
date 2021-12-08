@@ -10,9 +10,9 @@
 <h2>Thông tin chi tiết</h2>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-1"><a href="@Url.Content("/Sach/indexSach/"+Model.masach)" class="btn btn-primary">Đọc</a></div>
+        <div class="col-md-1"><a href="@Url.Content("/Sach/indexSach/" + Model.masach)" class="btn btn-primary">Đọc</a></div>
         <div class="col-md-1">&nbsp;</div>
-        <div class="col-md-2"><a href="@Url.Content("/Sach/formChinhSua/"+Model.masach)" class="btn btn-primary">Chỉnh sửa</a></div>
+        <div class="col-md-2"><a href="@Url.Content("/Sach/formChinhSua/" + Model.masach)" class="btn btn-primary">Chỉnh sửa</a></div>
 
         <div class="col-md-8">&nbsp;</div>
     </div>
@@ -53,8 +53,8 @@
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row">
-        <div class="col-md-2 font-weight-bold">Giá:</div>
-        <div class="col-md-4">@Model.phi</div>
+        <div class="col-md-2 font-weight-bold">Premium:</div>
+        <div class="col-md-4">@(Model.premium?"Có":"Không có") <strong>Premium</strong></div>
         <div class="col-md-6">&nbsp;</div>
     </div>
     <div class="row"><div class="col-md-12 font-weight-bold"><hr /></div></div>

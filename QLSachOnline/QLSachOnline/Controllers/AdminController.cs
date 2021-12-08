@@ -16,22 +16,18 @@ namespace QLSachOnline.Controllers
                 ViewBag.flagCheckError = true;
             return View();
         }
-        public ActionResult DangNhap()
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DangNhap(Models.adminlogin adminlogin)
         {
 
-            if (Request["taikhoan"] == null || Request["matkhau"] == null)
+            if (ModelState.IsValid)
             {
-                TempData["flagCheckError"] = true;
-                return RedirectToAction("AdminLogin");
-            }
-            else
-            {
-                string tk = Request["taikhoan"].ToString();
-                Models.adminlogin x = db.adminlogins.Find(tk);
-                string mk = Request["matkhau"].ToString();
+                Models.adminlogin x = db.adminlogins.Find(adminlogin.taikhoan);
                 if (x != null)
                 {
-                    if (x.matkhau == mk)
+                    if (x.matkhau == adminlogin.matkhau)
                     {
                         Session["AdminLogin"] = x;
                         Session["AdminCheckLogin"] = true;
@@ -42,6 +38,7 @@ namespace QLSachOnline.Controllers
                 TempData["flagCheckError"] = true;
                 return RedirectToAction("AdminLogin");
             }
+            return View("AdminLogin");
         }
 
     }

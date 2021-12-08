@@ -1,0 +1,79 @@
+﻿@model IEnumerable<QLSachOnline.Models.userlogin>
+
+@{
+    ViewBag.Title = "quanLyUser";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Quản lý tài khoản</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.taikhoan)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.sdt)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.email)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.status)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                string trangThai = "Vô hiệu user";
+                                string textTrangThai = "Hoạt động";
+                                string checkColor = "color:green";
+
+                                <tr>
+                                    <td>@item.taikhoan</td>
+                                    <td>@item.sdt</td>
+                                    <td>@item.email</td>
+
+                                    @if (!item.status.Value)
+                                    {
+                                        trangThai = "Kích hoạt user";
+                                        checkColor = "color:red";
+                                        textTrangThai = "Vô hiệu";
+                                    }
+                                    <td style="@checkColor">@textTrangThai</td>
+
+                                    <td>
+                                        <input type="hidden"  value="@item.taikhoan" id="tk_@item.taikhoan" />
+                                        <div class="form-actions no-color">
+                                            <input type="button" id="statusUser_@item.taikhoan" value="@trangThai" class="btn btn-outline-primary" />
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <script type="text/javascript">
+                                    $().ready(function () {
+                                        $('#statusUser_@item.taikhoan').click(function () {
+                                            const id = $('#tk_@item.taikhoan').val();
+                                            const url = '/User/xulyStatus/' + id;
+                                            $.get(url, function () {
+                                                $('body').load('/User/quanLyUser');
+                                            });
+                                        });
+                                    });
+                                </script>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
