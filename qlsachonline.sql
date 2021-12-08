@@ -83,8 +83,8 @@ CREATE TABLE sach(
 	[tensach] [nvarchar](50) null,
 	[namxuatban] [int] null,
 	[hinhanh] [nvarchar](200) null,
-	[tomtat] [nvarchar] null,
-	[phi] [money] null,
+	[tomtat] [nvarchar](max) null,
+	[premium] [bit] not null,
 
  CONSTRAINT [PK_sach] PRIMARY KEY CLUSTERED 
 (
@@ -112,23 +112,40 @@ CREATE TABLE chuong(
 
 
 GO
-/****** Object:  Table [dbo].[tacgia]    Script Date: 18/10/2021 2:00:00 AM ******/
+/****** Object:  Table [dbo].[sach]    Script Date: 18/10/2021 2:00:00 AM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE TABLE giaodich(
-	[magd] [varchar] (10)not null,
-	[taikhoan] [varchar](50) NOT NULL,
-	[masach] [varchar](10) NOT NULL,
-	[ngaygiaodich] [datetime] null,
- CONSTRAINT [PK_giaodich] PRIMARY KEY CLUSTERED 
+CREATE TABLE goi(
+	[magoi] [varchar](10) NOT NULL,
+	[tengoi] [varchar](100) NOT NULL,
+	[motagoi] [nvarchar](max) null,
+	[thoihan] int not null,
+ CONSTRAINT [PK_goi] PRIMARY KEY CLUSTERED 
 (
-	[magd] asc,
-	[taikhoan]asc,
-	[masach] asc
+	[magoi] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[sach]    Script Date: 18/10/2021 2:00:00 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE usergoi(
+	[magoi] [varchar](10) NOT NULL,
+	[taikhoan] [varchar](50) NOT NULL,
+	[ngaymua] datetime not null,
+	[ngayhethan] datetime not null,
+ CONSTRAINT [PK_usergoi] PRIMARY KEY CLUSTERED 
+(
+	[magoi] ASC,
+	[taikhoan] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 
 GO
 /****** Object:  Table [dbo].[tacgia]    Script Date: 18/10/2021 2:00:00 AM ******/
@@ -207,7 +224,6 @@ REFERENCES [dbo].[sach] ([masach])
 GO
 ALTER TABLE [dbo].[tacgiasach] CHECK CONSTRAINT [FK_tacgiasach_sach]
 
-
 GO
 ALTER TABLE [dbo].[tacgiasach]  WITH CHECK ADD  CONSTRAINT [FK_tacgiasach_tacgia] FOREIGN KEY([matg])
 REFERENCES [dbo].[tacgia] ([matg])
@@ -227,17 +243,20 @@ REFERENCES [dbo].[theloai] ([maloai])
 GO
 ALTER TABLE [dbo].[theloaisach] CHECK CONSTRAINT [FK_theloaisach_theloai]
 
-GO
-ALTER TABLE [dbo].[giaodich]  WITH CHECK ADD  CONSTRAINT [FK_giaodich_userlogin] FOREIGN KEY([taikhoan])
-REFERENCES [dbo].[userlogin] ([taikhoan])
-GO
-ALTER TABLE [dbo].[giaodich] CHECK CONSTRAINT [FK_giaodich_userlogin]
 
 GO
-ALTER TABLE [dbo].[giaodich]  WITH CHECK ADD  CONSTRAINT [FK_giaodich_sach] FOREIGN KEY([masach])
-REFERENCES [dbo].[sach] ([masach])
+ALTER TABLE [dbo].[usergoi]  WITH CHECK ADD  CONSTRAINT [FK_usergoi_userlogin] FOREIGN KEY([taikhoan])
+REFERENCES [dbo].[userlogin] ([taikhoan])
 GO
-ALTER TABLE [dbo].[giaodich] CHECK CONSTRAINT [FK_giaodich_sach]
+ALTER TABLE [dbo].[usergoi] CHECK CONSTRAINT [FK_usergoi_userlogin]
+
+GO
+ALTER TABLE [dbo].[usergoi]  WITH CHECK ADD  CONSTRAINT [FK_usergoi_goi] FOREIGN KEY([magoi])
+REFERENCES [dbo].[goi] ([magoi])
+GO
+ALTER TABLE [dbo].[usergoi] CHECK CONSTRAINT [FK_usergoi_goi]
+
+
 
 
 GO
@@ -253,6 +272,11 @@ GO
 ALTER TABLE [dbo].[luusach] CHECK CONSTRAINT [FK_luusach_sach]
 
 insert into adminlogin values('admin','admin')
+
+insert into goi values('G001',N'Gói 1 ngày',N'Mua gói đọc sách premium với thời hạn 1 ngày',1)
+insert into goi values('G002',N'Gói 7 ngày',N'Mua gói đọc sách premium với thời hạn 7 ngày',7)
+insert into goi values('G003',N'Gói 30 ngày',N'Mua gói đọc sách premium với thời hạn 30 ngày',30)
+insert into goi values('G004',N'Gói 90 ngày',N'Mua gói đọc sách premium với thời hạn 90 ngày',90)
 
 insert into nhaxuatban values ('NXB001',N'Kim Đồng',null)
 insert into nhaxuatban values ('NXB002',N'Nhà xuất bản trẻ',null)
@@ -283,16 +307,16 @@ insert into theloai values ('TL012',N'Tôn giáo',null)
 
 insert into sach values('S001','NXB001',N'Hoa rơi cửa phật',2015,null,null,0)
 insert into sach values('S002','NXB001',N'Cây cam ngọt của tôi',2018,null,null,0) 
-insert into sach values('S003','NXB002',N'Con đường tu tiên của tôi',2019,null,null,100000) 
-insert into sach values('S004','NXB002',N'Hoa vẫn nở mỗi ngày',2020,null,null,50000)
+insert into sach values('S003','NXB002',N'Con đường tu tiên của tôi',2019,null,null,1) 
+insert into sach values('S004','NXB002',N'Hoa vẫn nở mỗi ngày',2020,null,null,1)
 insert into sach values('S005','NXB001',N'Vạn sự tùy duyên',2017,null,null,0)
-insert into sach values('S006','NXB004',N'Đắc nhân tâm',2021,null,null,150000)
+insert into sach values('S006','NXB004',N'Đắc nhân tâm',2021,null,null,1)
 insert into sach values('S007','NXB003',N'Muôn kiếp nhân sinh',2015,null,null,0)
 insert into sach values('S008','NXB005',N'Nóng giận là bản năng',2021,null,null,0) 
-insert into sach values('S009','NXB006',N'Nhà đầu tư thông minh',2019,null,null,100000) 
-insert into sach values('S010','NXB005',N'Hai số phận',2020,null,null,50000)
+insert into sach values('S009','NXB006',N'Nhà đầu tư thông minh',2019,null,null,1) 
+insert into sach values('S010','NXB005',N'Hai số phận',2020,null,null,1)
 insert into sach values('S011','NXB004',N'Hoàng tử bé',2019,null,null,0)
-insert into sach values('S012','NXB003',N'Tâm lý học',2021,null,null,150000)
+insert into sach values('S012','NXB003',N'Tâm lý học',2021,null,null,1)
 
 insert into tacgiasach values('S001','TG001')
 insert into tacgiasach values('S001','TG003')
@@ -330,93 +354,86 @@ insert into theloaisach values('S011','TL012')
 insert into theloaisach values('S012','TL009')
 insert into theloaisach values('S012','TL008')
 
-insert into chuong values('C001','S001',null,null)
-insert into chuong values('C002','S001',null,null)
-insert into chuong values('C003','S001',null,null)
-insert into chuong values('C004','S001',null,null)
-insert into chuong values('C005','S001',null,null)
-insert into chuong values('C006','S001',null,null)
+insert into chuong values('C001','S001',N'Chương 1',null)
+insert into chuong values('C002','S001',N'Chương 2',null)
+insert into chuong values('C003','S001',N'Chương 3',null)
+insert into chuong values('C004','S001',N'Chương 4',null)
+insert into chuong values('C005','S001',N'Chương 5',null)
+insert into chuong values('C006','S001',N'Chương 6',null)
 
-insert into chuong values('C001','S002',null,null)
-insert into chuong values('C002','S002',null,null)
-insert into chuong values('C003','S002',null,null)
-insert into chuong values('C004','S002',null,null)
-insert into chuong values('C005','S002',null,null)
-insert into chuong values('C006','S002',null,null)
+insert into chuong values('C001','S002',N'Chương 1',null)
+insert into chuong values('C002','S002',N'Chương 2',null)
+insert into chuong values('C003','S002',N'Chương 3',null)
+insert into chuong values('C004','S002',N'Chương 4',null)
+insert into chuong values('C005','S002',N'Chương 5',null)
+insert into chuong values('C006','S002',N'Chương 6',null)
 
-insert into chuong values('C001','S003',null,null)
-insert into chuong values('C002','S003',null,null)
-insert into chuong values('C003','S003',null,null)
-insert into chuong values('C004','S003',null,null)
-insert into chuong values('C005','S003',null,null)
-insert into chuong values('C006','S003',null,null)
+insert into chuong values('C001','S003',N'Chương 1',null)
+insert into chuong values('C002','S003',N'Chương 2',null)
+insert into chuong values('C003','S003',N'Chương 3',null)
+insert into chuong values('C004','S003',N'Chương 4',null)
+insert into chuong values('C005','S003',N'Chương 5',null)
+insert into chuong values('C006','S003',N'Chương 6',null)
 
-insert into chuong values('C001','S004',null,null)
-insert into chuong values('C002','S004',null,null)
-insert into chuong values('C003','S004',null,null)
-insert into chuong values('C004','S004',null,null)
-insert into chuong values('C005','S004',null,null)
-insert into chuong values('C006','S004',null,null)
+insert into chuong values('C001','S004',N'Chương 1',null)
+insert into chuong values('C002','S004',N'Chương 2',null)
+insert into chuong values('C003','S004',N'Chương 3',null)
+insert into chuong values('C004','S004',N'Chương 4',null)
+insert into chuong values('C005','S004',N'Chương 5',null)
+insert into chuong values('C006','S004',N'Chương 6',null)
 
-insert into chuong values('C001','S005',null,null)
-insert into chuong values('C002','S005',null,null)
-insert into chuong values('C003','S005',null,null)
-insert into chuong values('C004','S005',null,null)
-insert into chuong values('C005','S005',null,null)
-insert into chuong values('C006','S005',null,null)
+insert into chuong values('C001','S005',N'Chương 1',null)
+insert into chuong values('C002','S005',N'Chương 2',null)
+insert into chuong values('C003','S005',N'Chương 3',null)
+insert into chuong values('C004','S005',N'Chương 4',null)
+insert into chuong values('C005','S005',N'Chương 5',null)
+insert into chuong values('C006','S005',N'Chương 6',null)
 
-insert into chuong values('C001','S006',null,null)
-insert into chuong values('C002','S006',null,null)
-insert into chuong values('C003','S006',null,null)
-insert into chuong values('C004','S006',null,null)
-insert into chuong values('C005','S006',null,null)
-insert into chuong values('C006','S006',null,null)
+insert into chuong values('C001','S006',N'Chương 1',null)
+insert into chuong values('C002','S006',N'Chương 2',null)
+insert into chuong values('C003','S006',N'Chương 3',null)
+insert into chuong values('C004','S006',N'Chương 4',null)
+insert into chuong values('C005','S006',N'Chương 5',null)
+insert into chuong values('C006','S006',N'Chương 6',null)
 
-insert into chuong values('C001','S007',null,null)
-insert into chuong values('C002','S007',null,null)
-insert into chuong values('C003','S007',null,null)
-insert into chuong values('C004','S007',null,null)
-insert into chuong values('C005','S007',null,null)
-insert into chuong values('C006','S007',null,null)
+insert into chuong values('C001','S007',N'Chương 1',null)
+insert into chuong values('C002','S007',N'Chương 2',null)
+insert into chuong values('C003','S007',N'Chương 3',null)
+insert into chuong values('C004','S007',N'Chương 4',null)
+insert into chuong values('C005','S007',N'Chương 5',null)
+insert into chuong values('C006','S007',N'Chương 6',null)
 
-insert into chuong values('C001','S008',null,null)
-insert into chuong values('C002','S008',null,null)
-insert into chuong values('C003','S008',null,null)
-insert into chuong values('C004','S008',null,null)
-insert into chuong values('C005','S008',null,null)
-insert into chuong values('C006','S008',null,null)
+insert into chuong values('C001','S008',N'Chương 1',null)
+insert into chuong values('C002','S008',N'Chương 2',null)
+insert into chuong values('C003','S008',N'Chương 3',null)
+insert into chuong values('C004','S008',N'Chương 4',null)
+insert into chuong values('C005','S008',N'Chương 5',null)
+insert into chuong values('C006','S008',N'Chương 6',null)
 
-insert into chuong values('C001','S009',null,null)
-insert into chuong values('C002','S009',null,null)
-insert into chuong values('C003','S009',null,null)
-insert into chuong values('C004','S009',null,null)
-insert into chuong values('C005','S009',null,null)
-insert into chuong values('C006','S009',null,null)
+insert into chuong values('C001','S009',N'Chương 1',null)
+insert into chuong values('C002','S009',N'Chương 2',null)
+insert into chuong values('C003','S009',N'Chương 3',null)
+insert into chuong values('C004','S009',N'Chương 4',null)
+insert into chuong values('C005','S009',N'Chương 5',null)
+insert into chuong values('C006','S009',N'Chương 6',null)
 
-insert into chuong values('C001','S009',null,null)
-insert into chuong values('C002','S009',null,null)
-insert into chuong values('C003','S009',null,null)
-insert into chuong values('C004','S009',null,null)
-insert into chuong values('C005','S009',null,null)
-insert into chuong values('C006','S009',null,null)
+insert into chuong values('C001','S010',N'Chương 1',null)
+insert into chuong values('C002','S010',N'Chương 2',null)
+insert into chuong values('C003','S010',N'Chương 3',null)
+insert into chuong values('C004','S010',N'Chương 4',null)
+insert into chuong values('C005','S010',N'Chương 5',null)
+insert into chuong values('C006','S010',N'Chương 6',null)
 
-insert into chuong values('C001','S010',null,null)
-insert into chuong values('C002','S010',null,null)
-insert into chuong values('C003','S010',null,null)
-insert into chuong values('C004','S010',null,null)
-insert into chuong values('C005','S010',null,null)
-insert into chuong values('C006','S010',null,null)
+insert into chuong values('C001','S011',N'Chương 1',null)
+insert into chuong values('C002','S011',N'Chương 2',null)
+insert into chuong values('C003','S011',N'Chương 3',null)
+insert into chuong values('C004','S011',N'Chương 4',null)
+insert into chuong values('C005','S011',N'Chương 5',null)
+insert into chuong values('C006','S011',N'Chương 6',null)
 
-insert into chuong values('C001','S011',null,null)
-insert into chuong values('C002','S011',null,null)
-insert into chuong values('C003','S011',null,null)
-insert into chuong values('C004','S011',null,null)
-insert into chuong values('C005','S011',null,null)
-insert into chuong values('C006','S011',null,null)
-
-insert into chuong values('C001','S012',null,null)
-insert into chuong values('C002','S012',null,null)
-insert into chuong values('C003','S012',null,null)
-insert into chuong values('C004','S012',null,null)
-insert into chuong values('C005','S012',null,null)
-insert into chuong values('C006','S012',null,null)
+insert into chuong values('C001','S012',N'Chương 1',null)
+insert into chuong values('C002','S012',N'Chương 2',null)
+insert into chuong values('C003','S012',N'Chương 3',null)
+insert into chuong values('C004','S012',N'Chương 4',null)
+insert into chuong values('C005','S012',N'Chương 5',null)
+insert into chuong values('C006','S012',N'Chương 6',null)
