@@ -122,6 +122,7 @@ CREATE TABLE goi(
 	[tengoi] [varchar](100) NOT NULL,
 	[motagoi] [nvarchar](max) null,
 	[thoihan] int not null,
+	[gia] money null,
  CONSTRAINT [PK_goi] PRIMARY KEY CLUSTERED 
 (
 	[magoi] ASC
@@ -273,10 +274,14 @@ ALTER TABLE [dbo].[luusach] CHECK CONSTRAINT [FK_luusach_sach]
 
 insert into adminlogin values('admin','admin')
 
-insert into goi values('G001',N'Gói 1 ngày',N'Mua gói đọc sách premium với thời hạn 1 ngày',1)
-insert into goi values('G002',N'Gói 7 ngày',N'Mua gói đọc sách premium với thời hạn 7 ngày',7)
-insert into goi values('G003',N'Gói 30 ngày',N'Mua gói đọc sách premium với thời hạn 30 ngày',30)
-insert into goi values('G004',N'Gói 90 ngày',N'Mua gói đọc sách premium với thời hạn 90 ngày',90)
+insert into goi values('G001',N'Gói 1 ngày',N'Mua gói đọc sách premium với thời hạn 1 ngày',1,10000)
+insert into goi values('G002',N'Gói 7 ngày',N'Mua gói đọc sách premium với thời hạn 7 ngày',7,70000)
+insert into goi values('G003',N'Gói 30 ngày',N'Mua gói đọc sách premium với thời hạn 30 ngày',30,300000)
+insert into goi values('G004',N'Gói 90 ngày',N'Mua gói đọc sách premium với thời hạn 90 ngày',90,900000)
+
+insert into userlogin values('abc','abc','0123','abc@gmail.com',1)
+insert into userlogin values('abc2','abc2','0123','abc2@gmail.com',1)
+insert into userlogin values('abc3','abc3','0123','abc3@gmail.com',1)
 
 insert into nhaxuatban values ('NXB001',N'Kim Đồng',null)
 insert into nhaxuatban values ('NXB002',N'Nhà xuất bản trẻ',null)
