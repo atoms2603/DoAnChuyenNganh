@@ -136,12 +136,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE usergoi(
+	[id] int identity,
 	[magoi] [varchar](10) NOT NULL,
 	[taikhoan] [varchar](50) NOT NULL,
 	[ngaymua] datetime not null,
 	[ngayhethan] datetime not null,
  CONSTRAINT [PK_usergoi] PRIMARY KEY CLUSTERED 
 (
+	[id] ASC,
 	[magoi] ASC,
 	[taikhoan] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
