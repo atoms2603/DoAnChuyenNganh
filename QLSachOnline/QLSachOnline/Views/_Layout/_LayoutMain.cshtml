@@ -29,6 +29,8 @@
     <link href="~/fontawesome/css/all.min.css" rel="stylesheet" />
     <script src="~/fontawesome/js/all.min.js"></script>
 
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
     <title>@ViewBag.Title</title>
 </head>
 <body>
@@ -59,8 +61,6 @@
                                 <li><a href="@Url.Content("/Home/formTheLoaiFilter/"+item.maloai)">@item.tentl</a></li>
                             }
 
-
-
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -80,17 +80,58 @@
                     else
                     {
                         <li class="dropdown">
-                            <a href="@Url.Content("/User/ThongTinChiTietUser/"+userlogin.taikhoan)"><span>@userlogin.taikhoan</span> <i class="bi bi-chevron-down"></i></a>
+                            <a href="@Url.Content("/User/ThongTinChiTietUser/" + userlogin.taikhoan)">
+                                @if ((bool)Session["isHavingPremium"])
+                                {
+                                    <i class="fas fa-gem text-danger"></i><span>&nbsp;</span>
+                                }
+                                <span>@userlogin.taikhoan</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </a>
                             <ul>
-
+                                @if(!(bool)Session["isHavingPremium"]) { 
+                                    <li><a href="#">(Chưa gia hạn<strong>&nbsp; Premium</strong>)</a></li>
+                                }else{
+                                    <li>
+                                        <a href="#"><span>Thời gian<strong>&nbsp;Premium</strong></span></a>
+                                        <a href="#"><sup><span id="txtNgay">@((int)Session["PDays"])</span> Ngày <span id="txtGio">@((int)Session["PHours"])</span> Giờ <span id="txtPhut">@((int)Session["PMinutes"])</span> Phút</sup></a>
+                                    </li>
+                                }
                                 <li><a href="@Url.Content("/User/thongTinNguoiDung/")">Thông tin</a></li>
                                 <li><a href="@Url.Content("/User/sachYeuThichUser/")">Yêu thích</a></li>
-                                <li><a href="#">Thiết lập tài khoản</a></li>
-                                <li><a href="@Url.Content("/User/lichSuGDUser/")">Lịch sử giao dịch</a></li>
+                                <li><a href="@Url.Content("/User/baoMatThietLap/")">Thiết lập tài khoản</a></li>
+                                <li><a href="#">------</a></li>
                                 <li><a href="@Url.Content("/User/logout")">Đăng xuất</a></li>
 
                             </ul>
                         </li>
+                        <script>
+                            var txtNgay = $('#txtNgay');
+                            var txtGio = $('#txtGio');
+                            var txtPhut = $('#txtPhut');
+                            function refresh() {
+                                @{
+                                    double tongNgay = 0;
+                                    double tongGio = 0;
+                                    double tongPhut = 0;
+                                    foreach (var item in userlogin.usergois.Where(a => a.ngayhethan >= System.DateTime.Now).ToList())
+                                    {
+                                        tongNgay += (item.ngayhethan - System.DateTime.Now).TotalDays;
+                                        tongGio += (item.ngayhethan - System.DateTime.Now).TotalHours;
+                                        tongPhut += (item.ngayhethan - System.DateTime.Now).TotalMinutes;
+                                    }
+                                    Session["PDays"] = (int)Math.Floor(tongNgay);
+                                    if ((int)Session["PDays"] != 0) { Session["PHours"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Hour; }
+                                    else { Session["PHours"] = (int)Math.Floor(tongGio); }
+                                    if ((int)Session["PHours"] != 0) { Session["PMinutes"] = DateTime.FromOADate(tongGio - Math.Floor(tongGio)).Minute; }
+                                    else { Session["PMinutes"] = (int)Math.Floor(tongPhut); }
+                                }
+                                txtNgay.html(@((int)Session["PDays"]));
+                                txtGio.html(@((int)Session["PHours"]));
+                                txtPhut.html(@((int)Session["PMinutes"]));
+                            }
+                            setInterval(refresh, 60000);
+                        </script>
                         <li class="dropdown">
                             <a class="nav-link scrollto" href="#"><i class="fas fa-bell"></i></a>
                             <ul>
@@ -98,7 +139,7 @@
                                 <li><a href="#">Thông báo 2</a></li>
                             </ul>
                         </li>
-                    }
+                                    }
                     <li><a class="nav-link scrollto" href="@Url.Content("/Home/formGopY")">Góp ý</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -148,7 +189,21 @@
                                                 <li>
                                                     @if ((bool)item.premium)
                                                     {
-                                                        <a href="@Url.Content("/Goi/IndexGoi")" class="btn btn-success">Mua <strong>Premium</strong></a>
+                                                        if (item.chuongs.ToList().Count == 0)
+                                                        {
+                                                            <a href="#" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            if (!(bool)Session["isHavingPremium"])
+                                                            {
+                                                                <a href="@Url.Content("/Goi/IndexGoi")" class="btn btn-success">Mua <strong>Premium</strong></a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a href="@Url.Content("/Sach/indexSach/"+item.masach)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                                            }
+                                                        }
                                                     }
                                                     else
                                                     {

@@ -23,7 +23,7 @@
                                 <ul>
                                     <li><strong>Tên gói</strong>: @Model.tengoi</li>
                                     <li><strong>Thời hạn</strong>: @Model.thoihan &nbsp; <strong>Ngày</strong></li>
-                                    <li><strong>Giá</strong>: 100,000 &nbsp; <strong>VNĐ</strong></li>
+                                    <li><strong>Giá</strong>: @String.Format("{0:n0}", Model.gia) &nbsp; <strong>VNĐ</strong></li>
                                 </ul>
                             </div>
                             <div class="col-5">
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="text-center"><a href="@Url.Content("/Goi/thanhToanGoi/"+Model.magoi)" class="btn btn-success"><i class="fas fa-money-bill-alt"></i>&nbsp;Thanh toán</a></div>
+                        <div class="text-center"><a href="@Url.Content("/Home/chonPhuongThucThanhToan/"+Model.magoi)" class="btn btn-success"><i class="fas fa-money-bill-alt"></i>&nbsp;Thanh toán</a></div>
 
                     </div>
                 </div>
@@ -42,35 +42,52 @@
             <div class="col-lg-1">&nbsp;</div>
 
 
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-12">
                 <div class="portfolio-info row" style="background-color: white;">
                     <div class="col-md-12 col-lg-12 col-12 mb-5 mb-lg-0">
-                        <div class="section-title">
-                            <h2>Các gói được mua nhiều nhất trong tháng &nbsp;<i class="fas fa-gem text-danger"></i></h2>
-                        </div>
 
                         <section id="featured-services" class="featured-services">
                             <div class="container" data-aos="fade-up">
 
-                                <div class="col-md-12 col-lg-12 d-flex align-items-stretch mb-5 mb-lg-0">
-                                    <a href="#" class="text-black">
-                                        <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
-                                            <div class="icon text-center"><i class="fas fa-gem text-danger"></i></div>
-                                            <h4 class="title">Gói Premium 1 ngày</h4>
-                                            <p class="description"><strong>Giá:</strong>: 5,9000&nbsp; <strong>VNĐ</strong></p>
-                                        </div>
-                                    </a>
+                                <div class="section-title">
+                                    <h2>Các gói được mua nhiều nhất trong tháng &nbsp;<i class="fas fa-gem text-danger"></i></h2>
                                 </div>
-                                <div>&nbsp;</div>
-                                <div class="col-md-12 col-lg-12 d-flex align-items-stretch mb-5 mb-lg-0">
-                                    <a href="#" class="text-black">
-                                        <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
-                                            <div class="icon text-center"><i class="fas fa-gem text-danger"></i></div>
-                                            <h4 class="title">Gói Premium 30 ngày</h4>
-                                            <p class="description"><strong>Giá:</strong>: 5,9000&nbsp; <strong>VNĐ</strong></p>
+                                @{
+                                    QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
+                                    List<QLSachOnline.Models.goi> dsGoi = new List<QLSachOnline.Models.goi>();
+                                    for (int i = 0; i < db.gois.Count(); i++)
+                                    {
+                                        string ma = db.gois.ToArray()[i].magoi;
+                                        int max = db.usergois.Where(x => x.magoi == ma).ToList().Count;
+                                        foreach (var item in db.gois)
+                                        {
+                                            if (db.usergois.Where(x => x.magoi == item.magoi).ToList().Count > max)
+                                            {
+                                                if (!dsGoi.Contains(db.gois.Find(item.magoi)))
+                                                {
+                                                    max = db.usergois.Where(x => x.magoi == item.magoi).ToList().Count;
+                                                    ma = item.magoi;
+                                                }
+                                            }
+                                        }
+                                        dsGoi.Add(db.gois.Find(ma));
+                                    }
+                                    foreach (var item in dsGoi)
+                                    {
+                                        <div class="col-md-12 col-lg-12 col-12 mb-5 mb-lg-0">
+                                            <a href="@Url.Content("/Goi/chiTietGoi/"+item.magoi)" class="text-black">
+                                                <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                                                    <div class="icon text-center"><i class="fas fa-gem text-danger"></i></div>
+                                                    <h4 class="title">@item.tengoi</h4>
+                                                    <p class="description"><strong>Giá:</strong>: @String.Format("{0:n0}", item.gia)&nbsp; <strong>VNĐ</strong></p>
+                                                </div>
+                                            </a>
                                         </div>
-                                    </a>
-                                </div>
+                                        <div>&nbsp;</div>
+                                    }
+
+                                }
+                                
 
                             </div>
                         </section>

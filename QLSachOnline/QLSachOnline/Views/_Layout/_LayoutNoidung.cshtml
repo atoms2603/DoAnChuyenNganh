@@ -77,13 +77,30 @@
                     else
                     {
                         <li class="dropdown">
-                            <a href="@Url.Content("/User/ThongTinChiTietUser/"+userlogin.taikhoan)"><span>@userlogin.taikhoan</span> <i class="bi bi-chevron-down"></i></a>
+                            <a href="@Url.Content("/User/ThongTinChiTietUser/" + userlogin.taikhoan)">
+                                @if ((bool)Session["isHavingPremium"])
+                                {
+                                    <i class="fas fa-gem text-danger"></i><span>&nbsp;</span>
+                                }
+                                <span>@userlogin.taikhoan</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </a>
                             <ul>
-
+                                @if (!(bool)Session["isHavingPremium"])
+                                {
+                                    <li><a href="#">(Chưa gia hạn<strong>&nbsp; Premium</strong>)</a></li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="#"><span>Thời gian<strong>&nbsp;Premium</strong></span></a>
+                                        <a href="#"><sup>@((int)Session["PDays"]) Ngày @((int)Session["PHours"]) Giờ @((int)Session["PMinutes"]) Phút</sup></a>
+                                    </li>
+                                }
                                 <li><a href="@Url.Content("/User/thongTinNguoiDung/")">Thông tin</a></li>
                                 <li><a href="@Url.Content("/User/sachYeuThichUser/")">Yêu thích</a></li>
-                                <li><a href="#">Thiết lập tài khoản</a></li>
-                                <li><a href="@Url.Content("/User/lichSuGDUser/")">Lịch sử giao dịch</a></li>
+                                <li><a href="@Url.Content("/User/baoMatThietLap/")">Thiết lập tài khoản</a></li>
+                                <li><a href="#">------</a></li>
                                 <li><a href="@Url.Content("/User/logout")">Đăng xuất</a></li>
 
                             </ul>

@@ -1837,6 +1837,7 @@
     <Content Include="fontawesome\webfonts\fa-regular-400.svg" />
     <Content Include="fontawesome\webfonts\fa-solid-900.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Demo_QR.png" />
     <Content Include="Images\Images_SP\Pro1.jpg" />
     <Content Include="Images\LogoIconReal.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -1952,6 +1953,11 @@
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -2036,18 +2042,13 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\NhaXuatBan\QuanLyNhaXuatBan.cshtml" />
-    <Content Include="Views\Sach\formChinhSua.cshtml" />
-    <Content Include="Views\Sach\formThemSach.cshtml" />
     <Content Include="Views\Sach\formThongTinChiTiet.cshtml" />
     <Content Include="Views\Sach\formXoaSach.cshtml" />
     <Content Include="Views\Sach\indexSach.cshtml" />
     <Content Include="Views\Sach\QuanLySach.cshtml" />
-    <Content Include="Views\TacGia\formChinhSuaTG.cshtml" />
     <Content Include="Views\TacGia\formChiTietTacGia.cshtml" />
-    <Content Include="Views\TacGia\formThemTacGia.cshtml" />
     <Content Include="Views\TacGia\formXoaTacGia.cshtml" />
     <Content Include="Views\TacGia\QuanLyTacGia.cshtml" />
-    <Content Include="Views\TheLoai\QuanLyTheLoai.cshtml" />
     <Content Include="Views\User\DangNhapThanhCong.cshtml" />
     <Content Include="Views\User\IndexDangKy.cshtml" />
     <Content Include="Views\User\IndexDangNhap.cshtml" />
@@ -2061,6 +2062,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChuongController.cs" />
+    <Compile Include="Controllers\GoiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NhaXuatBanController.cs" />
     <Compile Include="Controllers\SachController.cs" />
@@ -2072,13 +2074,14 @@
     </Compile>
     <Compile Include="Models\adminlogin.cs" />
     <Compile Include="Models\chuong.cs" />
-    <Compile Include="Models\giaodich.cs" />
+    <Compile Include="Models\goi.cs" />
     <Compile Include="Models\luusach.cs" />
     <Compile Include="Models\nhaxuatban.cs" />
     <Compile Include="Models\QLySachOnline.cs" />
     <Compile Include="Models\sach.cs" />
     <Compile Include="Models\tacgia.cs" />
     <Compile Include="Models\theloai.cs" />
+    <Compile Include="Models\usergoi.cs" />
     <Compile Include="Models\userlogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -2095,7 +2098,20 @@
     <Content Include="Views\User\thongTinNguoiDung.cshtml" />
     <Content Include="Views\User\baoMatThietLap.cshtml" />
     <Content Include="Views\User\sachYeuThichUser.cshtml" />
-    <Content Include="Views\User\lichSuGDUser.cshtml" />
+    <Content Include="Views\Sach\formThemSach.cshtml" />
+    <Content Include="Views\Sach\formChinhSua.cshtml" />
+    <Content Include="Views\TacGia\formThemTacGia.cshtml" />
+    <Content Include="Views\TacGia\formChinhSuaTG.cshtml" />
+    <Content Include="Views\TheLoai\QuanLyTheLoai.cshtml" />
+    <Content Include="Views\Home\formGopY.cshtml" />
+    <Content Include="Views\User\quanLyUser.cshtml" />
+    <Content Include="Views\Goi\IndexGoi.cshtml" />
+    <Content Include="Views\Goi\chiTietGoi.cshtml" />
+    <Content Include="Views\Goi\QuanLyGoi.cshtml" />
+    <Content Include="Views\Goi\formThemGoi.cshtml" />
+    <Content Include="Views\Goi\formSuaGoi.cshtml" />
+    <Content Include="Views\Goi\formXoaGoi.cshtml" />
+    <Content Include="Views\Home\chonPhuongThucThanhToan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

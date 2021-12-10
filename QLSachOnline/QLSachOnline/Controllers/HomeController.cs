@@ -30,16 +30,13 @@ namespace QLSachOnline.Controllers
             return View();
         }
 
-        public ActionResult formThanhToanSach(string id)
+        public ActionResult chonPhuongThucThanhToan(string id)
         {
-            if ((bool)Session["isLogin"] == false) // xét nếu chưa đăng nhập thì phải đăng nhập
-            {
-                TempData["flagMuaSach"] = id;
+            //id này của Gói
+            ViewBag.idGoi = id;
+            if (!(bool)Session["isLogin"])
                 return RedirectToAction("IndexDangNhap", "User");
-            }
-            if (TempData["flagMaSach"] != null) // lấy mã sách từ Action DangNhap của Controller User
-                return View(db.saches.Find(TempData["flagMaSach"] as string));
-            return View(db.saches.Find(id));
+            return View();
         }
 
     }

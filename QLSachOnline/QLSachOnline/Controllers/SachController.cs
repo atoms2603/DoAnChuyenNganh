@@ -31,6 +31,9 @@ namespace QLSachOnline.Controllers
         }
         public ActionResult indexSach(string id)
         {
+            if (Session["flagMaSach"] != null)
+                id = Session["flagMaSach"] as string;
+            Session.Remove("flagMaSach");
             return View(db.saches.Find(id));
         }
 

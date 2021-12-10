@@ -16,8 +16,8 @@
         }
 
         [Key]
-        [StringLength(10),Display(Name ="Mã gói")]
-        [Required(ErrorMessage ="Vui lòng nhập mã gói !")]
+        [StringLength(10), Display(Name = "Mã gói")]
+        [Required(ErrorMessage = "Vui lòng nhập mã gói !")]
         public string magoi { get; set; }
 
         [StringLength(100), Display(Name = "Tên gói")]
@@ -30,6 +30,9 @@
         [Display(Name = "Thời hạn gói")]
         [Required(ErrorMessage = "Vui lòng nhập thời hạn gói !")]
         public int thoihan { get; set; }
+
+        [Column(TypeName = "money"),Display(Name ="Giá")]
+        public decimal? gia { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<usergoi> usergois { get; set; }

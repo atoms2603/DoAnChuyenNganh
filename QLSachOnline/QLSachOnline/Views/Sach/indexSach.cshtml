@@ -48,7 +48,21 @@
                         <li>
                             @if ((bool)Model.premium)
                             {
-                                <a href="@Url.Content("/Goi/IndexGoi")" class="btn btn-success">Mua <strong>Premium</strong></a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                if (Model.chuongs.ToList().Count == 0)
+                                {
+                                    <a href="#" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                }
+                                else
+                                {
+                                    if (!(bool)Session["isHavingPremium"])
+                                    {
+                                        <a href="@Url.Content("/Goi/IndexGoi/"+Model.masach)" class="btn btn-success">Mua <strong>Premium</strong></a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+Model.chuongs.First().machuong)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                    }
+                                }
                             }
                             else
                             {

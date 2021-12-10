@@ -3,15 +3,22 @@
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/_Layout/_LayoutMain.cshtml";
 }
-
-<h1>Test:@System.DateTime.Now.AddDays(3)</h1>
+@{
+    double a = (System.DateTime.Now.AddMinutes(3) - System.DateTime.Now).TotalSeconds;
+}
+<div id="test">@a</div>
+<script>
+    var txttest = $('#test');
+    var valuesss = $('#test').html();
+    setInterval(function () { txttest.html(valuesss-=1); }, 1000);
+</script>
 @{
     foreach (var item in Model)
     {
         <div class="col-md-6 col-lg-3 col-12 d-flex align-items-stretch mb-5 mb-lg-0">
             <a href="@Url.Content("/Sach/indexSach/"+item.masach)">
                 <div class="icon-box col-12" data-aos="fade-up" data-aos-delay="400">
-                    <img src="~/Images/Images_SP/@item.hinhanh" class="img-fluid col-12 rounded-2" >
+                    <img src="~/Images/Images_SP/@item.hinhanh" class="img-fluid col-12 rounded-2">
                     <div>&nbsp;</div>
                     <h4 class="title"><a href="@Url.Content("/Sach/indexSach/"+item.masach)">@item.tensach</a></h4>
                     <h4 class="title"><a href="@Url.Content("/Sach/indexSach/"+item.masach)">Thể loại</a></h4>
@@ -22,7 +29,7 @@
                 </div>
             </a>
         </div>
-        
+
     }
 }
 

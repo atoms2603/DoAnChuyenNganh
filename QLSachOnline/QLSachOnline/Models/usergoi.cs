@@ -11,11 +11,16 @@ namespace QLSachOnline.Models
     {
         [Key]
         [Column(Order = 0)]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int id { get; set; }
+
+        [Key]
+        [Column(Order = 1)]
         [StringLength(10)]
         public string magoi { get; set; }
 
         [Key]
-        [Column(Order = 1)]
+        [Column(Order = 2)]
         [StringLength(50)]
         public string taikhoan { get; set; }
 

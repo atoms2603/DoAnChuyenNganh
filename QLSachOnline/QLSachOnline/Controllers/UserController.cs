@@ -12,9 +12,9 @@ namespace QLSachOnline.Controllers
         // GET: User
         public ActionResult IndexDangNhap()
         {
+            if (TempData["flagBackGoi"] != null) ViewBag.flagBackGoi = TempData["flagBackGoi"] as string;
             if (TempData["flagErrorMK"] != null) ViewBag.flagErrorMK = true;
             if (TempData["flagUnknownTK"] != null) ViewBag.flagUnknownTK = true;
-            if (TempData["flagMuaSach"] != null) ViewBag.flagMuaSach = TempData["flagMuaSach"] as string;
             if(TempData["flagCheckStatus"] != null) ViewBag.flagCheckStatus = true;
             if (TempData["dangKySuccess"] != null) ViewBag.dangKySuccess = true;
 
@@ -62,11 +62,32 @@ namespace QLSachOnline.Controllers
                         { 
                             Session["Login"] = x;
                             Session["isLogin"] = true;
-
-                            if (Request["masach"] != null) // lấy mã sách để truyền qua Action formThanhToanSach của Controller Home
+                            //kiểm tra tài khoản còn gói nào chưa hết hạn không.
+                            if (x.usergois.Where(a => a.ngayhethan >= System.DateTime.Now).ToList().Count != 0)
                             {
-                                TempData["flagMaSach"] = Request["masach"].ToString();
-                                return RedirectToAction("formThanhToanSach", "Home");
+                                Session["isHavingPremium"] = true;
+                                double tongNgay = 0;
+                                double tongGio = 0;
+                                double tongPhut = 0;
+                                foreach (var item in x.usergois.Where(a => a.ngayhethan >= System.DateTime.Now).ToList())
+                                {
+                                    tongNgay += (item.ngayhethan - System.DateTime.Now).TotalDays;
+                                    tongGio += (item.ngayhethan - System.DateTime.Now).TotalHours;
+                                    tongPhut += (item.ngayhethan - System.DateTime.Now).TotalMinutes;
+                                }
+                                Session["PDays"] = (int)Math.Floor(tongNgay);
+                                if ((int)Session["PDays"] != 0)
+                                    Session["PHours"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Hour;
+                                else
+                                    Session["PHours"] = (int)Math.Floor(tongGio);
+                                if ((int)Session["PHours"] != 0)
+                                    Session["PMinutes"] = DateTime.FromOADate(tongGio - Math.Floor(tongGio)).Minute;
+                                else Session["PMinutes"] = (int)Math.Floor(tongPhut);
+                            }
+                            if (Request["magoi"] != null) // lấy mã gói để truyền qua Action chiTietGoi của Controller Goi
+                            {
+                                TempData["flagBackGoi"] = Request["magoi"].ToString();
+                                return RedirectToAction("chiTietGoi", "Goi");
                             }
                             return RedirectToAction("Index", "Home");
                         }
@@ -86,6 +107,9 @@ namespace QLSachOnline.Controllers
             Session["Login"] = null;
             Session["isLogin"] = false;
             Session["AdminCheckLogin"] = false;
+            Session["isHavingPremium"] = false;
+            Session["PDays"] = 0;
+            Session["PHours"] = 0;
             return RedirectToAction("Index","Home");
         }
 

@@ -50,6 +50,10 @@ namespace QLSachOnline.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<goi>()
+                .Property(e => e.gia)
+                .HasPrecision(19, 4);
+
+            modelBuilder.Entity<goi>()
                 .HasMany(e => e.usergois)
                 .WithRequired(e => e.goi)
                 .WillCascadeOnDelete(false);

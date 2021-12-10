@@ -33,7 +33,7 @@
                                     <td>@item.magoi</td>
                                     <td><a href="#" class="text-decoration-none">@item.tengoi</a></td>
                                     <td>@item.thoihan<strong>&nbsp;Ngày</strong></td>
-                                    <td>-</td>
+                                    <td>@String.Format("{0:n0}", item.gia) <strong>&nbsp;VNĐ</strong></td>
                                     <td><a href="@Url.Content("/Goi/formXoaGoi/"+item.magoi)" class="btn btn-outline-primary">Xóa</a></td>
                                     <td><a href="@Url.Content("/Goi/formSuaGoi/"+item.magoi)" class="btn btn-outline-primary">Chỉnh sửa</a></td>
                                 </tr>

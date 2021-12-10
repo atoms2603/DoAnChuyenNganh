@@ -10,18 +10,24 @@ namespace QLSachOnline.Controllers
     {
         QLSachOnline.Models.QLySachOnline db = new Models.QLySachOnline();
         // phần hiển thị bên user
-        public ActionResult IndexGoi()
+        public ActionResult IndexGoi(string id)
         {
+            // id ở đây là mã sách từ indexSach truyền qua
+            if (id != null)
+            {
+                Session.Add("flagMaSach", id);
+            }
             return View(db.gois.ToList());
         }
 
         public ActionResult chiTietGoi(string id)
         {
+            if (TempData["flagBackGoi"] != null)
+                id = TempData["flagBackGoi"] as string;
             return View(db.gois.Find(id));
         }
 
         // Phần thanh toán
-
         public ActionResult thanhToanGoi(string id)
         {
             if ((bool)Session["isLogin"])
@@ -33,11 +39,36 @@ namespace QLSachOnline.Controllers
                 usergoi.taikhoan = userlogin.taikhoan;
                 usergoi.ngaymua = System.DateTime.Now;
                 usergoi.ngayhethan = System.DateTime.Now.AddDays(goi.thoihan);
-                
+
                 db.usergois.Add(usergoi);
                 db.SaveChanges();
+
+                Session["Login"] = db.userlogins.Find(userlogin.taikhoan);
+                userlogin = Session["Login"] as Models.userlogin;
+                Session["isHavingPremium"] = true;
+                double tongNgay = 0;
+                double tongGio = 0;
+                double tongPhut = 0;
+                foreach (var item in userlogin.usergois.Where(a => a.ngayhethan >= System.DateTime.Now).ToList())
+                {
+                    tongNgay += (item.ngayhethan - System.DateTime.Now).TotalDays;
+                    tongGio += (item.ngayhethan - System.DateTime.Now).TotalHours;
+                    tongPhut += (item.ngayhethan - System.DateTime.Now).TotalMinutes;
+                }
+                Session["PDays"] = (int)Math.Floor(tongNgay);
+                if ((int)Session["PDays"] != 0)
+                    Session["PHours"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Hour;
+                else
+                    Session["PHours"] = (int)Math.Floor(tongGio);
+                if ((int)Session["PHours"] != 0)
+                    Session["PMinutes"] = DateTime.FromOADate(tongGio - Math.Floor(tongGio)).Minute;
+                else Session["PMinutes"] = (int)Math.Floor(tongPhut);
+
+                if (Session["flagMaSach"] != null)
+                    return RedirectToAction("indexSach", "Sach");
                 return RedirectToAction("Index","Home");
             }
+            TempData["flagBackGoi"] = id;
             return RedirectToAction("IndexDangNhap","User");
         }
 
