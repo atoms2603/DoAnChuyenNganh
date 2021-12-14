@@ -47,7 +47,14 @@
             <h1 class="logo"><a href="@Url.Content("/Home/Index")">AtsBooks<span>.</span></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo"><img src="~/assets/img/logo.png" alt=""></a>-->
-
+            <div class="input-group" style="margin: 15px;">
+                <input class="form-control border-end-0 rounded-pill" onkeyup="showSearchResult()" type="text" placeholder="Search" id="searchInput">
+                <span class="input-group-append" style="padding-left: 5px ;">
+                    <button class="btn btn-outline-secondary bg-white text-black rounded-pill ms-n3" type="button" id="btnSearch">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="nav-link scrollto" href="@Url.Content("/Home/Index")">Trang chủ</a></li>
@@ -89,13 +96,26 @@
                                 <i class="bi bi-chevron-down"></i>
                             </a>
                             <ul>
-                                @if(!(bool)Session["isHavingPremium"]) { 
+                                @if (!(bool)Session["isHavingPremium"])
+                                {
                                     <li><a href="#">(Chưa gia hạn<strong>&nbsp; Premium</strong>)</a></li>
-                                }else{
+                                }
+                                else
+                                {
                                     <li>
                                         <a href="#"><span>Thời gian<strong>&nbsp;Premium</strong></span></a>
-                                        <a href="#"><sup><span id="txtNgay">@((int)Session["PDays"])</span> Ngày <span id="txtGio">@((int)Session["PHours"])</span> Giờ <span id="txtPhut">@((int)Session["PMinutes"])</span> Phút</sup></a>
+                                        <a href="#"><sup id="timerCD">@((int)Session["PDays"]) Ngày @((int)Session["PHours"]) Giờ @((int)Session["PMinutes"]) Phút</sup></a>
                                     </li>
+                                    //refresh Time
+                                    <script>
+                                        function refreshTime() {
+                                            const url = '/Home/refreshTimer';
+                                            $.get(url, function (val) {
+                                                $('#timerCD').html(val);
+                                            });
+                                        }
+                                        setInterval(refreshTime, 15000);
+                                    </script>
                                 }
                                 <li><a href="@Url.Content("/User/thongTinNguoiDung/")">Thông tin</a></li>
                                 <li><a href="@Url.Content("/User/sachYeuThichUser/")">Yêu thích</a></li>
@@ -105,33 +125,6 @@
 
                             </ul>
                         </li>
-                        <script>
-                            var txtNgay = $('#txtNgay');
-                            var txtGio = $('#txtGio');
-                            var txtPhut = $('#txtPhut');
-                            function refresh() {
-                                @{
-                                    double tongNgay = 0;
-                                    double tongGio = 0;
-                                    double tongPhut = 0;
-                                    foreach (var item in userlogin.usergois.Where(a => a.ngayhethan >= System.DateTime.Now).ToList())
-                                    {
-                                        tongNgay += (item.ngayhethan - System.DateTime.Now).TotalDays;
-                                        tongGio += (item.ngayhethan - System.DateTime.Now).TotalHours;
-                                        tongPhut += (item.ngayhethan - System.DateTime.Now).TotalMinutes;
-                                    }
-                                    Session["PDays"] = (int)Math.Floor(tongNgay);
-                                    if ((int)Session["PDays"] != 0) { Session["PHours"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Hour; }
-                                    else { Session["PHours"] = (int)Math.Floor(tongGio); }
-                                    if ((int)Session["PHours"] != 0) { Session["PMinutes"] = DateTime.FromOADate(tongGio - Math.Floor(tongGio)).Minute; }
-                                    else { Session["PMinutes"] = (int)Math.Floor(tongPhut); }
-                                }
-                                txtNgay.html(@((int)Session["PDays"]));
-                                txtGio.html(@((int)Session["PHours"]));
-                                txtPhut.html(@((int)Session["PMinutes"]));
-                            }
-                            setInterval(refresh, 60000);
-                        </script>
                         <li class="dropdown">
                             <a class="nav-link scrollto" href="#"><i class="fas fa-bell"></i></a>
                             <ul>
@@ -139,7 +132,7 @@
                                 <li><a href="#">Thông báo 2</a></li>
                             </ul>
                         </li>
-                                    }
+                    }
                     <li><a class="nav-link scrollto" href="@Url.Content("/Home/formGopY")">Góp ý</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
@@ -148,143 +141,210 @@
         </div>
     </header><!-- End Header -->
 
+    
+        <div class="container d-flex align-items-center justify-content-between rounded-2" style="position: fixed; z-index: 3;">
+            <div class="col-lg-2 col-md-2">&nbsp;</div>
+            <div class="col-12 col-lg-6 col-md-6">
+                <table id="myTable" class="table bg-white" hidden>
+                    <tr class="header">
+                        <th style="width:40%;">&nbsp;</th>
+                        <th style="width:60%;">Tên truyện</th>
+                    </tr>
 
-    <section id="portfolio-details" class="portfolio-details">
-        <div class="container">
-            <div class="row gy-4">
-                <div class="col-lg-12">
-                    <div class="portfolio-details-slider swiper">
-                        <div class="swiper-wrapper align-items-center">
-
-                            <!--COMPONENT-->
-                            @foreach (var item in db.saches)
-                            {
-                                if (tmpDem == 3) {
-                                    break;
-                                }
-
-                            <div class="swiper-slide about section-bg" style="border-radius: 30px;">
-                                <div class="row gy-4">
-                                    <div class="col-lg-6 d-flex justify-content-center align-items-center">
-                                        <div class="col-md-6 col-lg-8 mb-5 mb-lg-0">
-                                            <div class="icon-box" data-aos="fade-up" data-aos-delay="400" style="padding: 40px;">
-                                                <img src="~/Images/Images_SP/@item.hinhanh" class="img-fluid rounded mx-auto d-block" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="portfolio-info">
-                                            <h3>Giới thiệu</h3>
-                                            <ul>
-                                                <li><strong>Tên truyện</strong>: @item.tensach</li>
-                                                <li>
-                                                    <strong>Thể loại</strong>:
-                                                    @foreach (var item2 in item.theloais)
-                                                    {
-                                                        <span>@item2.tentl &nbsp;&nbsp;&nbsp;</span>
-                                                    }
-                                                </li>
-                                                <li><strong>Năm</strong>: @item.namxuatban</li>
-                                                <li>&nbsp;</li>
-                                                <li>
-                                                    @if ((bool)item.premium)
-                                                    {
-                                                        if (item.chuongs.ToList().Count == 0)
-                                                        {
-                                                            <a href="#" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            if (!(bool)Session["isHavingPremium"])
-                                                            {
-                                                                <a href="@Url.Content("/Goi/IndexGoi")" class="btn btn-success">Mua <strong>Premium</strong></a>
-                                                            }
-                                                            else
-                                                            {
-                                                                <a href="@Url.Content("/Sach/indexSach/"+item.masach)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
-                                                            }
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        if (item.chuongs.ToList().Count == 0)
-                                                        {
-                                                            <a href="#" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a href="@Url.Content("/Sach/indexSach/"+item.masach)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
-                                                        }
-                                                    }
-                                                    <a href="@Url.Content("/Sach/yeuThich/"+item.masach)" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
-                                                </li>
-               
-                                            </ul>
-                                        </div>
-                                        <div class="portfolio-description">
-                                            <h2>Tóm tắt</h2>
-                                            <p>
-                                                Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
-                                            </p>
-                                        </div>
-                                    </div>
+                    @foreach (var item in db.saches)
+                    {
+                        <tr onclick="window.location='@Url.Content("/Sach/indexSach/"+item.masach)';" style="cursor: pointer;">
+                            <td>
+                                <div class="col-lg-6 col-md-6 col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                                    <img src="~/Images/Images_SP/@item.hinhanh" class="img-fluid" alt="">
                                 </div>
-                            </div><!--END COMPONENT-->
-                             tmpDem++;
+                            </td>
+                            <td><strong>@item.tensach</strong></td>
+                        </tr>
+                    }
 
-                            }
+                </table>
+            </div>
+            <div class="col-lg-4 col-md-4">&nbsp;</div>
+        </div>
+    
+        <script>
+            $('').ready(function () {
+                $('body').click(function () {
+                    if ($('#searchInput').is(':focus')) {
+                        if ($('#searchInput').val() != "") {
+                            $("#myTable").attr("hidden", false);
+                        }
+                    } else {
+                        $("#myTable").attr("hidden", true);
+                    }
+                });
+            });
+            function showSearchResult() {
+                var input, filter, table, tr, td, i, txtValue;
+
+                input = document.getElementById("searchInput");
+                filter = input.value.toUpperCase();
+                table = document.getElementById("myTable");
+                tr = table.getElementsByTagName("tr");
+
+                if (filter != "") {
+                    $("#myTable").attr("hidden", false);
+                } else {
+                    $("#myTable").attr("hidden", true);
+                }
+
+
+                for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[1];
+                    if (td) {
+                        txtValue = td.textContent || td.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+        </script>
+
+        <main id="main" style="padding-top:45px">
+
+            <section id="portfolio-details" class="portfolio-details">
+                <div class="container">
+                    <div class="row gy-4">
+                        <div class="col-lg-12">
+                            <div class="portfolio-details-slider swiper">
+                                <div class="swiper-wrapper align-items-center">
+
+                                    <!--COMPONENT-->
+                                    @foreach (var item in db.saches)
+                                    {
+                                        if (tmpDem == 3)
+                                        {
+                                            break;
+                                        }
+
+                                        <div class="swiper-slide about section-bg" style="border-radius: 30px;">
+                                            <div class="row gy-4">
+                                                <div class="col-lg-6 d-flex justify-content-center align-items-center">
+                                                    <div class="col-md-6 col-lg-8 mb-5 mb-lg-0">
+                                                        <div class="icon-box" data-aos="fade-up" data-aos-delay="400" style="padding: 40px;">
+                                                            <img src="~/Images/Images_SP/@item.hinhanh" class="img-fluid rounded mx-auto d-block" alt="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="portfolio-info">
+                                                        <h3>Giới thiệu</h3>
+                                                        <ul>
+                                                            <li><strong>Tên truyện</strong>: @item.tensach</li>
+                                                            <li>
+                                                                <strong>Thể loại</strong>:
+                                                                @foreach (var item2 in item.theloais)
+                                                                {
+                                                                    <span>@item2.tentl &nbsp;&nbsp;&nbsp;</span>
+                                                                }
+                                                            </li>
+                                                            <li><strong>Năm</strong>: @item.namxuatban</li>
+                                                            <li>&nbsp;</li>
+                                                            <li>
+                                                                @if ((bool)item.premium)
+                                                                {
+                                                                    if (item.chuongs.ToList().Count == 0)
+                                                                    {
+                                                                        <a href="#" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (!(bool)Session["isHavingPremium"])
+                                                                        {
+                                                                            <a href="@Url.Content("/Goi/IndexGoi")" class="btn btn-success">Mua <strong>Premium</strong></a>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <a href="@Url.Content("/Sach/indexSach/"+item.masach)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                                                        }
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    if (item.chuongs.ToList().Count == 0)
+                                                                    {
+                                                                        <a href="#" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a href="@Url.Content("/Sach/indexSach/"+item.masach)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                                                    }
+                                                                }
+                                                                <a href="@Url.Content("/Sach/yeuThich/"+item.masach)" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+                                                    <div class="portfolio-description">
+                                                        <h2>Tóm tắt</h2>
+                                                        <p>
+                                                            Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><!--END COMPONENT-->
+                                        tmpDem++;
+
+                                    }
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
                         </div>
-                        <div class="swiper-pagination"></div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section><!-- End Portfolio Details Section -->
+            </section><!-- End Portfolio Details Section -->
+            <!-- ======= Featured Services Section ======= -->
+            <section id="featured-services" class="featured-services">
+                <div class="container" data-aos="fade-up">
 
-    <main id="main">
+                    <div class="row">
 
-        <!-- ======= Featured Services Section ======= -->
-        <section id="featured-services" class="featured-services">
-            <div class="container" data-aos="fade-up">
+                        @RenderBody()
 
-                <div class="row">
+                    </div>
+                </div>
+            </section><!-- End Featured Services Section -->
 
-                    @RenderBody()
 
+        </main><!-- End #main -->
+        <!-- ======= Footer ======= -->
+        <footer id="footer">
+
+            <div class="container py-4">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>AtsBooks</span></strong>. All Rights Reserved
+                </div>
+                <div class="credits">
+                    ABC
                 </div>
             </div>
-        </section><!-- End Featured Services Section -->
+        </footer><!-- End Footer -->
 
+        <div id="preloader"></div>
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-    </main><!-- End #main -->
-    <!-- ======= Footer ======= -->
-    <footer id="footer">
+        <!-- Vendor JS Files -->
+        <script src="~/assets/vendor/purecounter/purecounter.js"></script>
+        <script src="~/assets/vendor/aos/aos.js"></script>
+        <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+        <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="~/assets/vendor/waypoints/noframework.waypoints.js"></script>
+        <script src="~/assets/vendor/php-email-form/validate.js"></script>
 
-        <div class="container py-4">
-            <div class="copyright">
-                &copy; Copyright <strong><span>AtsBooks</span></strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-                ABC
-            </div>
-        </div>
-    </footer><!-- End Footer -->
-
-    <div id="preloader"></div>
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
-    <script src="~/assets/vendor/purecounter/purecounter.js"></script>
-    <script src="~/assets/vendor/aos/aos.js"></script>
-    <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="~/assets/vendor/waypoints/noframework.waypoints.js"></script>
-    <script src="~/assets/vendor/php-email-form/validate.js"></script>
-
-    <!-- Template Main JS File -->
-    <script src="~/assets/js/main.js"></script>
+        <!-- Template Main JS File -->
+        <script src="~/assets/js/main.js"></script>
 
 </body>
 </html>

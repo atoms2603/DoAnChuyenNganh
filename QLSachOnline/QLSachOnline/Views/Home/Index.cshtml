@@ -3,15 +3,8 @@
     ViewBag.Title = "Trang chủ";
     Layout = "~/Views/_Layout/_LayoutMain.cshtml";
 }
-@{
-    double a = (System.DateTime.Now.AddMinutes(3) - System.DateTime.Now).TotalSeconds;
-}
-<div id="test">@a</div>
-<script>
-    var txttest = $('#test');
-    var valuesss = $('#test').html();
-    setInterval(function () { txttest.html(valuesss-=1); }, 1000);
-</script>
+
+
 @{
     foreach (var item in Model)
     {

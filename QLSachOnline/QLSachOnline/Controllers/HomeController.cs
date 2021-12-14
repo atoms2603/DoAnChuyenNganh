@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Collections.Generic;
-
+using System.Linq;
+using System;
 
 namespace QLSachOnline.Controllers
 {
@@ -37,6 +38,25 @@ namespace QLSachOnline.Controllers
             if (!(bool)Session["isLogin"])
                 return RedirectToAction("IndexDangNhap", "User");
             return View();
+        }
+
+        //refresh TIME
+        public ActionResult refreshTimer()
+        {
+            string timer = "";
+            Models.userlogin x = Session["Login"] as Models.userlogin;//lấy ID tài khoản
+
+            //cập nhật lại giá trị (trường hợp vừa thanh toán xong gói khác)
+            x = db.userlogins.Find(x.taikhoan);
+            Session["Login"]= db.userlogins.Find(x.taikhoan);
+            //====
+
+            double tongNgay = (x.usergois.ToArray()[x.usergois.Count - 1].ngayhethan - System.DateTime.Now).TotalDays;
+            Session["PDays"] = (int)Math.Floor(tongNgay);
+            Session["PHours"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Hour;
+            Session["PMinutes"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Minute;
+            timer = (int)Session["PDays"] + " Ngày " + (int)Session["PHours"] + " Giờ " + (int)Session["PMinutes"] + " Phút";
+            return Json(timer,JsonRequestBehavior.AllowGet);
         }
 
     }

@@ -38,7 +38,12 @@ namespace QLSachOnline.Controllers
                 usergoi.magoi = id;
                 usergoi.taikhoan = userlogin.taikhoan;
                 usergoi.ngaymua = System.DateTime.Now;
-                usergoi.ngayhethan = System.DateTime.Now.AddDays(goi.thoihan);
+                if (userlogin.usergois.Where(a => a.ngayhethan >= System.DateTime.Now).ToList().Count == 0)
+                    usergoi.ngayhethan = System.DateTime.Now.AddDays(goi.thoihan);
+                else
+                    usergoi.ngayhethan = userlogin.usergois.ToList().Last().ngayhethan.AddDays(goi.thoihan);//lấy giá trị ngày hết hạn của thằng cuối cộng thêm
+                
+                double tongNgay = (usergoi.ngayhethan - System.DateTime.Now).TotalDays;
 
                 db.usergois.Add(usergoi);
                 db.SaveChanges();
@@ -46,23 +51,10 @@ namespace QLSachOnline.Controllers
                 Session["Login"] = db.userlogins.Find(userlogin.taikhoan);
                 userlogin = Session["Login"] as Models.userlogin;
                 Session["isHavingPremium"] = true;
-                double tongNgay = 0;
-                double tongGio = 0;
-                double tongPhut = 0;
-                foreach (var item in userlogin.usergois.Where(a => a.ngayhethan >= System.DateTime.Now).ToList())
-                {
-                    tongNgay += (item.ngayhethan - System.DateTime.Now).TotalDays;
-                    tongGio += (item.ngayhethan - System.DateTime.Now).TotalHours;
-                    tongPhut += (item.ngayhethan - System.DateTime.Now).TotalMinutes;
-                }
+
                 Session["PDays"] = (int)Math.Floor(tongNgay);
-                if ((int)Session["PDays"] != 0)
-                    Session["PHours"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Hour;
-                else
-                    Session["PHours"] = (int)Math.Floor(tongGio);
-                if ((int)Session["PHours"] != 0)
-                    Session["PMinutes"] = DateTime.FromOADate(tongGio - Math.Floor(tongGio)).Minute;
-                else Session["PMinutes"] = (int)Math.Floor(tongPhut);
+                Session["PHours"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Hour;
+                Session["PMinutes"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Minute;
 
                 if (Session["flagMaSach"] != null)
                     return RedirectToAction("indexSach", "Sach");

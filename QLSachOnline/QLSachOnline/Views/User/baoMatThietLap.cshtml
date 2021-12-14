@@ -39,31 +39,33 @@
                         <strong>Thành công!</strong> Cập nhật thành công.
                     </div>
 
-
-                    <div class="form-group">
-                        <label for="btnVoHieuHoa"><strong>Vô hiệu hóa tài khoản</strong></label>
-                        <a href="#" class="btn btn-danger form-control" id="btnVoHieuHoa">Vô hiệu</a>
-                    </div>
-                    <div class="form-group">
-                        <label for="btnXoaTK"><strong>Xóa tài khoản</strong></label>
-                        <a href="#" class="btn btn-outline-danger form-control" id="btnXoaTK">Xóa vĩnh viễn</a>
+                    <a href="#email" id="btnActive" class="text-decoration-none">Active</a>
+                    <div>
+                        <div class="form-group">
+                            <label for="btnVoHieuHoa"><strong>Vô hiệu hóa tài khoản</strong></label>
+                            <a href="#" class="btn btn-danger form-control disabled" id="btnVoHieuHoa">Vô hiệu</a>
+                        </div>
+                        <div class="form-group">
+                            <label for="btnXoaTK"><strong>Xóa tài khoản</strong></label>
+                            <a href="#" class="btn btn-outline-danger form-control disabled" id="btnXoaTK">Xóa vĩnh viễn</a>
+                        </div>
                     </div>
                 </form>
 
-                
+
 
             </div>
         </div>
 
     </div>
 </section><!-- End Section -->
+
 <script type="text/javascript">
     $('').ready(function () {
         var i = 0;
-        var luuVal;
+        var luuVal = $('#matkhau').val();
         $('#btnSuaMK').click(function () {
             if (i == 0) {
-                luuVal = $('#txtMK').val();
                 $('#matkhau').attr('readonly', false);
                 $('#btnSuaMK').html('Hủy');
                 i = 1;
@@ -72,6 +74,21 @@
                 $('#matkhau').attr('readonly', true);
                 $('#btnSuaMK').html('Sửa');
                 i = 0;
+            }
+        });
+
+        var dI = 1;
+        $('#btnActive').click(function () {
+            if (dI == 0) {
+                $('#btnVoHieuHoa').addClass('disabled');
+                $('#btnXoaTK').addClass('disabled');
+                $('#btnActive').html('Active');
+                dI = 1;
+            } else {
+                $('#btnVoHieuHoa').removeClass('disabled');
+                $('#btnXoaTK').removeClass('disabled');
+                $('#btnActive').html('Actived');
+                dI = 0;
             }
         });
 
@@ -94,6 +111,8 @@
 
     });
 </script>
+
+<!-- Phương thức thanh toán Section -->
 <section id="contact" class="contact">
     <div class="container" data-aos="fade-up">
 
@@ -103,7 +122,7 @@
         <div class="row" data-aos="fade-up" data-aos-delay="100">
 
             <div class="col-lg-4 col-md-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-                <a href="#" class="text-black text-center" style="height: 100%; width: 100%;">
+                <a href="#contact" class="text-black text-center" style="height: 100%; width: 100%;">
                     <div class="icon-box">
                         <div class="icon"><i class="fab fa-cc-visa fa-5x"></i></div>
                         <h4>Thanh toán bằng<strong>&nbsp;Visa</strong></h4>
@@ -113,7 +132,7 @@
             </div>
 
             <div class="col-lg-4 col-md-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-                <a href="#" class="text-black text-center" style="height: 100%; width: 100%;">
+                <a href="#contact" class="text-black text-center" style="height: 100%; width: 100%;">
                     <div class="icon-box">
                         <div class="icon"><i class="fab fa-cc-paypal fa-5x"></i></div>
                         <h4>Thanh toán bằng<strong>&nbsp;PayPal</strong></h4>
@@ -123,7 +142,7 @@
             </div>
 
             <div class="col-lg-4 col-md-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-                <a href="#" class="text-black text-center" style="height: 100%; width: 100%;">
+                <a href="#contact" class="text-black text-center" style="height: 100%; width: 100%;">
                     <div class="icon-box">
                         <div class="icon"><i class="fab fa-cc-mastercard fa-5x"></i></div>
                         <h4>Thanh toán bằng<strong>&nbsp;Mastercard</strong></h4>

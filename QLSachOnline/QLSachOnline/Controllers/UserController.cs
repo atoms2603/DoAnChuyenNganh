@@ -66,23 +66,10 @@ namespace QLSachOnline.Controllers
                             if (x.usergois.Where(a => a.ngayhethan >= System.DateTime.Now).ToList().Count != 0)
                             {
                                 Session["isHavingPremium"] = true;
-                                double tongNgay = 0;
-                                double tongGio = 0;
-                                double tongPhut = 0;
-                                foreach (var item in x.usergois.Where(a => a.ngayhethan >= System.DateTime.Now).ToList())
-                                {
-                                    tongNgay += (item.ngayhethan - System.DateTime.Now).TotalDays;
-                                    tongGio += (item.ngayhethan - System.DateTime.Now).TotalHours;
-                                    tongPhut += (item.ngayhethan - System.DateTime.Now).TotalMinutes;
-                                }
+                                double tongNgay = (x.usergois.ToArray()[x.usergois.Count - 1].ngayhethan - System.DateTime.Now).TotalDays;
                                 Session["PDays"] = (int)Math.Floor(tongNgay);
-                                if ((int)Session["PDays"] != 0)
-                                    Session["PHours"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Hour;
-                                else
-                                    Session["PHours"] = (int)Math.Floor(tongGio);
-                                if ((int)Session["PHours"] != 0)
-                                    Session["PMinutes"] = DateTime.FromOADate(tongGio - Math.Floor(tongGio)).Minute;
-                                else Session["PMinutes"] = (int)Math.Floor(tongPhut);
+                                Session["PHours"] = DateTime.FromOADate(tongNgay-Math.Floor(tongNgay)).Hour;
+                                Session["PMinutes"] = DateTime.FromOADate(tongNgay - Math.Floor(tongNgay)).Minute;
                             }
                             if (Request["magoi"] != null) // lấy mã gói để truyền qua Action chiTietGoi của Controller Goi
                             {

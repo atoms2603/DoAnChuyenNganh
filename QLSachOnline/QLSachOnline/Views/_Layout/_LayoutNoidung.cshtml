@@ -44,7 +44,14 @@
             <h1 class="logo"><a href="@Url.Content("/Home/Index")">AtsBooks<span>.</span></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo"><img src="~/assets/img/logo.png" alt=""></a>-->
-
+            <div class="input-group" style="margin: 15px;">
+                <input class="form-control border-end-0 rounded-pill" onkeyup="showSearchResult()" type="text" placeholder="Search" id="searchInput">
+                <span class="input-group-append" style="padding-left: 5px ;">
+                    <button class="btn btn-outline-secondary bg-white text-black rounded-pill ms-n3" type="button" id="btnSearch">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="nav-link scrollto" href="@Url.Content("/Home/Index")">Trang chủ</a></li>
@@ -94,8 +101,18 @@
                                 {
                                     <li>
                                         <a href="#"><span>Thời gian<strong>&nbsp;Premium</strong></span></a>
-                                        <a href="#"><sup>@((int)Session["PDays"]) Ngày @((int)Session["PHours"]) Giờ @((int)Session["PMinutes"]) Phút</sup></a>
+                                        <a href="#"><sup id="timerCD">@((int)Session["PDays"]) Ngày @((int)Session["PHours"]) Giờ @((int)Session["PMinutes"]) Phút</sup></a>
                                     </li>
+                                    //refresh Time
+                                    <script>
+                                        function refreshTime() {
+                                            const url = '/Home/refreshTimer';
+                                            $.get(url, function (val) {
+                                                $('#timerCD').html(val);
+                                            });
+                                        }
+                                        setInterval(refreshTime, 15000);
+                                    </script>
                                 }
                                 <li><a href="@Url.Content("/User/thongTinNguoiDung/")">Thông tin</a></li>
                                 <li><a href="@Url.Content("/User/sachYeuThichUser/")">Yêu thích</a></li>
@@ -120,6 +137,73 @@
 
         </div>
     </header><!-- End Header -->
+
+    <div class="container d-flex align-items-center justify-content-between rounded-2" style="position: fixed; z-index: 3;">
+        <div class="col-lg-2 col-md-2">&nbsp;</div>
+        <div class="col-12 col-lg-6 col-md-6">
+            <table id="myTable" class="table bg-white" hidden>
+                <tr class="header">
+                    <th style="width:40%;">&nbsp;</th>
+                    <th style="width:60%;">Tên truyện</th>
+                </tr>
+
+                @foreach (var item in db.saches)
+                {
+                    <tr onclick="window.location='@Url.Content("/Sach/indexSach/"+item.masach)';" style="cursor: pointer;">
+                        <td>
+                            <div class="col-lg-6 col-md-6 col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                                <img src="~/Images/Images_SP/@item.hinhanh" class="img-fluid" alt="">
+                            </div>
+                        </td>
+                        <td><strong>@item.tensach</strong></td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div class="col-lg-4 col-md-4">&nbsp;</div>
+    </div>
+
+    <script>
+        $('').ready(function () {
+            $('body').click(function () {
+                if ($('#searchInput').is(':focus')) {
+                    if ($('#searchInput').val() != "") {
+                        $("#myTable").attr("hidden", false);
+                    }
+                } else {
+                    $("#myTable").attr("hidden", true);
+                }
+            });
+        });
+        function showSearchResult() {
+            var input, filter, table, tr, td, i, txtValue;
+
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            if (filter != "") {
+                $("#myTable").attr("hidden", false);
+            } else {
+                $("#myTable").attr("hidden", true);
+            }
+
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
 
     <main id="main">
 
