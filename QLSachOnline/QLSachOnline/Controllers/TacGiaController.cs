@@ -41,10 +41,11 @@ namespace QLSachOnline.Controllers
                 ViewBag.flagXoa = true;
             return View(db.tacgias.Find(id));
         }
+        
         [HttpPost]
-        public ActionResult xoaTacGia(string id)
-        {
-            QLSachOnline.Models.tacgia tg = db.tacgias.Find(id);
+        public ActionResult xoaTacGia()
+        { 
+            Models.tacgia tg = db.tacgias.Find(Request["matg"].ToString());
             db.tacgias.Remove(tg);
             db.SaveChanges();
             return RedirectToAction("QuanLyTacGia");

@@ -145,10 +145,10 @@
     </header><!-- End Header -->
 
 
-    <div class="container d-flex align-items-center justify-content-between rounded-2" style="position: fixed; z-index: 3;">
+    <div class="container d-flex align-items-center justify-content-between rounded-2" style=" position:fixed; z-index: 3;">
         <div class="col-lg-2 col-md-2">&nbsp;</div>
-        <div class="col-12 col-lg-6 col-md-6">
-            <table id="myTable" class="table bg-white" hidden>
+        <div class="col-12 col-lg-3 col-md-3" data-spy="scroll" style=" position:relative; overflow-y:scroll ; height: 300px;" id="divSearch" hidden>
+            <table id="myTable" class="table bg-white">
                 <tr class="header">
                     <th style="width:40%;">&nbsp;</th>
                     <th style="width:60%;">Tên truyện</th>
@@ -168,20 +168,29 @@
 
             </table>
         </div>
-        <div class="col-lg-4 col-md-4">&nbsp;</div>
+        <div class="col-lg-7 col-md-7">&nbsp;</div>
     </div>
 
     <script>
         $('').ready(function () {
+
             $('body').click(function () {
                 if ($('#searchInput').is(':focus')) {
                     if ($('#searchInput').val() != "") {
-                        $("#myTable").attr("hidden", false);
+                        $("#divSearch").attr("hidden", false);
                     }
                 } else {
-                    $("#myTable").attr("hidden", true);
+                    $("#divSearch").attr("hidden", true);
                 }
             });
+
+            $('#btnSearch').click(function () {
+                    const url = '/Home/searchSach/' + $('#searchInput').val();
+                    $.get(url, function (val) {
+                        if (parseInt(val) == 1) { window.location='@Url.Content("/Home/formSearchResult")'; }
+                    });
+            });
+
         });
         function showSearchResult() {
             var input, filter, table, tr, td, i, txtValue;
@@ -192,9 +201,9 @@
             tr = table.getElementsByTagName("tr");
 
             if (filter != "") {
-                $("#myTable").attr("hidden", false);
+                $("#divSearch").attr("hidden", false);
             } else {
-                $("#myTable").attr("hidden", true);
+                $("#divSearch").attr("hidden", true);
             }
 
 

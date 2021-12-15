@@ -151,11 +151,7 @@ namespace QLSachOnline.Controllers
         }
         public ActionResult formXoaSach(string id)
         {
-            ViewBag.flagXoa = false;
-            Models.sach x = db.saches.Find(id);
-            int dem = x.luusaches.Where(t => t.masach == id).Count();
-            if (dem==0) ViewBag.flagXoa = true;
-            return View(x);
+            return View(db.saches.Find(id));
         }
         public ActionResult xoaSach(string id)
         {

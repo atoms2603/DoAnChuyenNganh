@@ -40,6 +40,27 @@ namespace QLSachOnline.Controllers
             return View();
         }
 
+        //XỬ LÝ THÔNG TIN SÁCH
+        public ActionResult formSearchResult()
+        {
+            List<Models.sach> dsSach = Session["dsSach"] as List<Models.sach>;
+            Session.Remove("dsSach");
+            return View(dsSach);
+        }
+
+        public ActionResult searchSach(string id)
+        {
+            int i = 0;
+            if (id != null)
+            {
+                List<Models.sach> dsSach = new List<Models.sach>();
+                dsSach.AddRange(db.saches.Where(x => x.tensach.ToLower().Contains(id)).ToList());
+                Session.Add("dsSach", dsSach);
+                i = 1;
+            }
+            return Json(i, JsonRequestBehavior.AllowGet);
+        }
+
         //refresh TIME
         public ActionResult refreshTimer()
         {
