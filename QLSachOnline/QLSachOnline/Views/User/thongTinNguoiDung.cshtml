@@ -7,7 +7,7 @@
 
 
 <!-- ======= THONG TIN USER Section ======= -->
-<section id="contact" class="contact">
+<section id="contact" class="contact bg-white" style="border-radius:30px;">
     <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -22,15 +22,15 @@
                     <input type="text" name="taikhoan" class="form-control" value="@Model.taikhoan" id="taikhoan" placeholder="Tài khoản" readonly>
                 </div>
                 <div class="row">
-                    <div class="col form-group">
+                    <div class="col-lg col-md col-12 form-group">
                         <label for="txtYT"><strong>Số sách yêu thích</strong></label>
                         <input type="text" class="form-control" id="txtYT" value="0" placeholder="Số lượng sách yêu thích" readonly>
                     </div>
-                    <div class="col form-group">
+                    <div class="col-lg col-md col-12 form-group">
                         <label for="txtTT"><strong>Số phương thức thanh toán đã liên kết</strong></label>
                         <input type="text" class="form-control" id="txtTT" value="0" placeholder="Số lượng phương thức thanh toán" readonly>
                     </div>
-                    <div class="col form-group">
+                    <div class="col-lg col-md col-12 form-group">
                         @{ 
                             decimal tongTien = 0;
                             foreach (var item in Model.usergois)
@@ -49,8 +49,10 @@
     </div>
 </section><!-- End THONG TIN USER  Section -->
 
+<div>&nbsp;</div>
+
 <!-- ======= GIAO DICH Section ======= -->
-<section id="about" class="about section-bg">
+<section id="about" class="about bg-white" style="border-radius:30px;">
     <div class="container" data-aos="fade-up">
         <div>&nbsp;</div>
         <div class="section-title">

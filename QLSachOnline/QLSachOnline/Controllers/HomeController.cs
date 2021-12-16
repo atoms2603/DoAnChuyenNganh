@@ -17,12 +17,21 @@ namespace QLSachOnline.Controllers
         public ActionResult formTheLoaiFilter(string id)
         {
             List<Models.sach> dsSach = new List<Models.sach>();
-            Models.theloai tl = db.theloais.Find(id);
-            foreach (var item in tl.saches)
+            if (id.Equals("free"))
             {
-                dsSach.Add(item);
+                dsSach.AddRange(db.saches.Where(x => !x.premium).ToList());
+                ViewBag.tenTheLoai = "Free";
             }
-            ViewBag.tenTheLoai = tl.tentl;
+            else if(id.Equals("premium"))
+            {
+                dsSach.AddRange(db.saches.Where(x => x.premium).ToList());
+                ViewBag.tenTheLoai = "Premium";
+            }
+            else
+            {
+                dsSach.AddRange(db.theloais.Find(id).saches.ToList());
+                ViewBag.tenTheLoai = db.theloais.Find(id).tentl;
+            }
             return View(dsSach);
         }
 

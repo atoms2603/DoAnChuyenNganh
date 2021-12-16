@@ -6,13 +6,13 @@
 }
 
 <!-- ======= Gói Section ======= -->
-<section id="featured-services" class="featured-services about section-bg rounded-2">
+<section id="featured-services" class="featured-services bg-white rounded-2">
     <div class="container" data-aos="fade-up">
 
-        <div class="row">
+        <div class="row align-items-center">
             @foreach (var item in Model)
             {
-                <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                <div class="col-md-6 col-lg-3 col-12 mb-5 mb-lg-0">
                     <a href="@Url.Content("/Goi/chiTietGoi/"+item.magoi)" class="text-black text-center">
                         <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
                             <div class="icon text-danger"><i class="fas fa-gem fa-5x"></i></div>

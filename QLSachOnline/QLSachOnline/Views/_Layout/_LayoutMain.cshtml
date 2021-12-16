@@ -34,7 +34,7 @@
 
     <title>@ViewBag.Title</title>
 </head>
-<body>
+<body style="background-color: #faeff4;">
     @{
         QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
         QLSachOnline.Models.userlogin userlogin = Session["Login"] as QLSachOnline.Models.userlogin;
@@ -74,11 +74,11 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#"><span>Tiến độ</span> <i class="bi bi-chevron-down"></i></a>
+                        <a href="#"><span>Truyện</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
 
-                            <li><a href="#">Truyện đã hoàn thành</a></li>
-                            <li><a href="#">Truyện chưa hoàn thành</a></li>
+                            <li><a href="@Url.Content("/Home/formTheLoaiFilter/"+"free")">Truyện Free</a></li>
+                            <li><a href="@Url.Content("/Home/formTheLoaiFilter/"+"premium")">Truyện Premium</a></li>
 
                         </ul>
                     </li>
@@ -237,16 +237,16 @@
                                             break;
                                         }
 
-                                        <div class="swiper-slide about section-bg" style="border-radius: 30px;">
+                                        <div class="swiper-slide bg-white" style="border-radius: 30px;">
                                             <div class="row gy-4">
-                                                <div class="col-lg-6 d-flex justify-content-center align-items-center">
-                                                    <div class="col-md-6 col-lg-8 mb-5 mb-lg-0">
+                                                <div class="col-lg-6 col-6 d-flex justify-content-center align-items-center">
+                                                    <div class="col-md-6 col-lg-8 col-12 mb-5 mb-lg-0">
                                                         <div class="icon-box" data-aos="fade-up" data-aos-delay="400" style="padding: 40px;">
                                                             <img src="~/Images/Images_SP/@item.hinhanh" class="img-fluid rounded mx-auto d-block" alt="">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6">
+                                                <div class="col-lg-6 col-6">
                                                     <div class="portfolio-info">
                                                         <h3>Giới thiệu</h3>
                                                         <ul>
@@ -329,7 +329,7 @@
 
         </main><!-- End #main -->
         <!-- ======= Footer ======= -->
-        <footer id="footer">
+        <footer id="footer" class="bg-white">
 
             <div class="container py-4">
                 <div class="copyright">

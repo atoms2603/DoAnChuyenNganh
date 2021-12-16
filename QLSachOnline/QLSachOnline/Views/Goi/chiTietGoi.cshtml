@@ -6,10 +6,10 @@
 }
 
 <!-- ======= Chi tiết gói/ thanh toán Section ======= -->
-<section id="portfolio-details" class="portfolio-details">
+<section id="portfolio-details" class="portfolio-details bg-white" style="border-radius:30px;">
     <div class="container">
 
-        <div class="row gy-4 d-flex justify-content-center section-bg rounded-2">
+        <div class="row gy-4 d-flex justify-content-center">
 
             <div class="col-lg-6">
                 <div class="portfolio-info row" style="background-color: white;">
@@ -55,6 +55,7 @@
                                 @{
                                     QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
                                     List<QLSachOnline.Models.goi> dsGoi = new List<QLSachOnline.Models.goi>();
+
                                     for (int i = 0; i < db.gois.Count(); i++)
                                     {
                                         string ma = db.gois.ToArray()[i].magoi;
@@ -70,7 +71,16 @@
                                                 }
                                             }
                                         }
-                                        dsGoi.Add(db.gois.Find(ma));
+                                        if (!dsGoi.Contains(db.gois.Find(ma))) {
+                                            dsGoi.Add(db.gois.Find(ma));
+                                        }
+                                    }
+                                    foreach (var item in db.gois)
+                                    {
+                                        if (!dsGoi.Contains(item))
+                                        {
+                                            dsGoi.Add(item);
+                                        }
                                     }
                                     foreach (var item in dsGoi)
                                     {

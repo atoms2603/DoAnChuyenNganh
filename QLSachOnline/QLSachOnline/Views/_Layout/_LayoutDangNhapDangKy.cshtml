@@ -35,7 +35,7 @@
 
     <title>@ViewBag.Title</title>
 </head>
-<body>
+<body style="background-color: #faeff4;">
     @{
         QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
         QLSachOnline.Models.userlogin userlogin = Session["Login"] as QLSachOnline.Models.userlogin;
@@ -73,11 +73,11 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#"><span>Tiến độ</span> <i class="bi bi-chevron-down"></i></a>
+                        <a href="#"><span>Truyện</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
 
-                            <li><a href="#">Truyện đã hoàn thành</a></li>
-                            <li><a href="#">Truyện chưa hoàn thành</a></li>
+                            <li><a href="@Url.Content("/Home/formTheLoaiFilter/"+"free")">Truyện Free</a></li>
+                            <li><a href="@Url.Content("/Home/formTheLoaiFilter/"+"premium")">Truyện Premium</a></li>
 
                         </ul>
                     </li>
@@ -221,7 +221,7 @@
         }
     </script>
 
-    <main id="main">
+    <main id="main" style="padding-top:45px">
 
         <!-- ======= Featured Services Section ======= -->
         <section id="featured-services" class="featured-services">
@@ -238,7 +238,7 @@
 
     </main><!-- End #main -->
     <!-- ======= Footer ======= -->
-    <footer id="footer">
+    <footer id="footer" class="bg-white">
 
         <div class="container py-4">
             <div class="copyright">
