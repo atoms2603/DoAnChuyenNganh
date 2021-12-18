@@ -6,7 +6,7 @@
 
 <!-- ======= Details Section ======= -->
 <section id="portfolio-details" class="portfolio-details">
-    <div class="container">
+    <div class="container bg-white rounded-3">
 
         <div class="row gy-4">
 
@@ -46,9 +46,23 @@
                         <li><strong>Nhà xuất bản</strong>:  @Model.nhaxuatban.tennhaxuatban </li>
                         <li>&nbsp;</li>
                         <li>
-                            @if ((int)Model.phi != 0)
+                            @if ((bool)Model.premium)
                             {
-                                <a href="@Url.Content("/Home/formThanhToanSach/"+Model.masach)" class="btn btn-success">Mua</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                if (Model.chuongs.ToList().Count == 0)
+                                {
+                                    <a href="#" class="btn btn-primary disabled">Sắp có</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                }
+                                else
+                                {
+                                    if (!(bool)Session["isHavingPremium"])
+                                    {
+                                        <a href="@Url.Content("/Goi/IndexGoi/"+Model.masach)" class="btn btn-success">Mua <strong>Premium</strong></a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+Model.chuongs.First().machuong)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
+                                    }
+                                }
                             }
                             else
                             {
@@ -61,12 +75,25 @@
                                     <a href="@Url.Content("/Sach/formNoiDung/"+Model.masach+"-"+Model.chuongs.First().machuong)" class="btn btn-primary">Đọc</a> <span>&nbsp; &nbsp; &nbsp; &nbsp;</span>
                                 }
                             }
-                            <a href="@Url.Content("/Sach/yeuThich/"+Model.masach)" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
+
+                            @if (!(bool)Session["isLogin"])
+                            {
+                                <a href="@Url.Content("/Sach/yeuThich/"+Model.masach)" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
+                            }
+                            else
+                            {
+                                QLSachOnline.Models.userlogin userlogin = Session["Login"] as QLSachOnline.Models.userlogin;
+                                if (userlogin.luusaches.Where(x => x.masach == Model.masach).ToList().Count == 0)
+                                {
+                                    <a href="@Url.Content("/Sach/yeuThich/"+Model.masach)" class="btn btn-danger"> <i class="fas fa-heart"></i>&nbsp;Yêu thích</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Content("/Sach/yeuThich/"+Model.masach)" class="btn btn-danger"> <i class="fas fa-heart-broken"></i>&nbsp;Hủy thích</a>
+                                }
+                            }
+
                         </li>
-                        @if ((int)Model.phi != 0)
-                        {
-                            <li><strong>Giá</strong>: @String.Format("{0:n0}", System.Convert.ToInt32(Model.phi)) &nbsp; <strong>VNĐ</strong></li>
-                        }
                     </ul>
                 </div>
 
@@ -83,8 +110,8 @@
         </div>
 
         <!-- ======= Chuong Section ======= -->
-        <section id="faq" class="faq section-bg">
-            <div class="container" data-aos="fade-up">
+        <section id="faq" class="faq">
+            <div class="container portfolio-info" data-aos="fade-up">
 
                 <div class="section-title">
                     <h2>Chương</h2>

@@ -1,0 +1,112 @@
+﻿@model QLSachOnline.Models.goi
+
+@{
+    ViewBag.Title = "chiTietGoi";
+    Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
+}
+
+<!-- ======= Chi tiết gói/ thanh toán Section ======= -->
+<section id="portfolio-details" class="portfolio-details bg-white" style="border-radius:30px;">
+    <div class="container">
+
+        <div class="row gy-4 d-flex justify-content-center">
+
+            <div class="col-lg-6">
+                <div class="portfolio-info row" style="background-color: white;">
+                    <div class="col-md-12 col-lg-12 col-12 mb-5 mb-lg-0">
+                        <div class="section-title">
+                            <h2>Gói Premium &nbsp;<i class="fas fa-gem text-danger"></i></h2>
+                            <h3>Premium <span>@Model.tengoi</span></h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-7">
+                                <ul>
+                                    <li><strong>Tên gói</strong>: @Model.tengoi</li>
+                                    <li><strong>Thời hạn</strong>: @Model.thoihan &nbsp; <strong>Ngày</strong></li>
+                                    <li><strong>Giá</strong>: @String.Format("{0:n0}", Model.gia) &nbsp; <strong>VNĐ</strong></li>
+                                </ul>
+                            </div>
+                            <div class="col-5">
+                                <strong>Mô tả gói:</strong>
+                                @Model.motagoi
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="text-center"><a href="@Url.Content("/Home/chonPhuongThucThanhToan/"+Model.magoi)" class="btn btn-success"><i class="fas fa-money-bill-alt"></i>&nbsp;Thanh toán</a></div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-1">&nbsp;</div>
+
+
+            <div class="col-lg-3 col-12">
+                <div class="portfolio-info row" style="background-color: white;">
+                    <div class="col-md-12 col-lg-12 col-12 mb-5 mb-lg-0">
+
+                        <section id="featured-services" class="featured-services">
+                            <div class="container" data-aos="fade-up">
+
+                                <div class="section-title">
+                                    <h2>Các gói được mua nhiều nhất trong tháng &nbsp;<i class="fas fa-gem text-danger"></i></h2>
+                                </div>
+                                @{
+                                    QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
+                                    List<QLSachOnline.Models.goi> dsGoi = new List<QLSachOnline.Models.goi>();
+
+                                    for (int i = 0; i < db.gois.Count(); i++)
+                                    {
+                                        string ma = db.gois.ToArray()[i].magoi;
+                                        int max = db.usergois.Where(x => x.magoi == ma).ToList().Count;
+                                        foreach (var item in db.gois)
+                                        {
+                                            if (db.usergois.Where(x => x.magoi == item.magoi).ToList().Count > max)
+                                            {
+                                                if (!dsGoi.Contains(db.gois.Find(item.magoi)))
+                                                {
+                                                    max = db.usergois.Where(x => x.magoi == item.magoi).ToList().Count;
+                                                    ma = item.magoi;
+                                                }
+                                            }
+                                        }
+                                        if (!dsGoi.Contains(db.gois.Find(ma))) {
+                                            dsGoi.Add(db.gois.Find(ma));
+                                        }
+                                    }
+                                    foreach (var item in db.gois)
+                                    {
+                                        if (!dsGoi.Contains(item))
+                                        {
+                                            dsGoi.Add(item);
+                                        }
+                                    }
+                                    foreach (var item in dsGoi)
+                                    {
+                                        <div class="col-md-12 col-lg-12 col-12 mb-5 mb-lg-0">
+                                            <a href="@Url.Content("/Goi/chiTietGoi/"+item.magoi)" class="text-black">
+                                                <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                                                    <div class="icon text-center"><i class="fas fa-gem text-danger"></i></div>
+                                                    <h4 class="title">@item.tengoi</h4>
+                                                    <p class="description"><strong>Giá:</strong>: @String.Format("{0:n0}", item.gia)&nbsp; <strong>VNĐ</strong></p>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div>&nbsp;</div>
+                                    }
+
+                                }
+                                
+
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section><!-- End Chi tiết gói/ thanh toán Section -->

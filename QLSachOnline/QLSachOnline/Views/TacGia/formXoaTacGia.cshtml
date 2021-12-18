@@ -7,61 +7,76 @@
 
 
 <div class="container-fluid">
-    <form action="@Url.Content("/TacGia/xoaTacGia/"+Model.matg)" method="post">
-        <div>&nbsp;</div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6">
-                <p><a href="@Url.Content("/TacGia/QuanLyTacGia")" class="btn btn-primary">Trở về</a></p>
-            </div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-6"><h2>Xóa tác giả</h2></div>
-            <div class="col-md-5">&nbsp;</div>
-        </div>
-        <div>&nbsp;</div>
-        <div class="row form-group">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-2 font-weight-bold">Mã tác giả:</div>
-            <div class="col-md-2">@Model.matg</div>
-            <div class="col-md-2 font-weight-bold">Tên tác giả:</div>
-            <div class="col-md-3">@Model.tentg</div>
-            <div class="col-md-2">&nbsp;</div>
-        </div>
-        <div>&nbsp;</div>
-        <div class="row form-group">
-            <div class="col-md-1">&nbsp;</div>
-            <div class="col-md-2 font-weight-bold">Ngày sinh:</div>
-            @if (Model.ngaysinh != null)
-            {<div class="col-md-2">@Model.ngaysinh.Value.ToShortDateString()</div>}
-        else
-        {<div class="col-md-2">&nbsp;</div>}
+    <div class="card">
+        <div class="card-header"><h2>Xóa tác giả</h2></div>
+        <div class="card-body">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.matg)
+                </dt>
 
-            <div class="col-md-2 font-weight-bold">Giới tính:</div>
-            <div class="col-md-3">@(Model.gioitinh.Equals(true)?"Nam":"Nữ")</div>
-            <div class="col-md-2">&nbsp;</div>
+                <dd>
+                    @Html.DisplayFor(model => model.matg)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.tentg)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.tentg)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ngaysinh)
+                </dt>
+
+                <dd>
+                    @Model.ngaysinh.Value.ToShortDateString()
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.quequan)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.quequan)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.nghedanh)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.nghedanh)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.gioitinh)
+                </dt>
+
+                <dd>
+                    @((bool)Model.gioitinh?"Nam":"Nữ")
+                </dd>
+
+            </dl>
         </div>
-        <div class="row">
-            <div class="col-md-1">&nbsp;</div>
-            @{
-                if (ViewBag.flagXoa != null)
+        <div class="card-footer">
+            @if (ViewBag.flagXoa != null)
+            {
+                using (Html.BeginForm("xoaTacGia", "TacGia", FormMethod.Post))
                 {
-                    <div class="col-md-3">
-                        <input type="submit" value="Xóa" class="btn btn-primary" />
-                    </div>
-                }
-                else
-                {
-                    <div class="col-md-3">
-                        <h3 class="text-danger">Không thể xóa </h3><br /> <hr />
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.matg)
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Xóa" class="btn btn-outline-danger" /> |
                     </div>
                 }
             }
-
-            <div class="col-md-8">&nbsp;</div>
+            else
+            {
+                <h3 class="alert alert-danger"><strong>Cảnh báo !!</strong>Không thể xóa</h3>
+            }
         </div>
-    </form>
+    </div>
 </div>
 

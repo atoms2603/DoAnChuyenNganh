@@ -33,48 +33,42 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.taikhoan)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.sdt)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.email)
-                                </td>
-                                @if (item.status.Equals(true))
-                                {
-                                    <td style="color:green">
-                                        Hoạt động
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td style="color:red">
-                                        Vô hiệu
-                                    </td>
-                                }
-                                @if (item.status.Equals(true))
-                                {
+                                string trangThai = "Vô hiệu user";
+                                string textTrangThai = "Hoạt động";
+                                string checkColor = "color:green";
+
+                                <tr>
+                                    <td>@item.taikhoan</td>
+                                    <td>@item.sdt</td>
+                                    <td>@item.email</td>
+
+                                    @if (!item.status.Value)
+                                    {
+                                        trangThai = "Kích hoạt user";
+                                        checkColor = "color:red";
+                                        textTrangThai = "Vô hiệu";
+                                    }
+                                    <td style="@checkColor">@textTrangThai</td>
+
                                     <td>
-                                        <input type="hidden" value="@item.taikhoan" id="taikhoan" />
+                                        <input type="hidden"  value="@item.taikhoan" id="tk_@item.taikhoan" />
                                         <div class="form-actions no-color">
-                                            <input type="button" id="disableUser" value="Vô hiệu user" class="btn btn-outline-primary" />
+                                            <input type="button" id="statusUser_@item.taikhoan" value="@trangThai" class="btn btn-outline-primary" />
                                         </div>
                                     </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        <input type="hidden" value="@item.taikhoan" id="taikhoan" />
-                                        <div class="form-actions no-color">
-                                            <input type="button" id="enableUser" value="Kích hoạt user" class="btn btn-outline-primary" />
-                                        </div>
-                                    </td>
-                                }
-                                
-                            </tr>
+                                </tr>
+
+                                <script type="text/javascript">
+                                    $().ready(function () {
+                                        $('#statusUser_@item.taikhoan').click(function () {
+                                            const id = $('#tk_@item.taikhoan').val();
+                                            const url = '/User/xulyStatus/' + id;
+                                            $.get(url, function () {
+                                                $('body').load('/User/quanLyUser');
+                                            });
+                                        });
+                                    });
+                                </script>
                             }
                         </tbody>
                     </table>
@@ -83,26 +77,3 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $().ready(function () {
-        $('#disableUser').click(function () {
-            const id = $('#taikhoan').val();
-            const url = '/User/voHieuUser/' + id;
-            $.get(url, function (data) {
-                if (parseInt(data) == 1)
-                    $('body').load('/User/quanLyUser');
-            });
-        })
-    })
-
-    $().ready(function () {
-        $('#enableUser').click(function () {
-            const id = $('#taikhoan').val();
-            const url = '/User/kichHoatUser/' + id;
-            $.get(url, function (data) {
-                if (parseInt(data) == 1)
-                    $('body').load('/User/quanLyUser');
-            });
-        })
-    })
-</script>

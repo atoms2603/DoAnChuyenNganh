@@ -25,13 +25,17 @@
     <!-- Template Main CSS File -->
     <link href="~/assets/css/style.css" rel="stylesheet">
 
+    <!--JQUERY-->
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
     <!--FONTAWSOME-->
     <link href="~/fontawesome/css/all.min.css" rel="stylesheet" />
     <script src="~/fontawesome/js/all.min.js"></script>
 
     <title>@ViewBag.Title</title>
 </head>
-<body>
+<body style="background-color: #faeff4;">
     @{
         QLSachOnline.Models.QLySachOnline db = new QLSachOnline.Models.QLySachOnline();
         QLSachOnline.Models.userlogin userlogin = Session["Login"] as QLSachOnline.Models.userlogin;
@@ -44,10 +48,18 @@
             <h1 class="logo"><a href="@Url.Content("/Home/Index")">AtsBooks<span>.</span></a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo"><img src="~/assets/img/logo.png" alt=""></a>-->
-
+            <div class="input-group" style="margin: 15px;">
+                <input class="form-control border-end-0 rounded-pill" onkeyup="showSearchResult()" type="text" placeholder="Search" id="searchInput">
+                <span class="input-group-append" style="padding-left: 5px ;">
+                    <button class="btn btn-outline-secondary bg-white text-black rounded-pill ms-n3" type="button" id="btnSearch">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
             <nav id="navbar" class="navbar">
                 <ul>
                     <li><a class="nav-link scrollto" href="@Url.Content("/Home/Index")">Trang chủ</a></li>
+                    <li><a class="nav-link scrollto" href="@Url.Content("/Goi/IndexGoi")">Gói Premium</a></li>
                     <li class="dropdown">
                         <a href="#"><span>Thể loại</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
@@ -60,11 +72,11 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#"><span>Tiến độ</span> <i class="bi bi-chevron-down"></i></a>
+                        <a href="#"><span>Truyện</span> <i class="bi bi-chevron-down"></i></a>
                         <ul>
 
-                            <li><a href="#">Truyện đã hoàn thành</a></li>
-                            <li><a href="#">Truyện chưa hoàn thành</a></li>
+                            <li><a href="@Url.Content("/Home/formTheLoaiFilter/"+"free")">Truyện Free</a></li>
+                            <li><a href="@Url.Content("/Home/formTheLoaiFilter/"+"premium")">Truyện Premium</a></li>
 
                         </ul>
                     </li>
@@ -76,13 +88,40 @@
                     else
                     {
                         <li class="dropdown">
-                            <a href="@Url.Content("/User/ThongTinChiTietUser/"+userlogin.taikhoan)"><span>@userlogin.taikhoan</span> <i class="bi bi-chevron-down"></i></a>
+                            <a href="@Url.Content("/User/ThongTinChiTietUser/" + userlogin.taikhoan)">
+                                @if ((bool)Session["isHavingPremium"])
+                                {
+                                    <i class="fas fa-gem text-danger"></i><span>&nbsp;</span>
+                                }
+                                <span>@userlogin.taikhoan</span>
+                                <i class="bi bi-chevron-down"></i>
+                            </a>
                             <ul>
-
-                                <li><a href="@Url.Content("/User/thongTinNguoiDung/"+userlogin.taikhoan)">Thông tin</a></li>
-                                <li><a href="@Url.Content("/User/sachYeuThichUser/"+userlogin.taikhoan)">Yêu thích</a></li>
-                                <li><a href="#">Thiết lập tài khoản</a></li>
-                                <li><a href="@Url.Content("/User/lichSuGDUser/"+userlogin.taikhoan)">Lịch sử giao dịch</a></li>
+                                @if (!(bool)Session["isHavingPremium"])
+                                {
+                                    <li><a href="#">(Chưa gia hạn<strong>&nbsp; Premium</strong>)</a></li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="#"><span>Thời gian<strong>&nbsp;Premium</strong></span></a>
+                                        <a href="#"><sup id="timerCD">@((int)Session["PDays"]) Ngày @((int)Session["PHours"]) Giờ @((int)Session["PMinutes"]) Phút</sup></a>
+                                    </li>
+                                    //refresh Time
+                                    <script>
+                                        function refreshTime() {
+                                            const url = '/Home/refreshTimer';
+                                            $.get(url, function (val) {
+                                                $('#timerCD').html(val);
+                                            });
+                                        }
+                                        setInterval(refreshTime, 15000);
+                                    </script>
+                                }
+                                <li><a href="@Url.Content("/User/thongTinNguoiDung/")">Thông tin</a></li>
+                                <li><a href="@Url.Content("/User/sachYeuThichUser/")">Yêu thích</a></li>
+                                <li><a href="@Url.Content("/User/baoMatThietLap/")">Thiết lập tài khoản</a></li>
+                                <li><a href="#">------</a></li>
                                 <li><a href="@Url.Content("/User/logout")">Đăng xuất</a></li>
 
                             </ul>
@@ -103,7 +142,81 @@
         </div>
     </header><!-- End Header -->
 
-    <main id="main">
+    <div class="container d-flex align-items-center justify-content-between rounded-2" style=" position:fixed; z-index: 3;">
+        <div class="col-lg-2 col-md-2">&nbsp;</div>
+        <div class="col-12 col-lg-3 col-md-3" data-spy="scroll" style=" position:relative; overflow-y:scroll ; height: 300px;" id="divSearch" hidden>
+            <table id="myTable" class="table bg-white">
+                <tr class="header">
+                    <th style="width:40%;">&nbsp;</th>
+                    <th style="width:60%;">Tên truyện</th>
+                </tr>
+
+                @foreach (var item in db.saches)
+                {
+                    <tr onclick="window.location='@Url.Content("/Sach/indexSach/"+item.masach)';" style="cursor: pointer;">
+                        <td>
+                            <div class="col-lg-6 col-md-6 col-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                                <img src="~/Images/Images_SP/@item.hinhanh" class="img-fluid" alt="">
+                            </div>
+                        </td>
+                        <td><strong>@item.tensach</strong></td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div class="col-lg-7 col-md-7">&nbsp;</div>
+    </div>
+
+    <script>
+        $('').ready(function () {
+            $('body').click(function () {
+                if ($('#searchInput').is(':focus')) {
+                    if ($('#searchInput').val() != "") {
+                        $("#divSearch").attr("hidden", false);
+                    }
+                } else {
+                    $("#divSearch").attr("hidden", true);
+                }
+            });
+
+            $('#btnSearch').click(function () {
+                    const url = '/Home/searchSach/' + $('#searchInput').val();
+                    $.get(url, function (val) {
+                        if (parseInt(val) == 1) { window.location='@Url.Content("/Home/formSearchResult")'; }
+                    });
+                });
+        });
+        function showSearchResult() {
+            var input, filter, table, tr, td, i, txtValue;
+
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+
+            if (filter != "") {
+                $("#divSearch").attr("hidden", false);
+            } else {
+                $("#divSearch").attr("hidden", true);
+            }
+
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+
+    <main id="main" style="padding-top:45px">
 
         <!-- ======= Featured Services Section ======= -->
         <section id="featured-services" class="featured-services">
@@ -120,7 +233,7 @@
 
     </main><!-- End #main -->
     <!-- ======= Footer ======= -->
-    <footer id="footer">
+    <footer id="footer" class="bg-white">
 
         <div class="container py-4">
             <div class="copyright">

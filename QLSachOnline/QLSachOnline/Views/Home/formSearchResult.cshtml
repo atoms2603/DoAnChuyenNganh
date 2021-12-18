@@ -1,0 +1,39 @@
+﻿@model IEnumerable<QLSachOnline.Models.sach>
+
+@{
+    ViewBag.Title = "Kết quả tìm kiếm";
+    Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
+}
+
+<!--Search Section -->
+<section id="contact" class="contact bg-white" style="border-radius:30px">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Tìm kiếm sách</h2>
+        </div>
+    </div>
+</section><!-- End Search Section -->
+<!--Search Section -->
+<section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-3 col-6 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <a href="@Url.Content("/Sach/indexSach/" + item.masach)">
+                        <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+                            <img src="~/Images/Images_SP/@item.hinhanh" class="img-fluid" alt="">
+                            <div>&nbsp;</div>
+                            <h4 class="title"><a href="@Url.Content("/Sach/indexSach/" + item.masach)">@item.tensach</a></h4>
+                            <h4 class="title"><a href="@Url.Content("/Sach/indexSach/" + item.masach)">Thể loại:</a></h4>
+                            @foreach (var item2 in item.theloais)
+                            {
+                                <span><a href="@Url.Content("/Home/formTheLoaiFilter/" + item2.maloai)" class="text-black">@item2.tentl</a> &nbsp;&nbsp;&nbsp;</span>
+                            }
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</section><!-- End Search Section -->

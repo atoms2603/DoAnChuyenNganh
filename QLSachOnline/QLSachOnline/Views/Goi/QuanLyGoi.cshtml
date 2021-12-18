@@ -1,0 +1,47 @@
+﻿@model IEnumerable<QLSachOnline.Models.goi>
+
+@{
+    ViewBag.Title = "Quản lý gói";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Quản lý gói</h2>
+                    <a href="@Url.Content("/Goi/formThemGoi")" class="btn btn-primary">Thêm gói Premium</a>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã gói</th>
+                                <th>Tên gói</th>
+                                <th>Thời hạn</th>
+                                <th>Giá</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.magoi</td>
+                                    <td><a href="#" class="text-decoration-none">@item.tengoi</a></td>
+                                    <td>@item.thoihan<strong>&nbsp;Ngày</strong></td>
+                                    <td>@String.Format("{0:n0}", item.gia) <strong>&nbsp;VNĐ</strong></td>
+                                    <td><a href="@Url.Content("/Goi/formXoaGoi/"+item.magoi)" class="btn btn-outline-primary">Xóa</a></td>
+                                    <td><a href="@Url.Content("/Goi/formSuaGoi/"+item.magoi)" class="btn btn-outline-primary">Chỉnh sửa</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

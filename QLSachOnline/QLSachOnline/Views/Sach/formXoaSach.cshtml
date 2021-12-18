@@ -6,73 +6,61 @@
 
 <div class="container-fluid">
 
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-md-1">&nbsp;</div>
-        <div class="col-md-2">
-            <a href="@Url.Content("/Sach/QuanLySach")" class="btn btn-primary">Trở về</a>
+    <div class="card">
+        <div class="card-header">
+            <h2>Xóa sách</h2>
         </div>
-        <div class="col-md-9">&nbsp;</div>
-    </div>
-    <div class="row">&nbsp;</div>
-    <div class="row">
-        <div class="col-md-1">&nbsp;</div>
-        <div class="col-md-11"><h2>Xóa sách</h2></div>
-    </div>
-    <div class="row">&nbsp;</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2 font-weight-bold">Mã sách:</div>
+                <div class="col-md-4">@Model.masach</div>
+                <div class="col-md-6">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 font-weight-bold">Tên sách:</div>
+                <div class="col-md-4">@Model.tensach</div>
+                <div class="col-md-6">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 font-weight-bold">Thể loại:</div>
+                <div class="col-md-4">
+                    @foreach (var item in Model.theloais)
+                    {
+                        <span>@item.tentl &nbsp;</span>
+                    }
+                </div>
 
-    <div class="row">
-        <div class="col-md-2 font-weight-bold">Mã sách:</div>
-        <div class="col-md-4">@Model.masach</div>
-        <div class="col-md-6">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 font-weight-bold">Tên sách:</div>
-        <div class="col-md-4">@Model.tensach</div>
-        <div class="col-md-6">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 font-weight-bold">Thể loại:</div>
-        @foreach (var item in Model.theloais)
-        {
-            <div class="col-md-4">@item.tentl</div>
-        }
-        <div class="col-md-6">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 font-weight-bold">Tác giả:</div>
-        @foreach (var item in Model.tacgias)
-        {
-            <div class="col-md-4">@item.tentg</div>
-        }
-        <div class="col-md-6">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 font-weight-bold">Nhà xuất bản:</div>
-        <div class="col-md-4">@Model.nhaxuatban.tennhaxuatban</div>
-        <div class="col-md-6">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 font-weight-bold">Năm sản xuất:</div>
-        <div class="col-md-4">@Model.namxuatban</div>
-        <div class="col-md-6">&nbsp;</div>
-    </div>
-    <div class="row">
-        <div class="col-md-2 font-weight-bold">Giá:</div>
-        <div class="col-md-4">@Model.phi</div>
-        <div class="col-md-6">&nbsp;</div>
-    </div>
-    <div class="row">
-        @if ((bool)ViewBag.flagXoa)
-        {
-            <h4 class="text-danger">Bạn có thật sự muốn xóa sách này không?</h4>
-            <div class="col-md-3"><a href="@Url.Content("/Sach/xoaSach/"+Model.masach)" class="btn btn-primary">Xóa</a></div>
-            <div class="col-md-9">&nbsp;</div>
-        }
-        else
-        {
-            <h4 class="text-danger">Bạn không thể xóa sách này!!!</h4>
-        }
-
+                <div class="col-md-6">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 font-weight-bold">Tác giả:</div>
+                <div class="col-md-4">
+                    @foreach (var item in Model.tacgias)
+                    {
+                        <span>@item.tentg &nbsp;</span>
+                    }
+                </div>
+                <div class="col-md-6">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 font-weight-bold">Nhà xuất bản:</div>
+                <div class="col-md-4">@Model.nhaxuatban.tennhaxuatban</div>
+                <div class="col-md-6">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 font-weight-bold">Năm sản xuất:</div>
+                <div class="col-md-4">@Model.namxuatban</div>
+                <div class="col-md-6">&nbsp;</div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 font-weight-bold">Giá:</div>
+                <div class="col-md-4">@(Model.premium?"Có":"Không có") </div>
+                <div class="col-md-6">&nbsp;</div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <h4 class="alert alert-danger"><strong>Cảnh báo xóa !!</strong> Bạn có thật sự muốn xóa sách này không?</h4><br />
+            <a href="@Url.Content("/Sach/xoaSach/"+Model.masach)" class="btn btn-outline-danger">Xóa</a>
+        </div>
     </div>
 </div>

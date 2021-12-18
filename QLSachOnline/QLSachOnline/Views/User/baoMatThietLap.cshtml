@@ -5,81 +5,155 @@
     Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
 }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
-    <h2>Bảo mật</h2>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.taikhoan)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.matkhau, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.matkhau, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => model.matkhau, "", new { @class = "text-danger" })
+<section id="contact" class="contact bg-white" style="border-radius:30px;">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Thiết lập bảo mật</h2>
         </div>
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-12">
+                <form action="#" method="post" role="form" class="php-email-form">
+                    <div class="row">
+                        <div class="col form-group">
+                            <label for="taikhoan"><strong>Tên tài khoản</strong></label>
+                            <input type="text" name="taikhoan" class="form-control" value="@Model.taikhoan" id="taikhoan" placeholder="Tài khoản" readonly>
+                        </div>
+                        <div class="col form-group">
+                            <label for="matkhau"><strong>Mật khẩu</strong> <a href="#" id="btnSuaMK">Sửa</a></label>
+                            <input type="password" class="form-control" name="matkhau" value="@Model.matkhau" id="matkhau" placeholder="Mật khẩu" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sdt"><strong>Số điện thoại</strong></label>
+                        <input type="text" class="form-control" name="sdt" value="@Model.sdt" id="sdt" placeholder="Số điện thoại">
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><strong>Email</strong></label>
+                        <input type="text" class="form-control" name="email" value="@Model.email" id="email" placeholder="Email">
+                    </div>
+                    <div class="text-center"><button type="button" id="btnCapNhat" class="btn btn-primary">Cập nhật</button></div>
+                    <div>&nbsp;</div>
+                    <div class="alert alert-success" hidden id="alertSuccess">
+                        <strong>Thành công!</strong> Cập nhật thành công.
+                    </div>
+
+                    <a href="#email" id="btnActive" class="text-decoration-none">Active</a>
+                    <div>
+                        <div class="form-group">
+                            <label for="btnVoHieuHoa"><strong>Vô hiệu hóa tài khoản</strong></label>
+                            <a href="#" class="btn btn-danger form-control disabled" id="btnVoHieuHoa">Vô hiệu</a>
+                        </div>
+                        <div class="form-group">
+                            <label for="btnXoaTK"><strong>Xóa tài khoản</strong></label>
+                            <a href="#" class="btn btn-outline-danger form-control disabled" id="btnXoaTK">Xóa vĩnh viễn</a>
+                        </div>
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+
     </div>
+</section><!-- End Section -->
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.sdt, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.sdt, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => model.sdt, "", new { @class = "text-danger" })
+<script type="text/javascript">
+    $('').ready(function () {
+        var i = 0;
+        var luuVal = $('#matkhau').val();
+        $('#btnSuaMK').click(function () {
+            if (i == 0) {
+                $('#matkhau').attr('readonly', false);
+                $('#btnSuaMK').html('Hủy');
+                i = 1;
+            } else {
+                $('#matkhau').val(luuVal);
+                $('#matkhau').attr('readonly', true);
+                $('#btnSuaMK').html('Sửa');
+                i = 0;
+            }
+        });
+
+        var dI = 1;
+        $('#btnActive').click(function () {
+            if (dI == 0) {
+                $('#btnVoHieuHoa').addClass('disabled');
+                $('#btnXoaTK').addClass('disabled');
+                $('#btnActive').html('Active');
+                dI = 1;
+            } else {
+                $('#btnVoHieuHoa').removeClass('disabled');
+                $('#btnXoaTK').removeClass('disabled');
+                $('#btnActive').html('Actived');
+                dI = 0;
+            }
+        });
+
+        $('#btnCapNhat').click(function () {
+            const tk = $('#taikhoan').val();
+            const mk = $('#matkhau').val();
+            const sdt = $('#sdt').val();
+            const email = $('#email').val();
+            const data = { taikhoan: tk, matkhau: mk, sdt: sdt, email: email, status: false, giaodiches: null, luusaches: null };
+            const url = '/User/capNhatThongTin';
+            $.post(url, data, function (val) {
+                if (val == 1) {
+                    $('#alertSuccess').attr('hidden', false);
+                    setTimeout(function () { $('#alertSuccess').attr('hidden', true) }, 3000);
+                }
+            });
+
+        });
+
+
+    });
+</script>
+
+<div>&nbsp;</div>
+
+<!-- Phương thức thanh toán Section -->
+<section id="contact" class="contact bg-white" style="border-radius:30px;">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>Phương thức thanh toán</h2>
         </div>
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="col-lg-4 col-md-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <a href="#contact" class="text-black text-center" style="height: 100%; width: 100%;">
+                    <div class="icon-box">
+                        <div class="icon"><i class="fab fa-cc-visa fa-5x"></i></div>
+                        <h4>Thanh toán bằng<strong>&nbsp;Visa</strong></h4>
+                        <p>(Chưa liên kết)</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <a href="#contact" class="text-black text-center" style="height: 100%; width: 100%;">
+                    <div class="icon-box">
+                        <div class="icon"><i class="fab fa-cc-paypal fa-5x"></i></div>
+                        <h4>Thanh toán bằng<strong>&nbsp;PayPal</strong></h4>
+                        <p>(Chưa liên kết)</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-4 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <a href="#contact" class="text-black text-center" style="height: 100%; width: 100%;">
+                    <div class="icon-box">
+                        <div class="icon"><i class="fab fa-cc-mastercard fa-5x"></i></div>
+                        <h4>Thanh toán bằng<strong>&nbsp;Mastercard</strong></h4>
+                        <p>(Chưa liên kết)</p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
     </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-primary" />
-        </div>
-    </div>
-
-    <hr />
-    <h2>Thiết lập</h2>
-    <hr />
-
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-6 font-weight-bold">Phương thức thanh toán</div>
-            <div class="col-md-6 font-weight-bold">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">&nbsp;</div>
-            <div class="col-md-10">.........</div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-6 font-weight-bold">Vô hiêu hóa tài khoản</div>
-            <div class="col-md-6 font-weight-bold">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">&nbsp;</div>
-            <div class="col-md-8"><a href="#" class="btn btn-danger">Vô hiệu</a></div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-6 font-weight-bold">Xóa tài khoản</div>
-            <div class="col-md-6 font-weight-bold">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">&nbsp;</div>
-            <div class="col-md-8"><a href="#" class="btn btn-outline-danger">Xóa vĩnh viễn</a></div>
-        </div>
-    </div>
-
-</div>
-}
+</section><!-- End Section -->

@@ -8,7 +8,7 @@ namespace QLSachOnline.Controllers
         // GET: TheLoai
         public ActionResult QuanLyTheLoai()
         {
-            return View(db.theloais);
+            return View();
         }
         [HttpPost]
         public ActionResult suaTheLoai(string id)

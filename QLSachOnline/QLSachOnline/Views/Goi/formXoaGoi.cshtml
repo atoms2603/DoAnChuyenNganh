@@ -1,0 +1,66 @@
+﻿@model QLSachOnline.Models.goi
+
+@{
+    ViewBag.Title = "formXoaGoi";
+    Layout = "~/Views/_Layout/_LayoutAdmin.cshtml";
+}
+
+<div class="col-md-10 col-10">
+    <div>
+        @Html.ActionLink("Trở về", "QuanLyGoi", "Goi", null, htmlAttributes: new { @class = "btn btn-primary" })
+    </div>
+    <h2>Xóa gói <strong>Premium</strong> @Model.tengoi</h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.magoi)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.magoi)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.tengoi)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.tengoi)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.motagoi)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.motagoi)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.thoihan)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.thoihan)
+            </dd>
+
+        </dl>
+        @if (ViewBag.flagCheck != null)
+        {
+            using (Html.BeginForm("xoaGoi", "Goi", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(Model => Model.magoi)
+                <div class="alert alert-danger">Bạn có chắc là muốn <strong>xóa</strong> đi gói Premium này ?</div>
+                <div class="form-actions no-color">
+                    <input type="submit" value="Xóa" class="btn btn-primary" />
+                </div>
+            }
+            }
+            else
+            {
+                <div class="alert alert-danger"><strong>Không thể xóa !</strong> Bạn không thể xóa gói này !</div>
+            }
+    </div>
+</div>

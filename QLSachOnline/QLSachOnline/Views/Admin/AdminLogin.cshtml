@@ -1,30 +1,39 @@
-﻿
+﻿@model QLSachOnline.Models.adminlogin
 @{
     ViewBag.Title = "AdminLogin";
     Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
 }
 
-<!-- ======= Portfolio Details Section ======= -->
+<!-- ======= Admin Login Section ======= -->
 <section id="portfolio-details" class="portfolio-details">
     <div class="container">
         <div class="row gy-4">
 
             <div class="col-lg-3 ">&nbsp;</div>
             <div class="col-lg-6 ">
-                <div class="about section-bg text-center" style="border-radius: 30px; align-content: center;">
+                <div class="bg-white text-center" style="border-radius: 30px; align-content: center;">
                     <div>&nbsp;</div>
-                    <h2>Administrator</h2>
+                    <div class="section-title">
+                        <h2>Administrator</h2>
+                        <h3>Đăng nhập với <span>Quản trị viên</span></h3>
+                        <p><hr></p>
+                    </div>
                     <form action="@Url.Content("/Admin/DangNhap/")" id="formID" method="post">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="row">
                             <div class="col-md-3 col-1 col-lg-3">&nbsp;</div>
                             <div class="col-md-6 col-10 col-lg-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Tài khoản" name="taikhoan">
+                                    @Html.EditorFor(model => model.taikhoan, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tài khoản" } })
+                                    @Html.ValidationMessageFor(model => model.taikhoan, "", new { @class = "text-danger" })
                                 </div>
                                 <div>&nbsp;</div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Mật khẩu" name="matkhau">
+                                    @Html.EditorFor(model => model.matkhau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mật khẩu", @type = "password" } })
+                                    @Html.ValidationMessageFor(model => model.matkhau, "", new { @class = "text-danger" })
                                 </div>
+                                <div>&nbsp;</div>
                                 <div class="form-group form-check">
                                     <label class="form-check-label" style="float: left;">
                                         <input class="form-check-input" type="checkbox"> Remember me
@@ -33,13 +42,13 @@
                                 <div>&nbsp;</div>
                                 <input type="submit" class="btn btn-primary" id="btnLogin" value="Đăng nhập">
                                 <div>&nbsp;</div>
-                                @if (ViewBag.flagCheckError != null)
-                                {
-                                    <div class="text-danger" id="divDanger">Bạn đã nhập sai tài khoản hoặc mật khẩu</div>
-                                }
                             </div>
                             <div class="col-md-3 col-1 col-lg-3">&nbsp;</div>
                         </div>
+                        @if (ViewBag.flagCheckError != null)
+                        {
+                            <div class="alert alert-danger col-md-12 col-12" id="divDanger"><strong><i class="fas fa-exclamation-triangle"></i>&nbsp;Thông tin không chính xác !</strong> Bạn đã nhập sai tài khoản hoặc mật khẩu</div>
+                        }
                     </form>
                 </div>
             </div>
@@ -47,4 +56,4 @@
 
         </div>
     </div>
-</section><!-- End Portfolio Details Section -->
+</section><!-- End Admin Login Section -->

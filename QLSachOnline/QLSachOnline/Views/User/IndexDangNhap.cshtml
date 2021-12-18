@@ -1,61 +1,83 @@
-﻿
+﻿@model QLSachOnline.Models.userlogin
 @{
     ViewBag.Title = "IndexDangNhap";
     Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
-
 }
 
-<!-- ======= Portfolio Details Section ======= -->
+<!-- ======= Đăng nhập Section ======= -->
 <section id="portfolio-details" class="portfolio-details">
     <div class="container">
         <div class="row gy-4">
 
             <div class="col-lg-3 ">&nbsp;</div>
             <div class="col-lg-6 ">
-                <div class="about section-bg text-center" style="border-radius: 30px; align-content: center;">
+                <div class="bg-white text-center" style="border-radius: 30px; align-content: center;">
+
                     <div>&nbsp;</div>
-                    <h2>Đăng nhập</h2>
-                    <form action="@Url.Content("/User/DangNhap/")" id="formID" method="post">
+                    <div class="section-title">
+                        <h2>Đăng nhập</h2>
+                        <h3>Đăng nhập <span>tài khoản</span></h3>
+                        <p><hr></p>
+                    </div>
+                    @if (ViewBag.dangKySuccess != null)
+                    {
+                        <div class="alert alert-success col-md-12 col-12" id="divDanger"><strong><i class="fas fa-user"></i>&nbsp;Bạn đã đăng ký thành công !</strong> Bây giờ bạn có thể đăng nhập tài khoản vừa tạo</div>
+                    }
+
+                    @using (Html.BeginForm("DangNhap", "User", FormMethod.Post))
+                    {
+
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="row">
                             <div class="col-md-3 col-1 col-lg-3">&nbsp;</div>
                             <div class="col-md-6 col-10 col-lg-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Tài khoản" name="taikhoan">
+                                    @Html.EditorFor(model => model.taikhoan, new { htmlAttributes = new { @class = "form-control", @placeholder = "Tài khoản" } })
+                                    @Html.ValidationMessageFor(model => model.taikhoan, "", new { @class = "text-danger" })
                                 </div>
                                 <div>&nbsp;</div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Mật khẩu" name="matkhau">
+                                    @Html.EditorFor(model => model.matkhau, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mật khẩu", @type = "password" } })
+                                    @Html.ValidationMessageFor(model => model.matkhau, "", new { @class = "text-danger" })
                                 </div>
+                                <div>&nbsp;</div>
                                 <div class="form-group form-check">
                                     <label class="form-check-label" style="float: left;">
                                         <input class="form-check-input" type="checkbox"> Remember me
                                     </label>
                                 </div>
                                 <div>&nbsp;</div>
-                                @if (ViewBag.flagMuaSach != null)
-                                {
-                                    <input type="text" name="masach" value="@ViewBag.flagMuaSach" hidden />
-                                }
                                 <input type="submit" class="btn btn-primary" id="btnLogin" value="Đăng nhập">
-                                @if ((bool)ViewBag.flagCheckError == true)
-                                {
-                                    <div class="text-danger" id="divDanger">Bạn đã nhập sai tài khoản hoặc mật khẩu</div>
-                                }
-                                @if ((bool)ViewBag.flagCheckStatus == true)
-                                {
-                                    <div class="text-danger" id="divDanger">Tài khoản bị vô hiệu hóa</div>
-                                }
                                 <div>&nbsp;</div>
-                                <label class="text-right float-right"><a href="@Url.Content("/Admin/AdminLogin")" class="text-decoration-none">Đăng nhập với quyền quản trị</a></label>
+                                <label class=""><a href="@Url.Content("/Admin/AdminLogin")" class="text-decoration-none"><i class="fas fa-user-tie"></i>&nbsp;Đăng nhập với quyền quản trị</a></label>
                                 <div>&nbsp;</div>
                             </div>
                             <div class="col-md-3 col-1 col-lg-3">&nbsp;</div>
                         </div>
-                    </form>
+                        if (ViewBag.flagBackGoi != null)
+                        {
+                            <input type="text" name="magoi" value="@ViewBag.flagBackGoi" hidden />
+                        }
+                        if (ViewBag.flagErrorMK != null)
+                        {
+                            <div class="alert alert-danger col-md-12 col-12" id="divDanger"><strong><i class="fas fa-exclamation-triangle"></i>&nbsp;Thông tin không chính xác !</strong> Bạn đã nhập sai tài khoản hoặc mật khẩu</div>
+                        }
+                        if (ViewBag.flagUnknownTK != null)
+                        {
+                            <div class="alert alert-danger col-md-12 col-12" id="divDanger"><strong><i class="fas fa-exclamation-triangle"></i>&nbsp;Tài khoản không tôn tại !</strong> Vui lòng đăng ký tài khoản</div>
+                        }
+                        if (ViewBag.flagCheckStatus != null)
+                        {
+                            <div class="alert alert-danger col-md-12 col-12" id="divDanger"><strong><i class="fas fa-user-slash"></i></strong> Tài khoản này đã bị vô hiệu hóa</div>
+                        }
+                    }
                 </div>
             </div>
             <div class="col-lg-3 ">&nbsp;</div>
-
+            <script>
+                setTimeout(function () { $('.alert-danger, .alert-success').hide(true); }, 4000);
+            </script>
         </div>
-        </div>
-</section><!-- End Portfolio Details Section -->
+    </div>
+</section><!-- End Đăng nhập Section -->

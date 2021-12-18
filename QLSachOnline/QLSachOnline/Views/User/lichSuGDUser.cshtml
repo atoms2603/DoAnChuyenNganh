@@ -17,16 +17,16 @@
                 <div class="col-md-3 font-weight-bold">Giá</div>
                 <div class="col-md-4">&nbsp;</div>
             </div>
-            @foreach (var item in Model.giaodiches)
+            @foreach (var item in Model.usergois)
             {
                 <div class="row">
                     <div class="col-md-1">&nbsp;</div>
                     <div class="col-md-4">
-                        @item.ngaygiaodich.ToString()
+                        @item.ngaymua.ToShortDateString()
                     </div>
 
                     <div class="col-md-3">
-                        @item.sach.phi
+                        &nbsp;
                     </div>
                     <div class="col-md-4">&nbsp;</div>
                 </div>

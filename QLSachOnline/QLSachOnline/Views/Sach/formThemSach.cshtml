@@ -21,6 +21,29 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
+                @Html.LabelFor(model => model.premium, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" value="false" id="switch1" name="premium">
+                        <label class="custom-control-label" for="switch1">Sách <strong>Premium</strong></label>
+                    </div>
+                </div>
+            </div>
+            <script>
+                i = 0;
+                $('#switch1').on('change', function () {
+                    if (i == 0) {
+                        i = 1;
+                        $('#switch1').val(true);
+                    }
+                    else {
+                        i=0
+                        $('#switch1').val(false);
+                    }
+                });
+            </script>
+
+            <div class="form-group">
                 @Html.LabelFor(model => model.masach, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.masach, new { htmlAttributes = new { @class = "form-control" } })
@@ -45,28 +68,30 @@
             </div>
 
             <div class="form-group">
-                <a href="#" data-toggle="collapse" data-target="#theloai" class="font-weight-bold"><span style="color:black;">Thể loại</span><i class="fas fa-arrow-down"></i></a>
+                <a href="#" data-toggle="collapse" data-target="#theloai" class="font-weight-bold col-md-2"><span style="color:black;">Thể loại</span><i class="fas fa-arrow-down"></i></a>
                 <div id="theloai" class="collapse row col-md-10" style="border:solid;border-radius:15px;">
                     @foreach (var item in db.theloais)
                     {
-                        <div class="form-check-inline" style="margin:10px">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="maloai" value="@item.maloai" />@item.tentl
-                            </label>
+                    <div class="form-check-inline" style="margin:10px">
+                        <div class="custom-control custom-checkbox mb-3">
+                            <input type="checkbox" class="custom-control-input" id="tl_@item.maloai" name="maloai" value="@item.maloai">
+                            <label class="custom-control-label" for="tl_@item.maloai">@item.tentl</label>
                         </div>
+                    </div>
                     }
                 </div>
             </div>
 
             <div class="form-group">
-                <a href="#" data-toggle="collapse" data-target="#tacgiaCL" class="font-weight-bold"><span style="color:black;">Tác giả</span><i class="fas fa-arrow-down"></i></a>
+                <a href="#" data-toggle="collapse" data-target="#tacgiaCL" class="font-weight-bold col-md-2"><span style="color:black;">Tác giả</span><i class="fas fa-arrow-down"></i></a>
                 <div id="tacgiaCL" class="collapse row col-md-10" style="border:solid;border-radius:15px;">
                     @foreach (var item in db.tacgias)
                     {
                         <div class="form-check-inline" style="margin:10px">
-                            <label class="form-check-label">
-                                <input type="checkbox" class="form-check-input" name="matg" value="@item.matg" data-toggle="popover" data-placement="top" data-html="true" title="Thông tin tác giả" data-trigger="focus" data-content="@item.toString()" />@item.tentg
-                            </label>
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" id="tg_@item.matg" name="matg" value="@item.matg" data-toggle="popover" data-placement="top" data-html="true" title="Thông tin tác giả" data-trigger="focus" data-content="@item.toString()" >
+                                <label class="custom-control-label" for="tg_@item.matg">@item.tentg</label>
+                            </div>
                         </div>
                     }
                 </div>
@@ -90,7 +115,17 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.hinhanh, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <input type="file" name="hinhanh" class="form-control"/>
+                    <div class="custom-file mb-3">
+                        <input type="file" class="custom-file-input" id="customFile" name="hinhanh">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                    <script>
+                        // Add the following code if you want the name of the file appear on select
+                        $(".custom-file-input").on("change", function () {
+                            var fileName = $(this).val().split("\\").pop();
+                            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                        });
+                    </script>
                     @Html.ValidationMessageFor(model => model.hinhanh, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -100,14 +135,6 @@
                 <div class="col-md-10">
                     @Html.TextAreaFor(model => model.tomtat,htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.tomtat, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.phi, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.phi, new { htmlAttributes = new { @class = "form-control" , @type = "number" } })
-                    @Html.ValidationMessageFor(model => model.phi, "", new { @class = "text-danger" })
                 </div>
             </div>
 
