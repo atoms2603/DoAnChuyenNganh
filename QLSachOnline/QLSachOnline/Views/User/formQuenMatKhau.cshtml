@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Quên mật khẩu";
+    Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
+
+
+}
+
+
+<!-- Quên mật khẩu Section -->
+<section id="contact" class="contact bg-white" style="border-radius: 30px">
+    <div class="container" data-aos="fade-up">
+        @if (ViewBag.taikhoan != null)
+        {
+
+            <div class="section-title">
+                <h2>Lấy lại mật khẩu</h2>
+                <h3><span>Tài khoản - @ViewBag.taikhoan</span></h3>
+                <p>Điền thông tin bên dưới</p>
+            </div>
+
+            <form action="@Url.Content("/User/xulyQuenMK/xulyMK_"+ ViewBag.taikhoan)" method="post">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group" style="margin:15px;">
+                            <input type="password" class="form-control" id="mk" name="mk" placeholder="Mật khẩu" required>
+                        </div>
+                        <div class="form-group" style="margin:15px;">
+                            <input type="password" class="form-control" id="re_mk" name="re_mk" placeholder="Nhập lại mật khẩu" required>
+                        </div>
+                        <div class="text-center form-group" style="margin:15px;">
+                            <input type="button" id="btnSend" class="btn btn-primary" value="Đổi mật khẩu" />
+                        </div>
+                        <div class="alert alert-danger" id="checkMK" hidden><i class="far fa-times-circle"></i>&nbsp;Mật khẩu nhập không trùng !</div>
+                    </div>
+                </div>
+            </form>
+            <script>
+                $('').ready(function () {
+                    setInterval(function () {
+                        var txtMK = $('#mk').val();
+                        var txtRe_MK = $('#re_mk').val();
+                        if (txtMK == txtRe_MK) {
+                            $('#btnSend').attr('type', 'submit');
+                            $('#checkMK').attr("hidden", true);
+                        } else {
+                            $('#btnSend').attr('type', 'button');
+                            $('#checkMK').attr('hidden', false);
+                        }
+                    }, 1000);
+                });
+            </script>
+        }
+        else
+        {
+            <div class="section-title">
+                <h2>Quên mật khẩu</h2>
+                <h3><span>Điền thông tin bên dưới</span></h3>
+                <p>Bạn vui lòng nhập tên tài khoản hoặc email.</p>
+            </div>
+
+            <form action="@Url.Content("/User/xulyQuenMK")" method="post">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group" style="margin:15px;">
+                            <input type="text" class="form-control" name="tk_email" placeholder="Tên tài khoản / Email" required>
+                        </div>
+                        <div class="text-center form-group" style="margin:15px;">
+                            <input type="submit"class="btn btn-primary" value="Gửi" />
+                        </div>
+                    </div>
+                    @if (ViewBag.guiTC != null) {
+
+                        <div class="alert alert-success">
+                            <strong>Thông báo </strong> vui lòng kiểm tra mail để có thể đổi mật khẩu !
+                        </div>
+                    }
+                    @if (ViewBag.guiTB != null) {
+
+                        <div class="alert alert-danger">
+                            <strong>Thông báo </strong> email hoặc tài khoản không tồn tại !
+                        </div>
+                    }
+                </div>
+            </form>
+        }
+
+    </div>
+</section><!-- End Quên mật khẩu Section -->

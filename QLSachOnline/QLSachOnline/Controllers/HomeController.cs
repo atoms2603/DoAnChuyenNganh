@@ -37,6 +37,7 @@ namespace QLSachOnline.Controllers
 
         public ActionResult formGopY()
         {
+            if (TempData["GuiThanhCong"] != null) ViewBag.GuiThanhCong = true;
             return View();
         }
 

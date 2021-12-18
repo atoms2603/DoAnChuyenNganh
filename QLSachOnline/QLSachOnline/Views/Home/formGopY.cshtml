@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "Góp ý";
     Layout = "~/Views/_Layout/_LayoutDangNhapDangKy.cshtml";
+    QLSachOnline.Models.userlogin userlogin = Session["Login"] as QLSachOnline.Models.userlogin;
+
 }
 
 <!-- ======= Góp ý Section ======= -->
@@ -25,39 +27,52 @@
             </div>
 
         </div>
+        @if (ViewBag.GuiThanhCong == null)
+        {
+            <div class="row" data-aos="fade-up" data-aos-delay="100">
 
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-
-            <div class="col-lg-12">
-                <form action="#" method="post" role="form" class="php-email-form">
-                    <div class="row">
-                        <div class="col form-group">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Họ và tên" required>
-                        </div>
-                        @if (!(bool)Session["isLogin"]) { 
-
-                            <div class="col form-group">
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                <div class="col-lg-12">
+                    <form action="/Mail/sendMail" method="post">
+                        <div class="form-group d-flex justify-content-center" style="margin:15px;">
+                            <div class="col-md-6 col-6">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Họ và tên" required>
                             </div>
-                        }
-                        
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="subject" id="subject" placeholder="Tiêu đề" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" name="message" rows="5" placeholder="Nội dung" required></textarea>
-                    </div>
-                    <div class="my-3">
-                        <div class="loading">Loading</div>
-                        <div class="error-message"></div>
-                        <div class="sent-message">Cảm ơn bạn đã đóng góp ý kiến!</div>
-                    </div>
-                    <div class="text-center"><button type="submit">Gửi</button></div>
-                </form>
+                            
+                            @if (!(bool)Session["isLogin"])
+                            {
+                                <div class="col-md-6 col-6">
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-6 col-6">
+                                    <input type="email" class="form-control" name="email" value="@userlogin.email" id="email" placeholder="Email" required>
+                                </div>
+                            }
+
+
+                        </div>
+
+                        <div class="form-group" style="margin:15px;">
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Tiêu đề" required>
+                        </div>
+                        <div class="form-group" style="margin:15px;">
+                            <textarea class="form-control" name="body" rows="5" placeholder="Nội dung" required></textarea>
+                        </div>
+                        <div class="text-center form-group" style="margin:15px;">
+                            <input type="submit" id="btnSend" class="btn btn-primary" value="Gửi" />
+                        </div>
+                    </form>
+                </div>
+
             </div>
-
-        </div>
-
+        }
+        else
+        {
+            <div class="d-flex justify-content-center ">
+                <i class="fas fa-check-circle fa-2x text-success"></i><h3 class="text-success">Cảm ơn bạn đã đóng góp ý kiến!</h3>
+            </div>
+        }
     </div>
 </section><!-- End Góp ý Section -->
