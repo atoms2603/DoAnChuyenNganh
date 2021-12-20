@@ -38,7 +38,7 @@ namespace QLSachOnline.Controllers
                     tl.maloai = tl.maloai.ToUpper();
                     db.theloais.Add(tl);
                     db.SaveChanges();
-                    return RedirectToAction("QuanLyTheLoaiTest");
+                    return RedirectToAction("QuanLyTheLoai");
                 }
                 ModelState.AddModelError("maloai", "Mã trùng, vui lòng nhập lại !");
             }
