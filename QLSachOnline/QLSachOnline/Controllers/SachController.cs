@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Linq;
-using BitMiracle.Docotic.Pdf;
-using System.Collections.Generic;
+using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.parser;
 
 namespace QLSachOnline.Controllers
 {
@@ -229,19 +229,16 @@ namespace QLSachOnline.Controllers
             return View(sach);
         }
         //ĐỌC FILE PDF
-        public string docPdf(string path)
+        public static string docPdf(string path)
         {
-            using (PdfDocument pdf = new PdfDocument(path))
+            PdfReader reader = new PdfReader(path);
+            string text = string.Empty;
+            for (int page = 1; page <= reader.NumberOfPages; page++)
             {
-                var options = new PdfTextExtractionOptions
-                {
-                    SkipInvisibleText = true,
-                    WithFormatting = true
-                };
-
-                string formattedText = pdf.GetText(options);
-                return formattedText;
+                text += PdfTextExtractor.GetTextFromPage(reader, page);
             }
+            reader.Close();
+            return text;
         }
 
 
