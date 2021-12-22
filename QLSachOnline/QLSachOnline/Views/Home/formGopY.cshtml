@@ -37,7 +37,6 @@
                             <div class="col-md-6 col-6">
                                 <input type="text" name="name" class="form-control" id="name" placeholder="Họ và tên" required>
                             </div>
-                            
                             @if (!(bool)Session["isLogin"])
                             {
                                 <div class="col-md-6 col-6">
@@ -50,8 +49,6 @@
                                     <input type="email" class="form-control" name="email" value="@userlogin.email" id="email" placeholder="Email" required>
                                 </div>
                             }
-
-
                         </div>
 
                         <div class="form-group" style="margin:15px;">

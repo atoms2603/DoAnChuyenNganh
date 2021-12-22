@@ -162,6 +162,7 @@ namespace QLSachOnline.Controllers
                 sach.tacgias.Clear();
                 sach.theloais.Clear();
                 sach.chuongs.Clear();
+                sach.luusaches.Clear();
 
                 db.saches.Remove(sach);
                 db.SaveChanges();
