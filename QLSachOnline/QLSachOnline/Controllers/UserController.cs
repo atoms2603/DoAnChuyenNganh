@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -17,6 +19,7 @@ namespace QLSachOnline.Controllers
             if (TempData["flagUnknownTK"] != null) ViewBag.flagUnknownTK = true;
             if(TempData["flagCheckStatus"] != null) ViewBag.flagCheckStatus = true;
             if (TempData["dangKySuccess"] != null) ViewBag.dangKySuccess = true;
+            if (TempData["changePass"] != null) ViewBag.changePass = true;
 
             return View();
         }
@@ -100,10 +103,65 @@ namespace QLSachOnline.Controllers
             return RedirectToAction("Index","Home");
         }
 
-
+        public ActionResult formQuenMatKhau(string id)
+        {
+            if (id != null) ViewBag.taikhoan = id;
+            if (TempData["guiTC"] != null) ViewBag.guiTC = true;
+            if (TempData["guiTB"] != null) ViewBag.guiTB = true;
+            return View();
+        }
 
         //=================================================================================
         //Xử lý thông tin người dùng
+
+        [HttpPost]
+        public ActionResult xulyQuenMK(string id,string tk_email)
+        {
+            string[] check = null;
+            _ = id != null ? check = id.Split('_') : check = tk_email.Split('_');
+            if (!check[0].Equals("xulyMK"))
+            {
+                if (db.userlogins.Find(tk_email) != null || db.userlogins.Where(x => x.email.Equals(tk_email)).ToList().Count != 0)
+                {
+                    string email = "";
+                    _ = db.userlogins.Find(tk_email) != null ? email = db.userlogins.Find(tk_email).email : email = tk_email;
+
+                    MailAddress to = new MailAddress(email);
+                    MailAddress from = new MailAddress("huyt2603.study@gmail.com");
+
+                    MailMessage message = new MailMessage(from, to);
+
+                    message.Subject = "Mail lấy lại mật khẩu";
+                    message.Body += "<p><strong>Email:</strong> " + email + "<br />";
+                    message.Body += "<p><strong>Nội dung:</strong><br /> " + "<a href=" + "http://localhost:56556/User/formQuenMatKhau/"+ db.userlogins.Where(x => x.email.Equals(tk_email)).First().taikhoan + ">click here to change password</a>" + "</p>";
+                    message.IsBodyHtml = true;
+                    SmtpClient client = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential("huyt2603.study@gmail.com", "8464237z"),
+                    };
+                    client.Send(message);
+                    TempData["guiTC"] = true;
+                    return RedirectToAction("formQuenMatKhau");
+                }
+                TempData["guiTB"] = true;
+                return RedirectToAction("formQuenMatKhau");
+            }
+            else
+            {
+                if (Request["mk"] != null) { 
+                    db.userlogins.Find(check[1]).matkhau = Request["mk"].ToString();
+                    db.SaveChanges();
+                }
+                TempData["changePass"] = true;
+                return RedirectToAction("IndexDangNhap");
+            }
+        }
+
         public ActionResult thongTinNguoiDung()
         {
             return View(Session["Login"] as Models.userlogin);

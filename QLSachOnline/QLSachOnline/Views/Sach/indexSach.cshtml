@@ -1,6 +1,6 @@
 ﻿@model QLSachOnline.Models.sach
 @{
-    ViewBag.Title = "Tên sách";
+    ViewBag.Title = Model.tensach;
     Layout = "~/Views/_Layout/_LayoutNoidung.cshtml";
 }
 
@@ -101,7 +101,7 @@
                 <div class="portfolio-description">
                     <h2>Tóm tắt</h2>
                     <p>
-                        Autem ipsum nam porro corporis rerum. Quis eos dolorem eos itaque inventore commodi labore quia quia. Exercitationem repudiandae officiis neque suscipit non officia eaque itaque enim. Voluptatem officia accusantium nesciunt est omnis tempora consectetur dignissimos. Sequi nulla at esse enim cum deserunt eius.
+                        @Model.tomtat
                     </p>
                 </div>
             </div>

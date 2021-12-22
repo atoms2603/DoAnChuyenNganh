@@ -83,6 +83,7 @@ namespace QLSachOnline.Controllers
             {
                 if (db.gois.Find(goi.magoi) == null)
                 {
+                    goi.magoi = goi.magoi.ToUpper();
                     db.gois.Add(goi);
                     db.SaveChanges();
                     return RedirectToAction("QuanLyGoi");

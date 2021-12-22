@@ -1,5 +1,4 @@
-﻿
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -12,13 +11,12 @@ namespace QLSachOnline.Controllers
         public ActionResult sendMail(string name, string body, string subject, string email)
         {
 
-            MailAddress to = new MailAddress("huyt4242@gmail.com");
+            MailAddress to = new MailAddress("nqhuy20052000@gmail.com");
             MailAddress from = new MailAddress("huyt2603.study@gmail.com");
 
             MailMessage message = new MailMessage(from, to);
 
             message.Subject = subject;
-            //message.Body = bodytext;
             message.Body = "<p><strong>Người gửi:</strong> " + name + "<br />";
             message.Body += "<p><strong>Email:</strong> " + email + "<br />";
             message.Body += "<p><strong>Nội dung:</strong><br /> " + body + "</p>";

@@ -30,7 +30,7 @@
                             {
                                 <tr>
                                     <td>@Html.DisplayFor(ModelItem => item.matg)</td>
-                                    <td>@Html.DisplayFor(ModelItem => item.tentg)</td>
+                                    <td><a href="@Url.Content("/TacGia/formChiTietTacGia/"+item.matg)">@Html.DisplayFor(ModelItem => item.tentg)</a></td>
                                     <td>@item.ngaysinh.Value.ToShortDateString()</td>
                                     <td>@(item.gioitinh.Equals(true) ? "Nam" : "Nữ")</td>
                                     <td><a href="@Url.Content("/TacGia/formXoaTacGia/"+item.matg)" class="btn btn-outline-primary">Xóa</a></td>

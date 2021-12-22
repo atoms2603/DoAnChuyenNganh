@@ -18,6 +18,10 @@ namespace QLSachOnline
         {
             Session["Login"] = new Models.userlogin();
             Session["isLogin"] = false;
+            Session["isHavingPremium"] = false;
+            Session["PDays"] = 0;
+            Session["PHours"] = 0;
+            Session["PMinutes"] = 0;
 
             Session["AdminLogin"] = new Models.adminlogin();
             Session["AdminCheckLogin"] = false;
